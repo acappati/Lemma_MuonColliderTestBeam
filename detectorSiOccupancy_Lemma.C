@@ -31,7 +31,7 @@ using namespace std;
 
 
 // main function
-void detectorOccupancy_Lemma(int runNumber)
+void detectorSiOccupancy_Lemma(int runNumber)
 {
 
   // define input file name
@@ -40,17 +40,17 @@ void detectorOccupancy_Lemma(int runNumber)
 
   // define output path and make output directory
   TString plotPath;
-  plotPath.Form("plotsOccupancy_Run%d",runNumber);
+  plotPath.Form("SiOccupancy_Run%d",runNumber);
   gSystem->Exec(("mkdir -p "+plotPath));
   
   
   Int_t    iev;
   Int_t    nhits;
-  Int_t    subdet[23];   //[nhits]
-  Float_t  xh[23];       //[nhits]
-  Float_t  yh[23];       //[nhits]
-  Float_t  zh[23];       //[nhits]
-  Int_t    itrack[23];   //[nhits]
+  Int_t    subdet[500];   //[nhits]
+  Float_t  xh[500];       //[nhits]
+  Float_t  yh[500];       //[nhits]
+  Float_t  zh[500];       //[nhits]
+  Int_t    itrack[500];   //[nhits]
   Double_t Calo_EnDep[25];
   Int_t    Calo_Time[25];
 
@@ -60,13 +60,13 @@ void detectorOccupancy_Lemma(int runNumber)
 
   inputTree->SetBranchAddress("iev", &iev);
   inputTree->SetBranchAddress("nhits", &nhits);
-  inputTree->SetBranchAddress("subdet", &subdet);
-  inputTree->SetBranchAddress("xh", &xh);
-  inputTree->SetBranchAddress("yh", &yh);
-  inputTree->SetBranchAddress("zh", &zh);
-  inputTree->SetBranchAddress("itrack", &itrack);
-  inputTree->SetBranchAddress("Calo_EnDep", &Calo_EnDep);
-  inputTree->SetBranchAddress("Calo_Time", &Calo_Time);
+  inputTree->SetBranchAddress("subdet", &subdet[0]);
+  inputTree->SetBranchAddress("xh", &xh[0]);
+  inputTree->SetBranchAddress("yh", &yh[0]);
+  inputTree->SetBranchAddress("zh", &zh[0]);
+  inputTree->SetBranchAddress("itrack", &itrack[0]);
+  inputTree->SetBranchAddress("Calo_EnDep", &Calo_EnDep[0]);
+  inputTree->SetBranchAddress("Calo_Time", &Calo_Time[0]);
 
   
   TH1F* hist_xh_det10 = new TH1F("hist_xh_det10","hist_xh_det10",100,0.,2.);
@@ -222,7 +222,7 @@ void detectorOccupancy_Lemma(int runNumber)
   c_det37->cd(2);
   hist_yh_det37->Draw("hist");
   c_det37->SaveAs((plotPath + "/" + c_det37->GetName() + ".png"));
-  c_det37->SaveAs((plotPath + "/" + c_det37->GetName() + ".root"));
+  //c_det37->SaveAs((plotPath + "/" + c_det37->GetName() + ".root"));
     
 
   cout<<" Plots done! =) "<<endl; 
