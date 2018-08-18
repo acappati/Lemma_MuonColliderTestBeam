@@ -1,9 +1,9 @@
 // **************************
 // 
 // usage:
-//    root -l -b -q 'detectorOccupancy_Lemma.C(runNumber)'
+//    root -l -b -q 'detectorSiOccupancy_Lemma.C(runNumber)'
 //
-// e.g. root -l -b -q 'detectorOccupancy_Lemma.C(500275)'
+// e.g. root -l -b -q 'detectorSiOccupancy_Lemma.C(500275)'
 //
 // **************************
 
@@ -40,7 +40,7 @@ void detectorSiOccupancy_Lemma(int runNumber)
 
   // define output path and make output directory
   TString plotPath;
-  plotPath.Form("SiOccupancy_Run%d",runNumber);
+  plotPath.Form("plotsSiOccupancy_Run%d",runNumber);
   gSystem->Exec(("mkdir -p "+plotPath));
   
   
