@@ -141,8 +141,7 @@ void detectorSiOccupancy_Lemma(int runNumber)
   c_det10->cd(2);
   hist_yh_det10->Draw("hist");
   c_det10->SaveAs((plotPath + "/" + c_det10->GetName() + ".png"));
-  c_det10->SaveAs((plotPath + "/" + c_det10->GetName() + ".root"));
-  
+   
   TCanvas* c_det20 = new TCanvas("c_det20","c_det20");
   c_det20->Divide(2,1);
   c_det20->cd(1);
@@ -150,8 +149,7 @@ void detectorSiOccupancy_Lemma(int runNumber)
   c_det20->cd(2);
   hist_yh_det20->Draw("hist");
   c_det20->SaveAs((plotPath + "/" + c_det20->GetName() + ".png"));
-  c_det20->SaveAs((plotPath + "/" + c_det20->GetName() + ".root"));
-  
+   
   TCanvas* c_det30 = new TCanvas("c_det30","c_det30");
   c_det30->Divide(2,1);
   c_det30->cd(1);
@@ -159,7 +157,6 @@ void detectorSiOccupancy_Lemma(int runNumber)
   c_det30->cd(2);
   hist_yh_det30->Draw("hist");
   c_det30->SaveAs((plotPath + "/" + c_det30->GetName() + ".png"));
-  c_det30->SaveAs((plotPath + "/" + c_det30->GetName() + ".root"));
   
   TCanvas* c_det31 = new TCanvas("c_det31","c_det31");
   c_det31->Divide(2,1);
@@ -168,8 +165,7 @@ void detectorSiOccupancy_Lemma(int runNumber)
   c_det31->cd(2);
   hist_yh_det31->Draw("hist");
   c_det31->SaveAs((plotPath + "/" + c_det31->GetName() + ".png"));
-  c_det31->SaveAs((plotPath + "/" + c_det31->GetName() + ".root"));
-  
+
   TCanvas* c_det32 = new TCanvas("c_det32","c_det32");
   c_det32->Divide(2,1);
   c_det32->cd(1);
@@ -177,7 +173,6 @@ void detectorSiOccupancy_Lemma(int runNumber)
   c_det32->cd(2);
   hist_yh_det32->Draw("hist");
   c_det32->SaveAs((plotPath + "/" + c_det32->GetName() + ".png"));
-  c_det32->SaveAs((plotPath + "/" + c_det32->GetName() + ".root"));
   
   TCanvas* c_det33 = new TCanvas("c_det33","c_det33");
   c_det33->Divide(2,1);
@@ -186,7 +181,6 @@ void detectorSiOccupancy_Lemma(int runNumber)
   c_det33->cd(2);
   hist_yh_det33->Draw("hist");
   c_det33->SaveAs((plotPath + "/" + c_det33->GetName() + ".png"));
-  c_det33->SaveAs((plotPath + "/" + c_det33->GetName() + ".root"));
   
   TCanvas* c_det34 = new TCanvas("c_det34","c_det34");
   c_det34->Divide(2,1);
@@ -195,7 +189,6 @@ void detectorSiOccupancy_Lemma(int runNumber)
   c_det34->cd(2);
   hist_yh_det34->Draw("hist");
   c_det34->SaveAs((plotPath + "/" + c_det34->GetName() + ".png"));
-  c_det34->SaveAs((plotPath + "/" + c_det34->GetName() + ".root"));
   
   TCanvas* c_det35 = new TCanvas("c_det35","c_det35");
   c_det35->Divide(2,1);
@@ -204,7 +197,6 @@ void detectorSiOccupancy_Lemma(int runNumber)
   c_det35->cd(2);
   hist_yh_det35->Draw("hist");
   c_det35->SaveAs((plotPath + "/" + c_det35->GetName() + ".png"));
-  c_det35->SaveAs((plotPath + "/" + c_det35->GetName() + ".root"));
   
   TCanvas* c_det36 = new TCanvas("c_det36","c_det36");
   c_det36->Divide(2,1);
@@ -213,7 +205,6 @@ void detectorSiOccupancy_Lemma(int runNumber)
   c_det36->cd(2);
   hist_yh_det36->Draw("hist");
   c_det36->SaveAs((plotPath + "/" + c_det36->GetName() + ".png"));
-  c_det36->SaveAs((plotPath + "/" + c_det36->GetName() + ".root"));
   
   TCanvas* c_det37 = new TCanvas("c_det37","c_det37");
   c_det37->Divide(2,1);
@@ -222,7 +213,7 @@ void detectorSiOccupancy_Lemma(int runNumber)
   c_det37->cd(2);
   hist_yh_det37->Draw("hist");
   c_det37->SaveAs((plotPath + "/" + c_det37->GetName() + ".png"));
-  //c_det37->SaveAs((plotPath + "/" + c_det37->GetName() + ".root"));
+  
     
 
   cout<<" Plots done! =) "<<endl; 
