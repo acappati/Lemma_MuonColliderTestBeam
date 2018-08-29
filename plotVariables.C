@@ -191,7 +191,7 @@ void plotVariables()
   //plot histos
   TCanvas* c_pMuPlus = new TCanvas("c_pMuPlus","c_pMuPlus");
   c_pMuPlus->cd();
-  hist_pMuPlus->SetTitle("");
+  hist_pMuPlus->SetTitle("p #mu^{+}");
   hist_pMuPlus->GetXaxis()->SetTitle("p #mu^{+}");
   hist_pMuPlus->Draw("hist");
   c_pMuPlus->SaveAs((plotPath + "/" + hist_pMuPlus->GetName() + ".png"));
@@ -199,7 +199,7 @@ void plotVariables()
 
   TCanvas* c_pMuMinus = new TCanvas("c_pMuMinus","c_pMuMinus");
   c_pMuMinus->cd();
-  hist_pMuMinus->SetTitle("");
+  hist_pMuMinus->SetTitle("p #mu^{-}");
   hist_pMuMinus->GetXaxis()->SetTitle("p #mu^{-}");
   hist_pMuMinus->Draw("hist");
   c_pMuMinus->SaveAs((plotPath + "/" + hist_pMuMinus->GetName() + ".png"));
@@ -207,7 +207,7 @@ void plotVariables()
   
   TCanvas* c_pTot = new TCanvas("c_pTot","c_pTot");
   c_pTot->cd();
-  hist_pTot->SetTitle("");
+  hist_pTot->SetTitle("p #mu^{+} + p #mu^{-}");
   hist_pTot->GetXaxis()->SetTitle("p #mu^{+} + p #mu^{-}");
   hist_pTot->Draw("hist");
   c_pTot->SaveAs((plotPath + "/" + hist_pTot->GetName() + ".png"));
@@ -215,7 +215,7 @@ void plotVariables()
 
   TCanvas* c_chi2MuPlus = new TCanvas("c_chi2MuPlus","c_chi2MuPlus");
   c_chi2MuPlus->cd();
-  hist_chi2MuPlus->SetTitle("");
+  hist_chi2MuPlus->SetTitle("#Chi^{2} #mu^{+}");
   hist_chi2MuPlus->GetXaxis()->SetTitle("#Chi^{2} #mu^{+}");
   hist_chi2MuPlus->Draw("hist");
   c_chi2MuPlus->SaveAs((plotPath + "/" + hist_chi2MuPlus->GetName() + ".png"));
@@ -223,7 +223,7 @@ void plotVariables()
   
   TCanvas* c_chi2MuMinus = new TCanvas("c_chi2MuMinus","c_chi2MuMinus");
   c_chi2MuMinus->cd();
-  hist_chi2MuMinus->SetTitle("");
+  hist_chi2MuMinus->SetTitle("#Chi^{2} #mu^{-}");
   hist_chi2MuMinus->GetXaxis()->SetTitle("#Chi^{2} #mu^{-}");
   hist_chi2MuMinus->Draw("hist");
   c_chi2MuMinus->SaveAs((plotPath + "/" + hist_chi2MuMinus->GetName() + ".png"));
@@ -234,6 +234,7 @@ void plotVariables()
   c_det10->cd();
   hist_xh_det10_MuMinus->SetTitle("xh in det10");
   hist_xh_det10_MuMinus->SetLineColor(kBlue);
+  hist_xh_det10_MuMinus->SetMaximum(max(hist_xh_det10_MuMinus->GetMaximum(),hist_xh_det10_MuPlus->GetMaximum()));
   hist_xh_det10_MuMinus->Draw("hist");
   hist_xh_det10_MuPlus->SetTitle("");
   hist_xh_det10_MuPlus->SetLineColor(kRed);
@@ -258,6 +259,7 @@ void plotVariables()
   c_det20->cd();
   hist_xh_det20_MuMinus->SetTitle("xh in det20");
   hist_xh_det20_MuMinus->SetLineColor(kBlue);
+  hist_xh_det20_MuMinus->SetMaximum(max(hist_xh_det20_MuMinus->GetMaximum(),hist_xh_det20_MuPlus->GetMaximum()));
   hist_xh_det20_MuMinus->Draw("hist");
   hist_xh_det20_MuPlus->SetTitle("");
   hist_xh_det20_MuPlus->SetLineColor(kRed);
@@ -282,6 +284,7 @@ void plotVariables()
   c_det30->cd();
   hist_xh_det30_MuMinus->SetTitle("xh in det30");
   hist_xh_det30_MuMinus->SetLineColor(kBlue);
+  hist_xh_det30_MuMinus->SetMaximum(max(hist_xh_det30_MuMinus->GetMaximum(),hist_xh_det30_MuPlus->GetMaximum()));
   hist_xh_det30_MuMinus->Draw("hist");
   hist_xh_det30_MuPlus->SetTitle("");
   hist_xh_det30_MuPlus->SetLineColor(kRed);
@@ -306,6 +309,7 @@ void plotVariables()
   c_det31->cd();
   hist_xh_det31_MuMinus->SetTitle("xh in det31");
   hist_xh_det31_MuMinus->SetLineColor(kBlue);
+  hist_xh_det31_MuMinus->SetMaximum(max(hist_xh_det31_MuMinus->GetMaximum(),hist_xh_det31_MuPlus->GetMaximum()));
   hist_xh_det31_MuMinus->Draw("hist");
   hist_xh_det31_MuPlus->SetTitle("");
   hist_xh_det31_MuPlus->SetLineColor(kRed);
@@ -330,6 +334,7 @@ void plotVariables()
   c_det32->cd();
   hist_xh_det32_MuMinus->SetTitle("xh in det32");
   hist_xh_det32_MuMinus->SetLineColor(kBlue);
+  hist_xh_det32_MuMinus->SetMaximum(max(hist_xh_det32_MuMinus->GetMaximum(),hist_xh_det32_MuPlus->GetMaximum()));
   hist_xh_det32_MuMinus->Draw("hist");
   hist_xh_det32_MuPlus->SetTitle("");
   hist_xh_det32_MuPlus->SetLineColor(kRed);
@@ -354,6 +359,7 @@ void plotVariables()
   c_det33->cd();
   hist_xh_det33_MuMinus->SetTitle("xh in det33");
   hist_xh_det33_MuMinus->SetLineColor(kBlue);
+  hist_xh_det33_MuMinus->SetMaximum(max(hist_xh_det33_MuMinus->GetMaximum(),hist_xh_det33_MuPlus->GetMaximum()));
   hist_xh_det33_MuMinus->Draw("hist");
   hist_xh_det33_MuPlus->SetTitle("");
   hist_xh_det33_MuPlus->SetLineColor(kRed);
@@ -378,6 +384,7 @@ void plotVariables()
   c_det34->cd();
   hist_xh_det34_MuMinus->SetTitle("xh in det34");
   hist_xh_det34_MuMinus->SetLineColor(kBlue);
+  hist_xh_det34_MuMinus->SetMaximum(max(hist_xh_det34_MuMinus->GetMaximum(),hist_xh_det34_MuPlus->GetMaximum()));
   hist_xh_det34_MuMinus->Draw("hist");
   hist_xh_det34_MuPlus->SetTitle("");
   hist_xh_det34_MuPlus->SetLineColor(kRed);
@@ -402,6 +409,7 @@ void plotVariables()
   c_det35->cd();
   hist_xh_det35_MuMinus->SetTitle("xh in det35");
   hist_xh_det35_MuMinus->SetLineColor(kBlue);
+  hist_xh_det35_MuMinus->SetMaximum(max(hist_xh_det35_MuMinus->GetMaximum(),hist_xh_det35_MuPlus->GetMaximum()));
   hist_xh_det35_MuMinus->Draw("hist");
   hist_xh_det35_MuPlus->SetTitle("");
   hist_xh_det35_MuPlus->SetLineColor(kRed);
@@ -426,6 +434,7 @@ void plotVariables()
   c_det36->cd();
   hist_xh_det36_MuMinus->SetTitle("xh in det36");
   hist_xh_det36_MuMinus->SetLineColor(kBlue);
+  hist_xh_det36_MuMinus->SetMaximum(max(hist_xh_det36_MuMinus->GetMaximum(),hist_xh_det36_MuPlus->GetMaximum()));
   hist_xh_det36_MuMinus->Draw("hist");
   hist_xh_det36_MuPlus->SetTitle("");
   hist_xh_det36_MuPlus->SetLineColor(kRed);
@@ -450,6 +459,7 @@ void plotVariables()
   c_det37->cd();
   hist_xh_det37_MuMinus->SetTitle("xh in det37");
   hist_xh_det37_MuMinus->SetLineColor(kBlue);
+  hist_xh_det37_MuMinus->SetMaximum(max(hist_xh_det37_MuMinus->GetMaximum(),hist_xh_det37_MuPlus->GetMaximum()));
   hist_xh_det37_MuMinus->Draw("hist");
   hist_xh_det37_MuPlus->SetTitle("");
   hist_xh_det37_MuPlus->SetLineColor(kRed);
