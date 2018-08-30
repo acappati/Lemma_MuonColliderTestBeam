@@ -233,6 +233,7 @@ void plotVariables()
   TCanvas* c_det10 = new TCanvas("c_det10","c_det10");
   c_det10->cd();
   hist_xh_det10_MuPlus->SetTitle("xh in det10");
+  hist_xh_det10_MuPlus->GetXaxis()->SetTitle("mm");
   hist_xh_det10_MuPlus->SetLineColor(kRed);
   hist_xh_det10_MuPlus->SetMaximum(1.05 * max(hist_xh_det10_MuMinus->GetMaximum(),hist_xh_det10_MuPlus->GetMaximum()));
   hist_xh_det10_MuPlus->Draw("hist");
@@ -258,6 +259,7 @@ void plotVariables()
   TCanvas* c_det20 = new TCanvas("c_det20","c_det20");
   c_det20->cd();
   hist_xh_det20_MuPlus->SetTitle("xh in det20");
+  hist_xh_det20_MuPlus->GetXaxis()->SetTitle("mm");
   hist_xh_det20_MuPlus->SetLineColor(kRed);
   hist_xh_det20_MuPlus->SetMaximum(1.05 * max(hist_xh_det20_MuMinus->GetMaximum(),hist_xh_det20_MuPlus->GetMaximum()));
   hist_xh_det20_MuPlus->Draw("hist");
@@ -283,6 +285,7 @@ void plotVariables()
   TCanvas* c_det30 = new TCanvas("c_det30","c_det30");
   c_det30->cd();
   hist_xh_det30_MuPlus->SetTitle("xh in det30");
+  hist_xh_det30_MuPlus->GetXaxis()->SetTitle("mm");
   hist_xh_det30_MuPlus->SetLineColor(kRed);
   hist_xh_det30_MuPlus->SetMaximum(1.05 * max(hist_xh_det30_MuMinus->GetMaximum(),hist_xh_det30_MuPlus->GetMaximum()));
   hist_xh_det30_MuPlus->Draw("hist");
@@ -308,6 +311,7 @@ void plotVariables()
   TCanvas* c_det31 = new TCanvas("c_det31","c_det31");
   c_det31->cd();
   hist_xh_det31_MuPlus->SetTitle("xh in det31");
+  hist_xh_det31_MuPlus->GetXaxis()->SetTitle("mm");
   hist_xh_det31_MuPlus->SetLineColor(kRed);
   hist_xh_det31_MuPlus->SetMaximum(1.05 * max(hist_xh_det31_MuMinus->GetMaximum(),hist_xh_det31_MuPlus->GetMaximum()));
   hist_xh_det31_MuPlus->Draw("hist");
@@ -333,6 +337,7 @@ void plotVariables()
   TCanvas* c_det32 = new TCanvas("c_det32","c_det32");
   c_det32->cd();
   hist_xh_det32_MuPlus->SetTitle("xh in det32");
+  hist_xh_det32_MuPlus->GetXaxis()->SetTitle("mm");
   hist_xh_det32_MuPlus->SetLineColor(kRed);
   hist_xh_det32_MuPlus->SetMaximum(1.05 * max(hist_xh_det32_MuMinus->GetMaximum(),hist_xh_det32_MuPlus->GetMaximum()));
   hist_xh_det32_MuPlus->Draw("hist");
@@ -358,6 +363,7 @@ void plotVariables()
   TCanvas* c_det33 = new TCanvas("c_det33","c_det33");
   c_det33->cd();
   hist_xh_det33_MuPlus->SetTitle("xh in det33");
+  hist_xh_det33_MuPlus->GetXaxis()->SetTitle("mm");
   hist_xh_det33_MuPlus->SetLineColor(kRed);
   hist_xh_det33_MuPlus->SetMaximum(1.05 * max(hist_xh_det33_MuMinus->GetMaximum(),hist_xh_det33_MuPlus->GetMaximum()));
   hist_xh_det33_MuPlus->Draw("hist");
@@ -383,6 +389,7 @@ void plotVariables()
   TCanvas* c_det34 = new TCanvas("c_det34","c_det34");
   c_det34->cd();
   hist_xh_det34_MuPlus->SetTitle("xh in det34");
+  hist_xh_det34_MuPlus->GetXaxis()->SetTitle("mm");
   hist_xh_det34_MuPlus->SetLineColor(kRed);
   hist_xh_det34_MuPlus->SetMaximum(1.05 * max(hist_xh_det34_MuMinus->GetMaximum(),hist_xh_det34_MuPlus->GetMaximum()));
   hist_xh_det34_MuPlus->Draw("hist");
@@ -408,6 +415,7 @@ void plotVariables()
   TCanvas* c_det35 = new TCanvas("c_det35","c_det35");
   c_det35->cd();
   hist_xh_det35_MuPlus->SetTitle("xh in det35");
+  hist_xh_det35_MuPlus->GetXaxis()->SetTitle("mm");
   hist_xh_det35_MuPlus->SetLineColor(kRed);
   hist_xh_det35_MuPlus->SetMaximum(1.05 * max(hist_xh_det35_MuMinus->GetMaximum(),hist_xh_det35_MuPlus->GetMaximum()));
   hist_xh_det35_MuPlus->Draw("hist");
@@ -433,6 +441,7 @@ void plotVariables()
   TCanvas* c_det36 = new TCanvas("c_det36","c_det36");
   c_det36->cd();
   hist_xh_det36_MuPlus->SetTitle("xh in det36");
+  hist_xh_det36_MuPlus->GetXaxis()->SetTitle("mm");
   hist_xh_det36_MuPlus->SetLineColor(kRed);
   hist_xh_det36_MuPlus->SetMaximum(1.05 * max(hist_xh_det36_MuMinus->GetMaximum(),hist_xh_det36_MuPlus->GetMaximum()));
   hist_xh_det36_MuPlus->Draw("hist");
@@ -458,6 +467,7 @@ void plotVariables()
   TCanvas* c_det37 = new TCanvas("c_det37","c_det37");
   c_det37->cd();
   hist_xh_det37_MuPlus->SetTitle("xh in det37");
+  hist_xh_det37_MuPlus->GetXaxis()->SetTitle("mm");
   hist_xh_det37_MuPlus->SetLineColor(kRed);
   hist_xh_det37_MuPlus->SetMaximum(1.05 * max(hist_xh_det37_MuMinus->GetMaximum(),hist_xh_det37_MuPlus->GetMaximum()));
   hist_xh_det37_MuPlus->Draw("hist");
