@@ -111,27 +111,27 @@ void plotVariables()
   // TH1F* hist_ThetaMuMinus = new TH1F("hist_ThetaMuMinus","hist_ThetaMuMinus",10,0.,10.);  //angle in bending plane
   
 
-  TH1F* hist_xh_det10_MuPlus = new TH1F("hist_xh_det10_MuPlus","hist_xh_det10_MuPlus",100,0.,2.);
-  TH1F* hist_xh_det20_MuPlus = new TH1F("hist_xh_det20_MuPlus","hist_xh_det20_MuPlus",100,0.,2.);
-  TH1F* hist_xh_det30_MuPlus = new TH1F("hist_xh_det30_MuPlus","hist_xh_det30_MuPlus",100,0.,10.);
-  TH1F* hist_xh_det31_MuPlus = new TH1F("hist_xh_det31_MuPlus","hist_xh_det31_MuPlus",100,0.,10.);
-  TH1F* hist_xh_det32_MuPlus = new TH1F("hist_xh_det32_MuPlus","hist_xh_det32_MuPlus",100,0.,10.);
-  TH1F* hist_xh_det33_MuPlus = new TH1F("hist_xh_det33_MuPlus","hist_xh_det33_MuPlus",100,0.,10.);
-  TH1F* hist_xh_det34_MuPlus = new TH1F("hist_xh_det34_MuPlus","hist_xh_det34_MuPlus",100,0.,10.);
-  TH1F* hist_xh_det35_MuPlus = new TH1F("hist_xh_det35_MuPlus","hist_xh_det35_MuPlus",100,0.,10.);
-  TH1F* hist_xh_det36_MuPlus = new TH1F("hist_xh_det36_MuPlus","hist_xh_det36_MuPlus",100,0.,20.);
-  TH1F* hist_xh_det37_MuPlus = new TH1F("hist_xh_det37_MuPlus","hist_xh_det37_MuPlus",100,0.,20.);
+  TH1F* hist_xh_det10_MuPlus = new TH1F("hist_xh_det10_MuPlus","hist_xh_det10_MuPlus",100,   -9.5,   9.5);
+  TH1F* hist_xh_det20_MuPlus = new TH1F("hist_xh_det20_MuPlus","hist_xh_det20_MuPlus",100,   -9.5,   9.5);
+  TH1F* hist_xh_det30_MuPlus = new TH1F("hist_xh_det30_MuPlus","hist_xh_det30_MuPlus",100,  -46.5,  46.5);
+  TH1F* hist_xh_det31_MuPlus = new TH1F("hist_xh_det31_MuPlus","hist_xh_det31_MuPlus",100,  -46.5,  46.5);
+  TH1F* hist_xh_det32_MuPlus = new TH1F("hist_xh_det32_MuPlus","hist_xh_det32_MuPlus",100,   40.0, 120.0);
+  TH1F* hist_xh_det33_MuPlus = new TH1F("hist_xh_det33_MuPlus","hist_xh_det33_MuPlus",100, -120.0, -40.0);
+  TH1F* hist_xh_det34_MuPlus = new TH1F("hist_xh_det34_MuPlus","hist_xh_det34_MuPlus",100,   93.5, 186.5);
+  TH1F* hist_xh_det35_MuPlus = new TH1F("hist_xh_det35_MuPlus","hist_xh_det35_MuPlus",100, -186.5, -93.5);
+  TH1F* hist_xh_det36_MuPlus = new TH1F("hist_xh_det36_MuPlus","hist_xh_det36_MuPlus",100,  150.0, 330.0);
+  TH1F* hist_xh_det37_MuPlus = new TH1F("hist_xh_det37_MuPlus","hist_xh_det37_MuPlus",100, -330.0,-150.0);
 
-  TH1F* hist_xh_det10_MuMinus = new TH1F("hist_xh_det10_MuMinus","hist_xh_det10_MuMinus",100,0.,2.);
-  TH1F* hist_xh_det20_MuMinus = new TH1F("hist_xh_det20_MuMinus","hist_xh_det20_MuMinus",100,0.,2.);
-  TH1F* hist_xh_det30_MuMinus = new TH1F("hist_xh_det30_MuMinus","hist_xh_det30_MuMinus",100,0.,10.);
-  TH1F* hist_xh_det31_MuMinus = new TH1F("hist_xh_det31_MuMinus","hist_xh_det31_MuMinus",100,0.,10.);
-  TH1F* hist_xh_det32_MuMinus = new TH1F("hist_xh_det32_MuMinus","hist_xh_det32_MuMinus",100,0.,10.);
-  TH1F* hist_xh_det33_MuMinus = new TH1F("hist_xh_det33_MuMinus","hist_xh_det33_MuMinus",100,0.,10.);
-  TH1F* hist_xh_det34_MuMinus = new TH1F("hist_xh_det34_MuMinus","hist_xh_det34_MuMinus",100,0.,10.);
-  TH1F* hist_xh_det35_MuMinus = new TH1F("hist_xh_det35_MuMinus","hist_xh_det35_MuMinus",100,0.,10.);
-  TH1F* hist_xh_det36_MuMinus = new TH1F("hist_xh_det36_MuMinus","hist_xh_det36_MuMinus",100,0.,20.);
-  TH1F* hist_xh_det37_MuMinus = new TH1F("hist_xh_det37_MuMinus","hist_xh_det37_MuMinus",100,0.,20.);
+  TH1F* hist_xh_det10_MuMinus = new TH1F("hist_xh_det10_MuMinus","hist_xh_det10_MuMinus",100,   -9.5,   9.5);
+  TH1F* hist_xh_det20_MuMinus = new TH1F("hist_xh_det20_MuMinus","hist_xh_det20_MuMinus",100,   -9.5,   9.5);
+  TH1F* hist_xh_det30_MuMinus = new TH1F("hist_xh_det30_MuMinus","hist_xh_det30_MuMinus",100,  -46.5,  46.5);
+  TH1F* hist_xh_det31_MuMinus = new TH1F("hist_xh_det31_MuMinus","hist_xh_det31_MuMinus",100,  -46.5,  46.5);
+  TH1F* hist_xh_det32_MuMinus = new TH1F("hist_xh_det32_MuMinus","hist_xh_det32_MuMinus",100,   40.0, 120.0);
+  TH1F* hist_xh_det33_MuMinus = new TH1F("hist_xh_det33_MuMinus","hist_xh_det33_MuMinus",100, -120.0, -40.0);
+  TH1F* hist_xh_det34_MuMinus = new TH1F("hist_xh_det34_MuMinus","hist_xh_det34_MuMinus",100,   93.5, 186.5);
+  TH1F* hist_xh_det35_MuMinus = new TH1F("hist_xh_det35_MuMinus","hist_xh_det35_MuMinus",100, -186.5, -93.5);
+  TH1F* hist_xh_det36_MuMinus = new TH1F("hist_xh_det36_MuMinus","hist_xh_det36_MuMinus",100,  150.0, 330.0);
+  TH1F* hist_xh_det37_MuMinus = new TH1F("hist_xh_det37_MuMinus","hist_xh_det37_MuMinus",100, -330.0,-150.0);
 
 
   // loop over tree entries 
@@ -232,18 +232,18 @@ void plotVariables()
   // xh in det10
   TCanvas* c_det10 = new TCanvas("c_det10","c_det10");
   c_det10->cd();
-  hist_xh_det10_MuMinus->SetTitle("xh in det10");
-  hist_xh_det10_MuMinus->SetLineColor(kBlue);
-  hist_xh_det10_MuMinus->SetMaximum(max(hist_xh_det10_MuMinus->GetMaximum(),hist_xh_det10_MuPlus->GetMaximum()));
-  hist_xh_det10_MuMinus->Draw("hist");
-  hist_xh_det10_MuPlus->SetTitle("");
+  hist_xh_det10_MuPlus->SetTitle("xh in det10");
   hist_xh_det10_MuPlus->SetLineColor(kRed);
-  hist_xh_det10_MuPlus->Draw("histsame");
+  hist_xh_det10_MuPlus->SetMaximum(1.05 * max(hist_xh_det10_MuMinus->GetMaximum(),hist_xh_det10_MuPlus->GetMaximum()));
+  hist_xh_det10_MuPlus->Draw("hist");
+  hist_xh_det10_MuMinus->SetTitle("");
+  hist_xh_det10_MuMinus->SetLineColor(kBlue);
+  hist_xh_det10_MuMinus->Draw("histsame");
   gStyle->SetOptStat(0);
 
   TLegend* l_det10 = new TLegend(0.84,0.76,0.94,0.87);
+  l_det10->AddEntry(hist_xh_det10_MuPlus, "#mu^{+}","l");
   l_det10->AddEntry(hist_xh_det10_MuMinus,"#mu^{-}","l");
-  l_det10->AddEntry(hist_xh_det10_MuPlus,"#mu^{+}","l");
   l_det10->SetFillColor(kWhite);
   l_det10->SetLineColor(kBlack);
   l_det10->SetTextFont(43);
@@ -257,18 +257,18 @@ void plotVariables()
   // xh in det20
   TCanvas* c_det20 = new TCanvas("c_det20","c_det20");
   c_det20->cd();
-  hist_xh_det20_MuMinus->SetTitle("xh in det20");
-  hist_xh_det20_MuMinus->SetLineColor(kBlue);
-  hist_xh_det20_MuMinus->SetMaximum(max(hist_xh_det20_MuMinus->GetMaximum(),hist_xh_det20_MuPlus->GetMaximum()));
-  hist_xh_det20_MuMinus->Draw("hist");
-  hist_xh_det20_MuPlus->SetTitle("");
+  hist_xh_det20_MuPlus->SetTitle("xh in det20");
   hist_xh_det20_MuPlus->SetLineColor(kRed);
-  hist_xh_det20_MuPlus->Draw("histsame");
+  hist_xh_det20_MuPlus->SetMaximum(1.05 * max(hist_xh_det20_MuMinus->GetMaximum(),hist_xh_det20_MuPlus->GetMaximum()));
+  hist_xh_det20_MuPlus->Draw("hist");
+  hist_xh_det20_MuMinus->SetTitle("");
+  hist_xh_det20_MuMinus->SetLineColor(kBlue);
+  hist_xh_det20_MuMinus->Draw("histsame");
   gStyle->SetOptStat(0);
 
   TLegend* l_det20 = new TLegend(0.84,0.76,0.94,0.87);
+  l_det20->AddEntry(hist_xh_det20_MuPlus, "#mu^{+}","l");
   l_det20->AddEntry(hist_xh_det20_MuMinus,"#mu^{-}","l");
-  l_det20->AddEntry(hist_xh_det20_MuPlus,"#mu^{+}","l");
   l_det20->SetFillColor(kWhite);
   l_det20->SetLineColor(kBlack);
   l_det20->SetTextFont(43);
@@ -282,18 +282,18 @@ void plotVariables()
   // xh in det30
   TCanvas* c_det30 = new TCanvas("c_det30","c_det30");
   c_det30->cd();
-  hist_xh_det30_MuMinus->SetTitle("xh in det30");
-  hist_xh_det30_MuMinus->SetLineColor(kBlue);
-  hist_xh_det30_MuMinus->SetMaximum(max(hist_xh_det30_MuMinus->GetMaximum(),hist_xh_det30_MuPlus->GetMaximum()));
-  hist_xh_det30_MuMinus->Draw("hist");
-  hist_xh_det30_MuPlus->SetTitle("");
+  hist_xh_det30_MuPlus->SetTitle("xh in det30");
   hist_xh_det30_MuPlus->SetLineColor(kRed);
-  hist_xh_det30_MuPlus->Draw("histsame");
+  hist_xh_det30_MuPlus->SetMaximum(1.05 * max(hist_xh_det30_MuMinus->GetMaximum(),hist_xh_det30_MuPlus->GetMaximum()));
+  hist_xh_det30_MuPlus->Draw("hist");
+  hist_xh_det30_MuMinus->SetTitle("");
+  hist_xh_det30_MuMinus->SetLineColor(kBlue);
+  hist_xh_det30_MuMinus->Draw("histsame");
   gStyle->SetOptStat(0);
 
   TLegend* l_det30 = new TLegend(0.84,0.76,0.94,0.87);
+  l_det30->AddEntry(hist_xh_det30_MuPlus, "#mu^{+}","l");
   l_det30->AddEntry(hist_xh_det30_MuMinus,"#mu^{-}","l");
-  l_det30->AddEntry(hist_xh_det30_MuPlus,"#mu^{+}","l");
   l_det30->SetFillColor(kWhite);
   l_det30->SetLineColor(kBlack);
   l_det30->SetTextFont(43);
@@ -307,18 +307,18 @@ void plotVariables()
   // xh in det31
   TCanvas* c_det31 = new TCanvas("c_det31","c_det31");
   c_det31->cd();
-  hist_xh_det31_MuMinus->SetTitle("xh in det31");
-  hist_xh_det31_MuMinus->SetLineColor(kBlue);
-  hist_xh_det31_MuMinus->SetMaximum(max(hist_xh_det31_MuMinus->GetMaximum(),hist_xh_det31_MuPlus->GetMaximum()));
-  hist_xh_det31_MuMinus->Draw("hist");
-  hist_xh_det31_MuPlus->SetTitle("");
+  hist_xh_det31_MuPlus->SetTitle("xh in det31");
   hist_xh_det31_MuPlus->SetLineColor(kRed);
-  hist_xh_det31_MuPlus->Draw("histsame");
+  hist_xh_det31_MuPlus->SetMaximum(1.05 * max(hist_xh_det31_MuMinus->GetMaximum(),hist_xh_det31_MuPlus->GetMaximum()));
+  hist_xh_det31_MuPlus->Draw("hist");
+  hist_xh_det31_MuMinus->SetTitle("");
+  hist_xh_det31_MuMinus->SetLineColor(kBlue);
+  hist_xh_det31_MuMinus->Draw("histsame");
   gStyle->SetOptStat(0);
 
   TLegend* l_det31 = new TLegend(0.84,0.76,0.94,0.87);
+  l_det31->AddEntry(hist_xh_det31_MuPlus, "#mu^{+}","l");
   l_det31->AddEntry(hist_xh_det31_MuMinus,"#mu^{-}","l");
-  l_det31->AddEntry(hist_xh_det31_MuPlus,"#mu^{+}","l");
   l_det31->SetFillColor(kWhite);
   l_det31->SetLineColor(kBlack);
   l_det31->SetTextFont(43);
@@ -332,18 +332,18 @@ void plotVariables()
   // xh in det32
   TCanvas* c_det32 = new TCanvas("c_det32","c_det32");
   c_det32->cd();
-  hist_xh_det32_MuMinus->SetTitle("xh in det32");
-  hist_xh_det32_MuMinus->SetLineColor(kBlue);
-  hist_xh_det32_MuMinus->SetMaximum(max(hist_xh_det32_MuMinus->GetMaximum(),hist_xh_det32_MuPlus->GetMaximum()));
-  hist_xh_det32_MuMinus->Draw("hist");
-  hist_xh_det32_MuPlus->SetTitle("");
+  hist_xh_det32_MuPlus->SetTitle("xh in det32");
   hist_xh_det32_MuPlus->SetLineColor(kRed);
-  hist_xh_det32_MuPlus->Draw("histsame");
+  hist_xh_det32_MuPlus->SetMaximum(1.05 * max(hist_xh_det32_MuMinus->GetMaximum(),hist_xh_det32_MuPlus->GetMaximum()));
+  hist_xh_det32_MuPlus->Draw("hist");
+  hist_xh_det32_MuMinus->SetTitle("");
+  hist_xh_det32_MuMinus->SetLineColor(kBlue);
+  hist_xh_det32_MuMinus->Draw("histsame");
   gStyle->SetOptStat(0);
 
   TLegend* l_det32 = new TLegend(0.84,0.76,0.94,0.87);
+  l_det32->AddEntry(hist_xh_det32_MuPlus, "#mu^{+}","l");
   l_det32->AddEntry(hist_xh_det32_MuMinus,"#mu^{-}","l");
-  l_det32->AddEntry(hist_xh_det32_MuPlus,"#mu^{+}","l");
   l_det32->SetFillColor(kWhite);
   l_det32->SetLineColor(kBlack);
   l_det32->SetTextFont(43);
@@ -357,18 +357,18 @@ void plotVariables()
   // xh in det33
   TCanvas* c_det33 = new TCanvas("c_det33","c_det33");
   c_det33->cd();
-  hist_xh_det33_MuMinus->SetTitle("xh in det33");
-  hist_xh_det33_MuMinus->SetLineColor(kBlue);
-  hist_xh_det33_MuMinus->SetMaximum(max(hist_xh_det33_MuMinus->GetMaximum(),hist_xh_det33_MuPlus->GetMaximum()));
-  hist_xh_det33_MuMinus->Draw("hist");
-  hist_xh_det33_MuPlus->SetTitle("");
+  hist_xh_det33_MuPlus->SetTitle("xh in det33");
   hist_xh_det33_MuPlus->SetLineColor(kRed);
-  hist_xh_det33_MuPlus->Draw("histsame");
+  hist_xh_det33_MuPlus->SetMaximum(1.05 * max(hist_xh_det33_MuMinus->GetMaximum(),hist_xh_det33_MuPlus->GetMaximum()));
+  hist_xh_det33_MuPlus->Draw("hist");
+  hist_xh_det33_MuMinus->SetTitle("");
+  hist_xh_det33_MuMinus->SetLineColor(kBlue);
+  hist_xh_det33_MuMinus->Draw("histsame");
   gStyle->SetOptStat(0);
 
   TLegend* l_det33 = new TLegend(0.84,0.76,0.94,0.87);
+  l_det33->AddEntry(hist_xh_det33_MuPlus, "#mu^{+}","l");
   l_det33->AddEntry(hist_xh_det33_MuMinus,"#mu^{-}","l");
-  l_det33->AddEntry(hist_xh_det33_MuPlus,"#mu^{+}","l");
   l_det33->SetFillColor(kWhite);
   l_det33->SetLineColor(kBlack);
   l_det33->SetTextFont(43);
@@ -382,18 +382,18 @@ void plotVariables()
   // xh in det34
   TCanvas* c_det34 = new TCanvas("c_det34","c_det34");
   c_det34->cd();
-  hist_xh_det34_MuMinus->SetTitle("xh in det34");
-  hist_xh_det34_MuMinus->SetLineColor(kBlue);
-  hist_xh_det34_MuMinus->SetMaximum(max(hist_xh_det34_MuMinus->GetMaximum(),hist_xh_det34_MuPlus->GetMaximum()));
-  hist_xh_det34_MuMinus->Draw("hist");
-  hist_xh_det34_MuPlus->SetTitle("");
+  hist_xh_det34_MuPlus->SetTitle("xh in det34");
   hist_xh_det34_MuPlus->SetLineColor(kRed);
-  hist_xh_det34_MuPlus->Draw("histsame");
+  hist_xh_det34_MuPlus->SetMaximum(1.05 * max(hist_xh_det34_MuMinus->GetMaximum(),hist_xh_det34_MuPlus->GetMaximum()));
+  hist_xh_det34_MuPlus->Draw("hist");
+  hist_xh_det34_MuMinus->SetTitle("");
+  hist_xh_det34_MuMinus->SetLineColor(kBlue);
+  hist_xh_det34_MuMinus->Draw("histsame");
   gStyle->SetOptStat(0);
 
   TLegend* l_det34 = new TLegend(0.84,0.76,0.94,0.87);
+  l_det34->AddEntry(hist_xh_det34_MuPlus, "#mu^{+}","l");
   l_det34->AddEntry(hist_xh_det34_MuMinus,"#mu^{-}","l");
-  l_det34->AddEntry(hist_xh_det34_MuPlus,"#mu^{+}","l");
   l_det34->SetFillColor(kWhite);
   l_det34->SetLineColor(kBlack);
   l_det34->SetTextFont(43);
@@ -407,18 +407,18 @@ void plotVariables()
   // xh in det35
   TCanvas* c_det35 = new TCanvas("c_det35","c_det35");
   c_det35->cd();
-  hist_xh_det35_MuMinus->SetTitle("xh in det35");
-  hist_xh_det35_MuMinus->SetLineColor(kBlue);
-  hist_xh_det35_MuMinus->SetMaximum(max(hist_xh_det35_MuMinus->GetMaximum(),hist_xh_det35_MuPlus->GetMaximum()));
-  hist_xh_det35_MuMinus->Draw("hist");
-  hist_xh_det35_MuPlus->SetTitle("");
+  hist_xh_det35_MuPlus->SetTitle("xh in det35");
   hist_xh_det35_MuPlus->SetLineColor(kRed);
-  hist_xh_det35_MuPlus->Draw("histsame");
+  hist_xh_det35_MuPlus->SetMaximum(1.05 * max(hist_xh_det35_MuMinus->GetMaximum(),hist_xh_det35_MuPlus->GetMaximum()));
+  hist_xh_det35_MuPlus->Draw("hist");
+  hist_xh_det35_MuMinus->SetTitle("");
+  hist_xh_det35_MuMinus->SetLineColor(kBlue);
+  hist_xh_det35_MuMinus->Draw("histsame");
   gStyle->SetOptStat(0);
 
   TLegend* l_det35 = new TLegend(0.84,0.76,0.94,0.87);
+  l_det35->AddEntry(hist_xh_det35_MuPlus, "#mu^{+}","l");
   l_det35->AddEntry(hist_xh_det35_MuMinus,"#mu^{-}","l");
-  l_det35->AddEntry(hist_xh_det35_MuPlus,"#mu^{+}","l");
   l_det35->SetFillColor(kWhite);
   l_det35->SetLineColor(kBlack);
   l_det35->SetTextFont(43);
@@ -432,18 +432,18 @@ void plotVariables()
   // xh in det36
   TCanvas* c_det36 = new TCanvas("c_det36","c_det36");
   c_det36->cd();
-  hist_xh_det36_MuMinus->SetTitle("xh in det36");
-  hist_xh_det36_MuMinus->SetLineColor(kBlue);
-  hist_xh_det36_MuMinus->SetMaximum(max(hist_xh_det36_MuMinus->GetMaximum(),hist_xh_det36_MuPlus->GetMaximum()));
-  hist_xh_det36_MuMinus->Draw("hist");
-  hist_xh_det36_MuPlus->SetTitle("");
+  hist_xh_det36_MuPlus->SetTitle("xh in det36");
   hist_xh_det36_MuPlus->SetLineColor(kRed);
-  hist_xh_det36_MuPlus->Draw("histsame");
+  hist_xh_det36_MuPlus->SetMaximum(1.05 * max(hist_xh_det36_MuMinus->GetMaximum(),hist_xh_det36_MuPlus->GetMaximum()));
+  hist_xh_det36_MuPlus->Draw("hist");
+  hist_xh_det36_MuMinus->SetTitle("");
+  hist_xh_det36_MuMinus->SetLineColor(kBlue);
+  hist_xh_det36_MuMinus->Draw("histsame");
   gStyle->SetOptStat(0);
 
   TLegend* l_det36 = new TLegend(0.84,0.76,0.94,0.87);
+  l_det36->AddEntry(hist_xh_det36_MuPlus, "#mu^{+}","l");
   l_det36->AddEntry(hist_xh_det36_MuMinus,"#mu^{-}","l");
-  l_det36->AddEntry(hist_xh_det36_MuPlus,"#mu^{+}","l");
   l_det36->SetFillColor(kWhite);
   l_det36->SetLineColor(kBlack);
   l_det36->SetTextFont(43);
@@ -457,18 +457,18 @@ void plotVariables()
   // xh in det37
   TCanvas* c_det37 = new TCanvas("c_det37","c_det37");
   c_det37->cd();
-  hist_xh_det37_MuMinus->SetTitle("xh in det37");
-  hist_xh_det37_MuMinus->SetLineColor(kBlue);
-  hist_xh_det37_MuMinus->SetMaximum(max(hist_xh_det37_MuMinus->GetMaximum(),hist_xh_det37_MuPlus->GetMaximum()));
-  hist_xh_det37_MuMinus->Draw("hist");
-  hist_xh_det37_MuPlus->SetTitle("");
+  hist_xh_det37_MuPlus->SetTitle("xh in det37");
   hist_xh_det37_MuPlus->SetLineColor(kRed);
-  hist_xh_det37_MuPlus->Draw("histsame");
+  hist_xh_det37_MuPlus->SetMaximum(1.05 * max(hist_xh_det37_MuMinus->GetMaximum(),hist_xh_det37_MuPlus->GetMaximum()));
+  hist_xh_det37_MuPlus->Draw("hist");
+  hist_xh_det37_MuMinus->SetTitle("");
+  hist_xh_det37_MuMinus->SetLineColor(kBlue);
+  hist_xh_det37_MuMinus->Draw("histsame");
   gStyle->SetOptStat(0);
 
   TLegend* l_det37 = new TLegend(0.84,0.76,0.94,0.87);
+  l_det37->AddEntry(hist_xh_det37_MuPlus, "#mu^{+}","l");
   l_det37->AddEntry(hist_xh_det37_MuMinus,"#mu^{-}","l");
-  l_det37->AddEntry(hist_xh_det37_MuPlus,"#mu^{+}","l");
   l_det37->SetFillColor(kWhite);
   l_det37->SetLineColor(kBlack);
   l_det37->SetTextFont(43);
