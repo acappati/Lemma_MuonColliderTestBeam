@@ -437,4 +437,60 @@ void detectorSiOccupancy_Lemma(int runNumber)
 
   cout<<" Plots done! =) "<<endl; 
 
+
+  // *** save histos in a root file
+  TString outputFileName;
+  outputFileName.Form("plotsSiOccupancy_Run%d.root",runNumber);
+  TFile* fOutHistos = new TFile(outputFileName,"recreate");
+  fOutHistos->cd();
+  
+  hist_xh_det10->Write(hist_xh_det10->GetName());
+  hist_xh_det20->Write(hist_xh_det20->GetName());
+  hist_xh_det30->Write(hist_xh_det30->GetName());
+  hist_xh_det31->Write(hist_xh_det31->GetName());
+  hist_xh_det32->Write(hist_xh_det32->GetName());
+  hist_xh_det33->Write(hist_xh_det33->GetName());
+  hist_xh_det34->Write(hist_xh_det34->GetName());
+  hist_xh_det35->Write(hist_xh_det35->GetName());
+  hist_xh_det36->Write(hist_xh_det36->GetName());
+  hist_xh_det37->Write(hist_xh_det37->GetName());
+               
+  hist_yh_det10->Write(hist_yh_det10->GetName());
+  hist_yh_det20->Write(hist_yh_det20->GetName());
+  hist_yh_det30->Write(hist_yh_det30->GetName());
+  hist_yh_det31->Write(hist_yh_det31->GetName());
+  hist_yh_det32->Write(hist_yh_det32->GetName());
+  hist_yh_det33->Write(hist_yh_det33->GetName());
+  hist_yh_det34->Write(hist_yh_det34->GetName());
+  hist_yh_det35->Write(hist_yh_det35->GetName());
+  hist_yh_det36->Write(hist_yh_det36->GetName());
+  hist_yh_det37->Write(hist_yh_det37->GetName());
+                    
+  hist_xh_nhit_det10->Write(hist_xh_nhit_det10->GetName());
+  hist_xh_nhit_det20->Write(hist_xh_nhit_det20->GetName());
+  hist_xh_nhit_det30->Write(hist_xh_nhit_det30->GetName());
+  hist_xh_nhit_det31->Write(hist_xh_nhit_det31->GetName());
+  hist_xh_nhit_det32->Write(hist_xh_nhit_det32->GetName());
+  hist_xh_nhit_det33->Write(hist_xh_nhit_det33->GetName());
+  hist_xh_nhit_det34->Write(hist_xh_nhit_det34->GetName());
+  hist_xh_nhit_det35->Write(hist_xh_nhit_det35->GetName());
+  hist_xh_nhit_det36->Write(hist_xh_nhit_det36->GetName());
+  hist_xh_nhit_det37->Write(hist_xh_nhit_det37->GetName());
+                    
+  hist_yh_nhit_det10->Write(hist_yh_nhit_det10->GetName());
+  hist_yh_nhit_det20->Write(hist_yh_nhit_det20->GetName());
+  hist_yh_nhit_det30->Write(hist_yh_nhit_det30->GetName());
+  hist_yh_nhit_det31->Write(hist_yh_nhit_det31->GetName());
+  hist_yh_nhit_det32->Write(hist_yh_nhit_det32->GetName());
+  hist_yh_nhit_det33->Write(hist_yh_nhit_det33->GetName());
+  hist_yh_nhit_det34->Write(hist_yh_nhit_det34->GetName());
+  hist_yh_nhit_det35->Write(hist_yh_nhit_det35->GetName());
+  hist_yh_nhit_det36->Write(hist_yh_nhit_det36->GetName());
+  hist_yh_nhit_det37->Write(hist_yh_nhit_det37->GetName());
+
+  fOutHistos->Close();
+  delete fOutHistos;
+
+  cout<<" root file filled and created!"<<endl;
+
 }
