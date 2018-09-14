@@ -27,9 +27,7 @@
 using namespace std;
 
 
-
-// do the fit function 
-//void doTheFits()
+// main function
 void plotProfileTrend_noTargetRuns()
 {
 
