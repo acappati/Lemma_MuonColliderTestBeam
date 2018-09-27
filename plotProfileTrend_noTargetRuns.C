@@ -22,7 +22,9 @@
 #include "TSystem.h"
 #include "TTree.h"
 #include "TAxis.h"
-
+#include "TF1.h"
+#include "TGraphErrors.h"
+#include "TPaveText.h"
 
 using namespace std;
 
@@ -60,8 +62,8 @@ void makeHistos(int runNumber)
 
 
   // histos for x occupancy of det 36 and 37 
-  TH1F* hist_xh_det36 = new TH1F("hist_xh_det36","hist_xh_det36",60,0.,22.);
-  TH1F* hist_xh_det37 = new TH1F("hist_xh_det37","hist_xh_det37",60,0.,22.);
+  TH1F* hist_xh_det36 = new TH1F("hist_xh_det36","hist_xh_det36",44,0.,22.);
+  TH1F* hist_xh_det37 = new TH1F("hist_xh_det37","hist_xh_det37",44,0.,22.);
 
   // loop over tree entries 
   Long64_t entries = inputTree->GetEntries();
@@ -70,32 +72,47 @@ void makeHistos(int runNumber)
     inputTree->GetEntry(z);
 
 
-    bool hitDet32 = false;
-    bool hitDet33 = false;
-    bool hitDet34 = false;
-    bool hitDet35 = false;
-    bool hitDet36 = false;
-    bool hitDet37 = false;
+    int nhitDet32_x = 0;
+    int nhitDet33_x = 0;
+    int nhitDet34_x = 0;
+    int nhitDet35_x = 0;
+    int nhitDet36_x = 0;
+    int nhitDet37_x = 0;
 
+    int nhitDet32_y = 0;
+    int nhitDet33_y = 0;
+    int nhitDet34_y = 0;
+    int nhitDet35_y = 0;
+    int nhitDet36_y = 0;
+    int nhitDet37_y = 0;
 
+    
     for(int i=0; i<nhits;i++){
 
       if(xh[i]>0.){
-        if(subdet[i]==32) {hitDet32 = true; }
-        if(subdet[i]==33) {hitDet33 = true; }
-        if(subdet[i]==34) {hitDet34 = true; }
-        if(subdet[i]==35) {hitDet35 = true; }
-        if(subdet[i]==36) {hitDet36 = true; }
-        if(subdet[i]==37) {hitDet37 = true; }
-        
-        //cout<< "***"<<subdet[i] <<" "<<hitDet32<<" "<<hitDet32<<" "<<hitDet33<<" "<<hitDet34<<" "<<hitDet35<<" "<<hitDet36<<" "<<hitDet37<<endl;
-
+        if(subdet[i]==32) {nhitDet32_x++; }
+        if(subdet[i]==33) {nhitDet33_x++; }
+        if(subdet[i]==34) {nhitDet34_x++; }
+        if(subdet[i]==35) {nhitDet35_x++; }
+        if(subdet[i]==36) {nhitDet36_x++; }
+        if(subdet[i]==37) {nhitDet37_x++; }        
       }
+    
+      if(yh[i]>0.){
+        if(subdet[i]==32) {nhitDet32_y++; }
+        if(subdet[i]==33) {nhitDet33_y++; }
+        if(subdet[i]==34) {nhitDet34_y++; }
+        if(subdet[i]==35) {nhitDet35_y++; }
+        if(subdet[i]==36) {nhitDet36_y++; }
+        if(subdet[i]==37) {nhitDet37_y++; }        
+      }  
+
     }// end loop over number of hits 
 
 
     // fill histo for det36 only if there are hits also in the dets 32, 34 and 36 
-    if(hitDet32 && hitDet34 && hitDet36){
+    // fill histo det36 only if there is 1 hit on det36 (single particle runs)
+    if(nhitDet32_x>0 && nhitDet34_x>0 && nhitDet36_x==1 && nhitDet32_y>0 && nhitDet34_y>0 && nhitDet36_y==1){
       for(int i=0; i<nhits;i++){
         if(xh[i]>0.){
           if(subdet[i]==36) {hist_xh_det36->Fill(xh[i]);}
@@ -103,14 +120,15 @@ void makeHistos(int runNumber)
       }
     }
     // fill histo for det37 only if there are hits also in the dets 33, 35 and 37
-    if(hitDet33 && hitDet35 && hitDet37){
+    // fill histo det37 only if there is 1 hit on det37 (single particle runs)
+    if(nhitDet33_x>0 && nhitDet35_x>0 && nhitDet37_x==1 && nhitDet33_y>0 && nhitDet35_y>0 && nhitDet37_y==1){
       for(int i=0; i<nhits;i++){
         if(xh[i]>0.){
           if(subdet[i]==37) {hist_xh_det37->Fill(xh[i]);}
         }
       }
     }
-
+    
   }//end loop over entries 
 
 
@@ -341,23 +359,50 @@ void doTheFit()
   // graphs 
   //mean vs beam en - det37
   TCanvas* c_meanDet37Plus580A = new TCanvas("c_meanDet37Plus580A","c_meanDet37Plus580A");
-  TGraphErrors* g_meanDet37Plus580A = new TGraphErrors(6,beamEnergy,meanDet37Plus580A,beamEnergy_err,meanDet37Plus580A_err);
+  TGraphErrors* g_meanDet37Plus580A = new TGraphErrors(6,meanDet37Plus580A,beamEnergy,meanDet37Plus580A_err,beamEnergy_err);
   g_meanDet37Plus580A->SetTitle("hits distrib mean on det37 - x view");
-  g_meanDet37Plus580A->GetXaxis()->SetTitle("e^{+} beam energy [GeV]");
-  g_meanDet37Plus580A->GetYaxis()->SetTitle("[cm]");
+  g_meanDet37Plus580A->GetYaxis()->SetTitle("e^{+} beam energy [GeV]");
+  g_meanDet37Plus580A->GetXaxis()->SetTitle("[cm]");
   g_meanDet37Plus580A->SetMarkerStyle(20);
   g_meanDet37Plus580A->SetMarkerColor(kBlue);
   g_meanDet37Plus580A->SetMarkerSize(0.9);
+
+  TF1* gfit3 = new TF1("gfit3","[0] + [1]*x",5.5,16.5);
+  //gfit3->SetParameter(0,);
+  //gfit3->SetParameter(1,);
+  gfit3->SetLineColor(kRed);
+  g_meanDet37Plus580A->Fit("gfit3","R");
+
+  gStyle->SetOptStat(0);
+  //gStyle->SetOptFit(111);
+
   c_meanDet37Plus580A->cd();
   g_meanDet37Plus580A->Draw("AP");
+
+  TPaveText* pvtext3 = new TPaveText(0.66,0.25,0.95,0.42,"brNDC");
+  pvtext3->AddText(Form("#chi^{2}/ndf    %.2f / %.0i",gfit3->GetChisquare(),gfit3->GetNDF()));
+  pvtext3->AddText(Form("Constant    %.2f #pm %.2f",gfit3->GetParameter(0),gfit3->GetParError(0)));
+  pvtext3->AddText(Form("Ang.Coeff.   %.2f #pm %.2f",gfit3->GetParameter(1),gfit3->GetParError(1)));
+  pvtext3->SetTextSize(0.03);
+  pvtext3->SetFillColor(kWhite);
+  pvtext3->SetBorderSize(1);
+  pvtext3->SetTextFont(40);
+  pvtext3->SetTextSize(0.037);
+  pvtext3->SetTextFont(42);
+  pvtext3->SetTextAlign(12);
+  pvtext3->Draw(); 
+
+  c_meanDet37Plus580A->Update();
+
   c_meanDet37Plus580A->SaveAs(plotPath + "/" + c_meanDet37Plus580A->GetName() + ".png");
+
 
   //sigma vs beam en - det37
   TCanvas* c_sigmaDet37Plus580A = new TCanvas("c_sigmaDet37Plus580A","c_sigmaDet37Plus580A");
-  TGraphErrors* g_sigmaDet37Plus580A = new TGraphErrors(6,beamEnergy,sigmaDet37Plus580A,beamEnergy_err,sigmaDet37Plus580A_err);
+  TGraphErrors* g_sigmaDet37Plus580A = new TGraphErrors(6,sigmaDet37Plus580A,beamEnergy,sigmaDet37Plus580A_err,beamEnergy_err);
   g_sigmaDet37Plus580A->SetTitle("hits distrib sigma on det37 - x view");
-  g_sigmaDet37Plus580A->GetXaxis()->SetTitle("e^{+} beam energy [GeV]");
-  g_sigmaDet37Plus580A->GetYaxis()->SetTitle("[cm]");
+  g_sigmaDet37Plus580A->GetYaxis()->SetTitle("e^{+} beam energy [GeV]");
+  g_sigmaDet37Plus580A->GetXaxis()->SetTitle("[cm]");
   g_sigmaDet37Plus580A->SetMarkerStyle(20);
   g_sigmaDet37Plus580A->SetMarkerColor(kBlue);
   g_sigmaDet37Plus580A->SetMarkerSize(0.9);
@@ -367,23 +412,51 @@ void doTheFit()
 
   //mean vs beam en - det36
   TCanvas* c_meanDet36Minus580A = new TCanvas("c_meanDet36Minus580A","c_meanDet36Minus580A");
-  TGraphErrors* g_meanDet36Minus580A = new TGraphErrors(6,beamEnergy,meanDet36Minus580A,beamEnergy_err,meanDet36Minus580A_err);
-  g_meanDet36Minus580A->SetTitle("hits distrib mean on det37 - x view");
-  g_meanDet36Minus580A->GetXaxis()->SetTitle("e^{+} beam energy [GeV]");
-  g_meanDet36Minus580A->GetYaxis()->SetTitle("[cm]");
+  TGraphErrors* g_meanDet36Minus580A = new TGraphErrors(6,meanDet36Minus580A,beamEnergy,meanDet36Minus580A_err,beamEnergy_err);
+  g_meanDet36Minus580A->SetTitle("hits distrib mean on det36 - x view");
+  g_meanDet36Minus580A->GetYaxis()->SetTitle("e^{+} beam energy [GeV]");
+  g_meanDet36Minus580A->GetXaxis()->SetTitle("[cm]");
   g_meanDet36Minus580A->SetMarkerStyle(20);
   g_meanDet36Minus580A->SetMarkerColor(kBlue);
   g_meanDet36Minus580A->SetMarkerSize(0.9);
+  
+
+  TF1* gfit4 = new TF1("gfit4","[0] + [1]*x",1.5,12.5);
+  //gfit4->SetParameter(0,);
+  //gfit4->SetParameter(1,);
+  gfit4->SetLineColor(kRed);
+  g_meanDet36Minus580A->Fit("gfit4","R");
+
+  gStyle->SetOptStat(0);
+  //gStyle->SetOptFit(111);
+
   c_meanDet36Minus580A->cd();
   g_meanDet36Minus580A->Draw("AP");
+
+  TPaveText* pvtext4 = new TPaveText(0.66,0.65,0.95,0.82,"brNDC");
+  pvtext4->AddText(Form("#chi^{2}/ndf    %.2f / %.0i",gfit4->GetChisquare(),gfit4->GetNDF()));
+  pvtext4->AddText(Form("Constant    %.2f #pm %.2f",gfit4->GetParameter(0),gfit4->GetParError(0)));
+  pvtext4->AddText(Form("Ang.Coeff.   %.2f #pm %.2f",gfit4->GetParameter(1),gfit4->GetParError(1)));
+  pvtext4->SetTextSize(0.03);
+  pvtext4->SetFillColor(kWhite);
+  pvtext4->SetBorderSize(1);
+  pvtext4->SetTextFont(40);
+  pvtext4->SetTextSize(0.037);
+  pvtext4->SetTextFont(42);
+  pvtext4->SetTextAlign(12);
+  pvtext4->Draw(); 
+
+  c_meanDet36Minus580A->Update();
+
   c_meanDet36Minus580A->SaveAs(plotPath + "/" + c_meanDet36Minus580A->GetName() + ".png");
+
 
   //sigma vs beam en - det36
   TCanvas* c_sigmaDet36Minus580A = new TCanvas("c_sigmaDet36Minus580A","c_sigmaDet36Minus580A");
-  TGraphErrors* g_sigmaDet36Minus580A = new TGraphErrors(6,beamEnergy,sigmaDet36Minus580A,beamEnergy_err,sigmaDet36Minus580A_err);
-  g_sigmaDet36Minus580A->SetTitle("hits distrib sigma on det37 - x view");
-  g_sigmaDet36Minus580A->GetXaxis()->SetTitle("e^{+} beam energy [GeV]");
-  g_sigmaDet36Minus580A->GetYaxis()->SetTitle("[cm]");
+  TGraphErrors* g_sigmaDet36Minus580A = new TGraphErrors(6,sigmaDet36Minus580A,beamEnergy,sigmaDet36Minus580A_err,beamEnergy_err);
+  g_sigmaDet36Minus580A->SetTitle("hits distrib sigma on det36 - x view");
+  g_sigmaDet36Minus580A->GetYaxis()->SetTitle("e^{+} beam energy [GeV]");
+  g_sigmaDet36Minus580A->GetXaxis()->SetTitle("[cm]");
   g_sigmaDet36Minus580A->SetMarkerStyle(20);
   g_sigmaDet36Minus580A->SetMarkerColor(kBlue);
   g_sigmaDet36Minus580A->SetMarkerSize(0.9);
