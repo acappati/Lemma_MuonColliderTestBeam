@@ -23,6 +23,7 @@
 #include "TAxis.h"
 #include "TF1.h"
 #include "TGraph.h"
+#include "TPaveText.h"
 
 
 using namespace std;
@@ -443,27 +444,69 @@ void dataMCComparison(TString plotDataMCOutputPath){
   TH1F* hist_xext_MuPlus_MC  = (TH1F*)inFile_MC->Get("hist_xext_MuPlus"); 
 
 
-
+  gStyle->SetOptStat(0);
  
   //plot histos
+
+  // pMuPlus plot
   TCanvas* c_pMuPlus = new TCanvas("c_pMuPlus","c_pMuPlus");
   c_pMuPlus->cd();
   hist_pMuPlus_MC->SetTitle("p #mu^{+}");
   hist_pMuPlus_MC->GetXaxis()->SetTitle("p #mu^{+}");
+  hist_pMuPlus_MC->SetLineColor(kRed);
   hist_pMuPlus_MC->Draw("hist");
   hist_pMuPlus_Data->SetMarkerStyle(20);
   hist_pMuPlus_Data->SetMarkerColor(kBlack);
   hist_pMuPlus_Data->SetLineColor(kBlack);
   hist_pMuPlus_Data->Draw("samepe");
+  TPaveText* pv_pMuPlus = new TPaveText(0.74,0.73,0.98,0.95,"brNDC");
+  pv_pMuPlus->AddText("MC: "); ((TText*)pv_pMuPlus->GetListOfLines()->Last())->SetTextColor(kRed);
+  pv_pMuPlus->AddText(Form("entries: %.2f",hist_pMuPlus_MC->GetEntries())); ((TText*)pv_pMuPlus->GetListOfLines()->Last())->SetTextColor(kRed);
+  pv_pMuPlus->AddText(Form("mean:    %.2f",hist_pMuPlus_MC->GetMean()));    ((TText*)pv_pMuPlus->GetListOfLines()->Last())->SetTextColor(kRed);
+  pv_pMuPlus->AddText("Data: "); ((TText*)pv_pMuPlus->GetListOfLines()->Last())->SetTextColor(kBlack);
+  pv_pMuPlus->AddText(Form("entries: %.2f",hist_pMuPlus_Data->GetEntries())); ((TText*)pv_pMuPlus->GetListOfLines()->Last())->SetTextColor(kBlack);
+  pv_pMuPlus->AddText(Form("mean:    %.2f",hist_pMuPlus_Data->GetMean()));    ((TText*)pv_pMuPlus->GetListOfLines()->Last())->SetTextColor(kBlack);
+  pv_pMuPlus->SetTextSize(0.03);
+  pv_pMuPlus->SetFillColor(kWhite);
+  pv_pMuPlus->SetBorderSize(1);
+  pv_pMuPlus->SetTextFont(40);
+  pv_pMuPlus->SetTextSize(0.037);
+  pv_pMuPlus->SetTextFont(42);
+  pv_pMuPlus->SetTextAlign(12);
+  pv_pMuPlus->Draw(); 
+  c_pMuPlus->Update();
   c_pMuPlus->SaveAs((plotDataMCOutputPath + "/" + c_pMuPlus->GetName() + ".png"));
- 
 
-  // TCanvas* c_pMuMinus = new TCanvas("c_pMuMinus","c_pMuMinus");
-  // c_pMuMinus->cd();
-  // hist_pMuMinus->SetTitle("p #mu^{-}");
-  // hist_pMuMinus->GetXaxis()->SetTitle("p #mu^{-}");
-  // hist_pMuMinus->Draw("hist");
-  // c_pMuMinus->SaveAs((plotDataMCOutputPath + "/" + hist_pMuMinus->GetName() + ".png"));
+  // pMuMinus plot
+  TCanvas* c_pMuMinus = new TCanvas("c_pMuMinus","c_pMuMinus");
+  c_pMuMinus->cd();
+  hist_pMuMinus_MC->SetTitle("p #mu^{+}");
+  hist_pMuMinus_MC->GetXaxis()->SetTitle("p #mu^{+}");
+  hist_pMuMinus_MC->SetLineColor(kBlue);
+  hist_pMuMinus_MC->Draw("hist");
+  hist_pMuMinus_Data->SetMarkerStyle(20);
+  hist_pMuMinus_Data->SetMarkerColor(kBlack);
+  hist_pMuMinus_Data->SetLineColor(kBlack);
+  hist_pMuMinus_Data->Draw("samepe");
+  TPaveText* pv_pMuMinus = new TPaveText(0.74,0.73,0.98,0.95,"brNDC");
+  pv_pMuMinus->AddText("MC: "); ((TText*)pv_pMuMinus->GetListOfLines()->Last())->SetTextColor(kBlue);
+  pv_pMuMinus->AddText(Form("entries: %.2f",hist_pMuMinus_MC->GetEntries())); ((TText*)pv_pMuMinus->GetListOfLines()->Last())->SetTextColor(kBlue);
+  pv_pMuMinus->AddText(Form("mean:    %.2f",hist_pMuMinus_MC->GetMean()));    ((TText*)pv_pMuMinus->GetListOfLines()->Last())->SetTextColor(kBlue);
+  pv_pMuMinus->AddText("Data: "); ((TText*)pv_pMuMinus->GetListOfLines()->Last())->SetTextColor(kBlack);
+  pv_pMuMinus->AddText(Form("entries: %.2f",hist_pMuMinus_Data->GetEntries())); ((TText*)pv_pMuMinus->GetListOfLines()->Last())->SetTextColor(kBlack);
+  pv_pMuMinus->AddText(Form("mean:    %.2f",hist_pMuMinus_Data->GetMean()));    ((TText*)pv_pMuMinus->GetListOfLines()->Last())->SetTextColor(kBlack);
+  pv_pMuMinus->SetTextSize(0.03);
+  pv_pMuMinus->SetFillColor(kWhite);
+  pv_pMuMinus->SetBorderSize(1);
+  pv_pMuMinus->SetTextFont(40);
+  pv_pMuMinus->SetTextSize(0.037);
+  pv_pMuMinus->SetTextFont(42);
+  pv_pMuMinus->SetTextAlign(12);
+  pv_pMuMinus->Draw(); 
+  c_pMuMinus->Update();
+  c_pMuMinus->SaveAs((plotDataMCOutputPath + "/" + c_pMuMinus->GetName() + ".png"));
+ 
+  
   
 
   // TCanvas* c_pTot = new TCanvas("c_pTot","c_pTot");
