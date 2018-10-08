@@ -459,26 +459,25 @@ void dataMCComparison(TString plotDataMCOutputPath){
   hist_pMuPlus_MC->GetXaxis()->SetTitle("p #mu^{+}");
   hist_pMuPlus_MC->SetLineColor(kRed);
   hist_pMuPlus_MC->SetFillColor(kRed-10);
+  hist_pMuPlus_MC->Scale(hist_pMuPlus_Data->Integral() / hist_pMuPlus_MC->Integral()); //normalize MC to Data
+  hist_pMuPlus_MC->SetMaximum(1.5 * max(hist_pMuPlus_MC->GetMaximum(),hist_pMuPlus_Data->GetMaximum()));
   hist_pMuPlus_MC->Draw("hist");
   hist_pMuPlus_Data->SetMarkerStyle(20);
-  hist_pMuPlus_Data->SetMarkerColor(kBlack);
+  hist_pMuPlus_Data->SetMarkerColor(kRed);
   hist_pMuPlus_Data->SetLineColor(kBlack);
   hist_pMuPlus_Data->Draw("samepe");
-  TPaveText* pv_pMuPlus = new TPaveText(0.74,0.73,0.98,0.95,"brNDC");
-  pv_pMuPlus->AddText("MC: "); ((TText*)pv_pMuPlus->GetListOfLines()->Last())->SetTextColor(kRed);
-  pv_pMuPlus->AddText(Form("entries: %.2f",hist_pMuPlus_MC->GetEntries())); ((TText*)pv_pMuPlus->GetListOfLines()->Last())->SetTextColor(kRed);
-  pv_pMuPlus->AddText(Form("mean:    %.2f",hist_pMuPlus_MC->GetMean()));    ((TText*)pv_pMuPlus->GetListOfLines()->Last())->SetTextColor(kRed);
-  pv_pMuPlus->AddText("Data: "); ((TText*)pv_pMuPlus->GetListOfLines()->Last())->SetTextColor(kBlack);
-  pv_pMuPlus->AddText(Form("entries: %.2f",hist_pMuPlus_Data->GetEntries())); ((TText*)pv_pMuPlus->GetListOfLines()->Last())->SetTextColor(kBlack);
-  pv_pMuPlus->AddText(Form("mean:    %.2f",hist_pMuPlus_Data->GetMean()));    ((TText*)pv_pMuPlus->GetListOfLines()->Last())->SetTextColor(kBlack);
-  pv_pMuPlus->SetTextSize(0.03);
-  pv_pMuPlus->SetFillColor(kWhite);
-  pv_pMuPlus->SetBorderSize(1);
-  pv_pMuPlus->SetTextFont(40);
-  pv_pMuPlus->SetTextSize(0.037);
-  pv_pMuPlus->SetTextFont(42);
-  pv_pMuPlus->SetTextAlign(12);
-  pv_pMuPlus->Draw(); 
+  TLegend* l_pMuPlus = new TLegend(0.72,0.67,0.98,0.97);
+  l_pMuPlus->AddEntry(hist_pMuPlus_MC,"MC #mu^{+}","f");
+  l_pMuPlus->AddEntry((TObject*)0,Form("entries: %.2f",hist_pMuPlus_MC->GetEntries()),"");
+  l_pMuPlus->AddEntry((TObject*)0,Form("mean: %.2f",hist_pMuPlus_MC->GetMean()),"");
+  l_pMuPlus->AddEntry(hist_pMuPlus_Data, "Data #mu^{+}", "pl");
+  l_pMuPlus->AddEntry((TObject*)0,Form("entries: %.2f",hist_pMuPlus_Data->GetEntries()),"");
+  l_pMuPlus->AddEntry((TObject*)0,Form("mean: %.2f",hist_pMuPlus_Data->GetMean()),"");
+  l_pMuPlus->SetFillColor(kWhite);
+  l_pMuPlus->SetLineColor(kBlack);
+  l_pMuPlus->SetTextFont(43);
+  l_pMuPlus->SetTextSize(20);
+  l_pMuPlus->Draw();
   c_pMuPlus->Update();
   c_pMuPlus->SaveAs((plotDataMCOutputPath + "/" + c_pMuPlus->GetName() + ".png"));
 
@@ -489,26 +488,25 @@ void dataMCComparison(TString plotDataMCOutputPath){
   hist_pMuMinus_MC->GetXaxis()->SetTitle("p #mu^{-}");
   hist_pMuMinus_MC->SetLineColor(kBlue);
   hist_pMuMinus_MC->SetFillColor(kBlue-10);
+  hist_pMuMinus_MC->Scale(hist_pMuMinus_Data->Integral() / hist_pMuMinus_MC->Integral()); //normalize MC to Data
+  hist_pMuMinus_MC->SetMaximum(1.5 * max(hist_pMuMinus_MC->GetMaximum(),hist_pMuMinus_Data->GetMaximum()));
   hist_pMuMinus_MC->Draw("hist");
   hist_pMuMinus_Data->SetMarkerStyle(20);
-  hist_pMuMinus_Data->SetMarkerColor(kBlack);
+  hist_pMuMinus_Data->SetMarkerColor(kBlue);
   hist_pMuMinus_Data->SetLineColor(kBlack);
   hist_pMuMinus_Data->Draw("samepe");
-  TPaveText* pv_pMuMinus = new TPaveText(0.74,0.73,0.98,0.95,"brNDC");
-  pv_pMuMinus->AddText("MC: "); ((TText*)pv_pMuMinus->GetListOfLines()->Last())->SetTextColor(kBlue);
-  pv_pMuMinus->AddText(Form("entries: %.2f",hist_pMuMinus_MC->GetEntries())); ((TText*)pv_pMuMinus->GetListOfLines()->Last())->SetTextColor(kBlue);
-  pv_pMuMinus->AddText(Form("mean:    %.2f",hist_pMuMinus_MC->GetMean()));    ((TText*)pv_pMuMinus->GetListOfLines()->Last())->SetTextColor(kBlue);
-  pv_pMuMinus->AddText("Data: "); ((TText*)pv_pMuMinus->GetListOfLines()->Last())->SetTextColor(kBlack);
-  pv_pMuMinus->AddText(Form("entries: %.2f",hist_pMuMinus_Data->GetEntries())); ((TText*)pv_pMuMinus->GetListOfLines()->Last())->SetTextColor(kBlack);
-  pv_pMuMinus->AddText(Form("mean:    %.2f",hist_pMuMinus_Data->GetMean()));    ((TText*)pv_pMuMinus->GetListOfLines()->Last())->SetTextColor(kBlack);
-  pv_pMuMinus->SetTextSize(0.03);
-  pv_pMuMinus->SetFillColor(kWhite);
-  pv_pMuMinus->SetBorderSize(1);
-  pv_pMuMinus->SetTextFont(40);
-  pv_pMuMinus->SetTextSize(0.037);
-  pv_pMuMinus->SetTextFont(42);
-  pv_pMuMinus->SetTextAlign(12);
-  pv_pMuMinus->Draw(); 
+  TLegend* l_pMuMinus = new TLegend(0.72,0.67,0.98,0.97);
+  l_pMuMinus->AddEntry(hist_pMuMinus_MC,"MC #mu^{-}","f");
+  l_pMuMinus->AddEntry((TObject*)0,Form("entries: %.2f",hist_pMuMinus_MC->GetEntries()),"");
+  l_pMuMinus->AddEntry((TObject*)0,Form("mean: %.2f",hist_pMuMinus_MC->GetMean()),"");
+  l_pMuMinus->AddEntry(hist_pMuMinus_Data, "Data #mu^{-}", "pl");
+  l_pMuMinus->AddEntry((TObject*)0,Form("entries: %.2f",hist_pMuMinus_Data->GetEntries()),"");
+  l_pMuMinus->AddEntry((TObject*)0,Form("mean: %.2f",hist_pMuMinus_Data->GetMean()),"");
+  l_pMuMinus->SetFillColor(kWhite);
+  l_pMuMinus->SetLineColor(kBlack);
+  l_pMuMinus->SetTextFont(43);
+  l_pMuMinus->SetTextSize(20);
+  l_pMuMinus->Draw();
   c_pMuMinus->Update();
   c_pMuMinus->SaveAs((plotDataMCOutputPath + "/" + c_pMuMinus->GetName() + ".png"));
  
@@ -518,26 +516,25 @@ void dataMCComparison(TString plotDataMCOutputPath){
   hist_pTot_MC->GetXaxis()->SetTitle("p #mu^{+} + p #mu^{-}");
   hist_pTot_MC->SetLineColor(kViolet);
   hist_pTot_MC->SetFillColor(kViolet-9);
+  hist_pTot_MC->Scale(hist_pTot_Data->Integral() / hist_pTot_MC->Integral()); //normalize MC to Data
+  hist_pTot_MC->SetMaximum(1.2 * max(hist_pTot_MC->GetMaximum(),hist_pTot_Data->GetMaximum()));
   hist_pTot_MC->Draw("hist");
   hist_pTot_Data->SetMarkerStyle(20);
-  hist_pTot_Data->SetMarkerColor(kBlack);
+  hist_pTot_Data->SetMarkerColor(kViolet+4);
   hist_pTot_Data->SetLineColor(kBlack);
   hist_pTot_Data->Draw("samepe");
-  TPaveText* pv_pTot = new TPaveText(0.74,0.73,0.98,0.95,"brNDC");
-  pv_pTot->AddText("MC: "); ((TText*)pv_pTot->GetListOfLines()->Last())->SetTextColor(kViolet);
-  pv_pTot->AddText(Form("entries: %.2f",hist_pTot_MC->GetEntries())); ((TText*)pv_pTot->GetListOfLines()->Last())->SetTextColor(kViolet);
-  pv_pTot->AddText(Form("mean:    %.2f",hist_pTot_MC->GetMean()));    ((TText*)pv_pTot->GetListOfLines()->Last())->SetTextColor(kViolet);
-  pv_pTot->AddText("Data: "); ((TText*)pv_pTot->GetListOfLines()->Last())->SetTextColor(kBlack);
-  pv_pTot->AddText(Form("entries: %.2f",hist_pTot_Data->GetEntries())); ((TText*)pv_pTot->GetListOfLines()->Last())->SetTextColor(kBlack);
-  pv_pTot->AddText(Form("mean:    %.2f",hist_pTot_Data->GetMean()));    ((TText*)pv_pTot->GetListOfLines()->Last())->SetTextColor(kBlack);
-  pv_pTot->SetTextSize(0.03);
-  pv_pTot->SetFillColor(kWhite);
-  pv_pTot->SetBorderSize(1);
-  pv_pTot->SetTextFont(40);
-  pv_pTot->SetTextSize(0.037);
-  pv_pTot->SetTextFont(42);
-  pv_pTot->SetTextAlign(12);
-  pv_pTot->Draw(); 
+  TLegend* l_pTot = new TLegend(0.72,0.67,0.98,0.97);
+  l_pTot->AddEntry(hist_pTot_MC,"MC","f");
+  l_pTot->AddEntry((TObject*)0,Form("entries: %.2f",hist_pTot_MC->GetEntries()),"");
+  l_pTot->AddEntry((TObject*)0,Form("mean: %.2f",hist_pTot_MC->GetMean()),"");
+  l_pTot->AddEntry(hist_pTot_Data, "Data", "pl");
+  l_pTot->AddEntry((TObject*)0,Form("entries: %.2f",hist_pTot_Data->GetEntries()),"");
+  l_pTot->AddEntry((TObject*)0,Form("mean: %.2f",hist_pTot_Data->GetMean()),"");
+  l_pTot->SetFillColor(kWhite);
+  l_pTot->SetLineColor(kBlack);
+  l_pTot->SetTextFont(43);
+  l_pTot->SetTextSize(20);
+  l_pTot->Draw();
   c_pTot->Update();
   c_pTot->SaveAs((plotDataMCOutputPath + "/" + c_pTot->GetName() + ".png"));
  
@@ -548,26 +545,25 @@ void dataMCComparison(TString plotDataMCOutputPath){
   hist_chi2MuPlus_MC->GetXaxis()->SetTitle("#Chi^{2} #mu^{+}");
   hist_chi2MuPlus_MC->SetLineColor(kRed);   
   hist_chi2MuPlus_MC->SetFillColor(kRed-10);
+  hist_chi2MuPlus_MC->Scale(hist_chi2MuPlus_Data->Integral() / hist_chi2MuPlus_MC->Integral()); //normalize MC to Data
+  hist_chi2MuPlus_MC->SetMaximum(1.2 * max(hist_chi2MuPlus_MC->GetMaximum(),hist_chi2MuPlus_Data->GetMaximum()));
   hist_chi2MuPlus_MC->Draw("hist");
   hist_chi2MuPlus_Data->SetMarkerStyle(20);  
-  hist_chi2MuPlus_Data->SetMarkerColor(kBlack);
+  hist_chi2MuPlus_Data->SetMarkerColor(kRed);
   hist_chi2MuPlus_Data->SetLineColor(kBlack);
   hist_chi2MuPlus_Data->Draw("samepe");
-  TPaveText* pv_chi2MuPlus = new TPaveText(0.74,0.73,0.98,0.95,"brNDC");
-  pv_chi2MuPlus->AddText("MC: "); ((TText*)pv_chi2MuPlus->GetListOfLines()->Last())->SetTextColor(kRed);
-  pv_chi2MuPlus->AddText(Form("entries: %.2f",hist_chi2MuPlus_MC->GetEntries())); ((TText*)pv_chi2MuPlus->GetListOfLines()->Last())->SetTextColor(kRed);
-  pv_chi2MuPlus->AddText(Form("mean:    %.2f",hist_chi2MuPlus_MC->GetMean()));    ((TText*)pv_chi2MuPlus->GetListOfLines()->Last())->SetTextColor(kRed);
-  pv_chi2MuPlus->AddText("Data: "); ((TText*)pv_chi2MuPlus->GetListOfLines()->Last())->SetTextColor(kBlack);
-  pv_chi2MuPlus->AddText(Form("entries: %.2f",hist_chi2MuPlus_Data->GetEntries())); ((TText*)pv_chi2MuPlus->GetListOfLines()->Last())->SetTextColor(kBlack);
-  pv_chi2MuPlus->AddText(Form("mean:    %.2f",hist_chi2MuPlus_Data->GetMean()));    ((TText*)pv_chi2MuPlus->GetListOfLines()->Last())->SetTextColor(kBlack);
-  pv_chi2MuPlus->SetTextSize(0.03);
-  pv_chi2MuPlus->SetFillColor(kWhite);
-  pv_chi2MuPlus->SetBorderSize(1);
-  pv_chi2MuPlus->SetTextFont(40);
-  pv_chi2MuPlus->SetTextSize(0.037);
-  pv_chi2MuPlus->SetTextFont(42);
-  pv_chi2MuPlus->SetTextAlign(12);
-  pv_chi2MuPlus->Draw(); 
+  TLegend* l_chi2MuPlus = new TLegend(0.72,0.67,0.98,0.97);
+  l_chi2MuPlus->AddEntry(hist_chi2MuPlus_MC,"MC","f");
+  l_chi2MuPlus->AddEntry((TObject*)0,Form("entries: %.2f",hist_chi2MuPlus_MC->GetEntries()),"");
+  l_chi2MuPlus->AddEntry((TObject*)0,Form("mean: %.2f",hist_chi2MuPlus_MC->GetMean()),"");
+  l_chi2MuPlus->AddEntry(hist_chi2MuPlus_Data, "Data", "pl");
+  l_chi2MuPlus->AddEntry((TObject*)0,Form("entries: %.2f",hist_chi2MuPlus_Data->GetEntries()),"");
+  l_chi2MuPlus->AddEntry((TObject*)0,Form("mean: %.2f",hist_chi2MuPlus_Data->GetMean()),"");
+  l_chi2MuPlus->SetFillColor(kWhite);
+  l_chi2MuPlus->SetLineColor(kBlack);
+  l_chi2MuPlus->SetTextFont(43);
+  l_chi2MuPlus->SetTextSize(20);
+  l_chi2MuPlus->Draw();
   c_chi2MuPlus->Update();
   c_chi2MuPlus->SaveAs((plotDataMCOutputPath + "/" + c_chi2MuPlus->GetName() + ".png"));
  
@@ -578,26 +574,25 @@ void dataMCComparison(TString plotDataMCOutputPath){
   hist_chi2MuMinus_MC->GetXaxis()->SetTitle("#Chi^{2} #mu^{-}");
   hist_chi2MuMinus_MC->SetLineColor(kBlue);   
   hist_chi2MuMinus_MC->SetFillColor(kBlue-10);
+  hist_chi2MuMinus_MC->Scale(hist_chi2MuMinus_Data->Integral() / hist_chi2MuMinus_MC->Integral()); //normalize MC to Data
+  hist_chi2MuMinus_MC->SetMaximum(1.2 * max(hist_chi2MuMinus_MC->GetMaximum(),hist_chi2MuMinus_Data->GetMaximum()));
   hist_chi2MuMinus_MC->Draw("hist");
   hist_chi2MuMinus_Data->SetMarkerStyle(20);  
-  hist_chi2MuMinus_Data->SetMarkerColor(kBlack);
+  hist_chi2MuMinus_Data->SetMarkerColor(kBlue);
   hist_chi2MuMinus_Data->SetLineColor(kBlack);
   hist_chi2MuMinus_Data->Draw("samepe");
-  TPaveText* pv_chi2MuMinus = new TPaveText(0.74,0.73,0.98,0.95,"brNDC");
-  pv_chi2MuMinus->AddText("MC: "); ((TText*)pv_chi2MuMinus->GetListOfLines()->Last())->SetTextColor(kBlue);
-  pv_chi2MuMinus->AddText(Form("entries: %.2f",hist_chi2MuMinus_MC->GetEntries())); ((TText*)pv_chi2MuMinus->GetListOfLines()->Last())->SetTextColor(kBlue);
-  pv_chi2MuMinus->AddText(Form("mean:    %.2f",hist_chi2MuMinus_MC->GetMean()));    ((TText*)pv_chi2MuMinus->GetListOfLines()->Last())->SetTextColor(kBlue);
-  pv_chi2MuMinus->AddText("Data: "); ((TText*)pv_chi2MuMinus->GetListOfLines()->Last())->SetTextColor(kBlack);
-  pv_chi2MuMinus->AddText(Form("entries: %.2f",hist_chi2MuMinus_Data->GetEntries())); ((TText*)pv_chi2MuMinus->GetListOfLines()->Last())->SetTextColor(kBlack);
-  pv_chi2MuMinus->AddText(Form("mean:    %.2f",hist_chi2MuMinus_Data->GetMean()));    ((TText*)pv_chi2MuMinus->GetListOfLines()->Last())->SetTextColor(kBlack);
-  pv_chi2MuMinus->SetTextSize(0.03);
-  pv_chi2MuMinus->SetFillColor(kWhite);
-  pv_chi2MuMinus->SetBorderSize(1);
-  pv_chi2MuMinus->SetTextFont(40);
-  pv_chi2MuMinus->SetTextSize(0.037);
-  pv_chi2MuMinus->SetTextFont(42);
-  pv_chi2MuMinus->SetTextAlign(12);
-  pv_chi2MuMinus->Draw(); 
+  TLegend* l_chi2MuMinus = new TLegend(0.72,0.67,0.98,0.97);
+  l_chi2MuMinus->AddEntry(hist_chi2MuMinus_MC,"MC","f");
+  l_chi2MuMinus->AddEntry((TObject*)0,Form("entries: %.2f",hist_chi2MuMinus_MC->GetEntries()),"");
+  l_chi2MuMinus->AddEntry((TObject*)0,Form("mean: %.2f",hist_chi2MuMinus_MC->GetMean()),"");
+  l_chi2MuMinus->AddEntry(hist_chi2MuMinus_Data, "Data", "pl");
+  l_chi2MuMinus->AddEntry((TObject*)0,Form("entries: %.2f",hist_chi2MuMinus_Data->GetEntries()),"");
+  l_chi2MuMinus->AddEntry((TObject*)0,Form("mean: %.2f",hist_chi2MuMinus_Data->GetMean()),"");
+  l_chi2MuMinus->SetFillColor(kWhite);
+  l_chi2MuMinus->SetLineColor(kBlack);
+  l_chi2MuMinus->SetTextFont(43);
+  l_chi2MuMinus->SetTextSize(20);
+  l_chi2MuMinus->Draw();
   c_chi2MuMinus->Update();
   c_chi2MuMinus->SaveAs((plotDataMCOutputPath + "/" + c_chi2MuMinus->GetName() + ".png"));
  
@@ -609,19 +604,21 @@ void dataMCComparison(TString plotDataMCOutputPath){
   hist_xh_det30_MuPlus_MC->GetXaxis()->SetTitle("mm");
   hist_xh_det30_MuPlus_MC->SetLineColor(kRed);
   hist_xh_det30_MuPlus_MC->SetFillColor(kRed-10);
-  hist_xh_det30_MuPlus_MC->SetMaximum(1.05 * max(hist_xh_det30_MuMinus_MC->GetMaximum(),hist_xh_det30_MuPlus_MC->GetMaximum()));
-  hist_xh_det30_MuPlus_MC->Draw("hist");
+  hist_xh_det30_MuPlus_MC->Scale(hist_xh_det30_MuPlus_Data->Integral() / hist_xh_det30_MuPlus_MC->Integral()); //normalize MC to Data
   hist_xh_det30_MuMinus_MC->SetTitle("");
   hist_xh_det30_MuMinus_MC->SetLineColor(kBlue);
   hist_xh_det30_MuMinus_MC->SetFillColor(kBlue-10);
-  hist_xh_det30_MuMinus_MC->Draw("histsame");
+  hist_xh_det30_MuMinus_MC->Scale(hist_xh_det30_MuMinus_Data->Integral() / hist_xh_det30_MuMinus_MC->Integral()); //normalize MC to Data
   hist_xh_det30_MuPlus_Data->SetMarkerStyle(20);  
   hist_xh_det30_MuPlus_Data->SetMarkerColor(kRed);
   hist_xh_det30_MuPlus_Data->SetLineColor(kBlack);
-  hist_xh_det30_MuPlus_Data->Draw("samepe");
   hist_xh_det30_MuMinus_Data->SetMarkerStyle(20);  
   hist_xh_det30_MuMinus_Data->SetMarkerColor(kBlue);
   hist_xh_det30_MuMinus_Data->SetLineColor(kBlack);
+  hist_xh_det30_MuPlus_MC->SetMaximum(1.5 * max(max(hist_xh_det30_MuMinus_MC->GetMaximum(),hist_xh_det30_MuMinus_Data->GetMaximum()),max(hist_xh_det30_MuPlus_MC->GetMaximum(),hist_xh_det30_MuPlus_Data->GetMaximum())));
+  hist_xh_det30_MuPlus_MC->Draw("hist");
+  hist_xh_det30_MuMinus_MC->Draw("histsame");
+  hist_xh_det30_MuPlus_Data->Draw("samepe");
   hist_xh_det30_MuMinus_Data->Draw("samepe");
   TLegend* l_det30 = new TLegend(0.72,0.47,0.98,0.97);
   l_det30->AddEntry(hist_xh_det30_MuPlus_MC,"MC #mu^{+}","f");
@@ -642,7 +639,7 @@ void dataMCComparison(TString plotDataMCOutputPath){
   l_det30->SetTextSize(20);
   l_det30->Draw();
   c_det30->Update();
-  c_det30->SaveAs((plotDataMCOutputPath + "/" + c_det30->GetName() + ".png"));    
+  c_det30->SaveAs((plotDataMCOutputPath + "/" + c_det30->GetName() + ".png"));  
 
   // xh in det31
   TCanvas* c_det31 = new TCanvas("c_det31","c_det31");
@@ -651,19 +648,21 @@ void dataMCComparison(TString plotDataMCOutputPath){
   hist_xh_det31_MuPlus_MC->GetXaxis()->SetTitle("mm");
   hist_xh_det31_MuPlus_MC->SetLineColor(kRed);
   hist_xh_det31_MuPlus_MC->SetFillColor(kRed-10);
-  hist_xh_det31_MuPlus_MC->SetMaximum(1.05 * max(hist_xh_det31_MuMinus_MC->GetMaximum(),hist_xh_det31_MuPlus_MC->GetMaximum()));
-  hist_xh_det31_MuPlus_MC->Draw("hist");
+  hist_xh_det31_MuPlus_MC->Scale(hist_xh_det31_MuPlus_Data->Integral() / hist_xh_det31_MuPlus_MC->Integral()); //normalize MC to Data
   hist_xh_det31_MuMinus_MC->SetTitle("");
   hist_xh_det31_MuMinus_MC->SetLineColor(kBlue);
   hist_xh_det31_MuMinus_MC->SetFillColor(kBlue-10);
-  hist_xh_det31_MuMinus_MC->Draw("histsame");
+  hist_xh_det31_MuMinus_MC->Scale(hist_xh_det31_MuMinus_Data->Integral() / hist_xh_det31_MuMinus_MC->Integral()); //normalize MC to Data
   hist_xh_det31_MuPlus_Data->SetMarkerStyle(20);  
   hist_xh_det31_MuPlus_Data->SetMarkerColor(kRed);
   hist_xh_det31_MuPlus_Data->SetLineColor(kBlack);
-  hist_xh_det31_MuPlus_Data->Draw("samepe");
   hist_xh_det31_MuMinus_Data->SetMarkerStyle(20);  
   hist_xh_det31_MuMinus_Data->SetMarkerColor(kBlue);
   hist_xh_det31_MuMinus_Data->SetLineColor(kBlack);
+  hist_xh_det31_MuPlus_MC->SetMaximum(1.5 * max(max(hist_xh_det31_MuMinus_MC->GetMaximum(),hist_xh_det31_MuMinus_Data->GetMaximum()),max(hist_xh_det31_MuPlus_MC->GetMaximum(),hist_xh_det31_MuPlus_Data->GetMaximum())));
+  hist_xh_det31_MuPlus_MC->Draw("hist");
+  hist_xh_det31_MuMinus_MC->Draw("histsame");
+  hist_xh_det31_MuPlus_Data->Draw("samepe");
   hist_xh_det31_MuMinus_Data->Draw("samepe");
   TLegend* l_det31 = new TLegend(0.72,0.47,0.98,0.97);
   l_det31->AddEntry(hist_xh_det31_MuPlus_MC,"MC #mu^{+}","f");
@@ -693,19 +692,21 @@ void dataMCComparison(TString plotDataMCOutputPath){
   hist_xh_det32_MuPlus_MC->GetXaxis()->SetTitle("mm");
   hist_xh_det32_MuPlus_MC->SetLineColor(kRed);
   hist_xh_det32_MuPlus_MC->SetFillColor(kRed-10);
-  hist_xh_det32_MuPlus_MC->SetMaximum(1.05 * max(hist_xh_det32_MuMinus_MC->GetMaximum(),hist_xh_det32_MuPlus_MC->GetMaximum()));
-  hist_xh_det32_MuPlus_MC->Draw("hist");
+  hist_xh_det32_MuPlus_MC->Scale(hist_xh_det32_MuPlus_Data->Integral() / hist_xh_det32_MuPlus_MC->Integral()); //normalize MC to Data
   hist_xh_det32_MuMinus_MC->SetTitle("");
   hist_xh_det32_MuMinus_MC->SetLineColor(kBlue);
   hist_xh_det32_MuMinus_MC->SetFillColor(kBlue-10);
-  hist_xh_det32_MuMinus_MC->Draw("histsame");
+  //hist_xh_det32_MuMinus_MC->Scale(hist_xh_det32_MuMinus_Data->Integral() / hist_xh_det32_MuMinus_MC->Integral()); //normalize MC to Data
   hist_xh_det32_MuPlus_Data->SetMarkerStyle(20);  
   hist_xh_det32_MuPlus_Data->SetMarkerColor(kRed);
   hist_xh_det32_MuPlus_Data->SetLineColor(kBlack);
-  hist_xh_det32_MuPlus_Data->Draw("samepe");
   hist_xh_det32_MuMinus_Data->SetMarkerStyle(20);  
   hist_xh_det32_MuMinus_Data->SetMarkerColor(kBlue);
   hist_xh_det32_MuMinus_Data->SetLineColor(kBlack);
+  hist_xh_det32_MuPlus_MC->SetMaximum(1.5 * max(max(hist_xh_det32_MuMinus_MC->GetMaximum(),hist_xh_det32_MuMinus_Data->GetMaximum()),max(hist_xh_det32_MuPlus_MC->GetMaximum(),hist_xh_det32_MuPlus_Data->GetMaximum())));
+  hist_xh_det32_MuPlus_MC->Draw("hist");
+  hist_xh_det32_MuMinus_MC->Draw("histsame");
+  hist_xh_det32_MuPlus_Data->Draw("samepe");
   hist_xh_det32_MuMinus_Data->Draw("samepe");
   TLegend* l_det32 = new TLegend(0.72,0.47,0.98,0.97);
   l_det32->AddEntry(hist_xh_det32_MuPlus_MC,"MC #mu^{+}","f");
@@ -726,8 +727,8 @@ void dataMCComparison(TString plotDataMCOutputPath){
   l_det32->SetTextSize(20);
   l_det32->Draw();
   c_det32->Update();
-  c_det32->SaveAs((plotDataMCOutputPath + "/" + c_det32->GetName() + ".png"));    
-  
+  c_det32->SaveAs((plotDataMCOutputPath + "/" + c_det32->GetName() + ".png"));   
+
   // xh in det33
   TCanvas* c_det33 = new TCanvas("c_det33","c_det33");
   c_det33->cd();
@@ -735,19 +736,21 @@ void dataMCComparison(TString plotDataMCOutputPath){
   hist_xh_det33_MuPlus_MC->GetXaxis()->SetTitle("mm");
   hist_xh_det33_MuPlus_MC->SetLineColor(kRed);
   hist_xh_det33_MuPlus_MC->SetFillColor(kRed-10);
-  hist_xh_det33_MuPlus_MC->SetMaximum(1.05 * max(hist_xh_det33_MuMinus_MC->GetMaximum(),hist_xh_det33_MuPlus_MC->GetMaximum()));
-  hist_xh_det33_MuPlus_MC->Draw("hist");
+  //hist_xh_det33_MuPlus_MC->Scale(hist_xh_det33_MuPlus_Data->Integral() / hist_xh_det33_MuPlus_MC->Integral()); //normalize MC to Data
   hist_xh_det33_MuMinus_MC->SetTitle("");
   hist_xh_det33_MuMinus_MC->SetLineColor(kBlue);
   hist_xh_det33_MuMinus_MC->SetFillColor(kBlue-10);
-  hist_xh_det33_MuMinus_MC->Draw("histsame");
+  hist_xh_det33_MuMinus_MC->Scale(hist_xh_det33_MuMinus_Data->Integral() / hist_xh_det33_MuMinus_MC->Integral()); //normalize MC to Data
   hist_xh_det33_MuPlus_Data->SetMarkerStyle(20);  
   hist_xh_det33_MuPlus_Data->SetMarkerColor(kRed);
   hist_xh_det33_MuPlus_Data->SetLineColor(kBlack);
-  hist_xh_det33_MuPlus_Data->Draw("samepe");
   hist_xh_det33_MuMinus_Data->SetMarkerStyle(20);  
   hist_xh_det33_MuMinus_Data->SetMarkerColor(kBlue);
   hist_xh_det33_MuMinus_Data->SetLineColor(kBlack);
+  hist_xh_det33_MuPlus_MC->SetMaximum(1.5 * max(max(hist_xh_det33_MuMinus_MC->GetMaximum(),hist_xh_det33_MuMinus_Data->GetMaximum()),max(hist_xh_det33_MuPlus_MC->GetMaximum(),hist_xh_det33_MuPlus_Data->GetMaximum())));
+  hist_xh_det33_MuPlus_MC->Draw("hist");
+  hist_xh_det33_MuMinus_MC->Draw("histsame");
+  hist_xh_det33_MuPlus_Data->Draw("samepe");
   hist_xh_det33_MuMinus_Data->Draw("samepe");
   TLegend* l_det33 = new TLegend(0.12,0.47,0.38,0.97);
   l_det33->AddEntry(hist_xh_det33_MuPlus_MC,"MC #mu^{+}","f");
@@ -768,8 +771,8 @@ void dataMCComparison(TString plotDataMCOutputPath){
   l_det33->SetTextSize(20);
   l_det33->Draw();
   c_det33->Update();
-  c_det33->SaveAs((plotDataMCOutputPath + "/" + c_det33->GetName() + ".png")); 
-      
+  c_det33->SaveAs((plotDataMCOutputPath + "/" + c_det33->GetName() + ".png"));   
+
   // xh in det34
   TCanvas* c_det34 = new TCanvas("c_det34","c_det34");
   c_det34->cd();
@@ -777,19 +780,21 @@ void dataMCComparison(TString plotDataMCOutputPath){
   hist_xh_det34_MuPlus_MC->GetXaxis()->SetTitle("mm");
   hist_xh_det34_MuPlus_MC->SetLineColor(kRed);
   hist_xh_det34_MuPlus_MC->SetFillColor(kRed-10);
-  hist_xh_det34_MuPlus_MC->SetMaximum(1.05 * max(hist_xh_det34_MuMinus_MC->GetMaximum(),hist_xh_det34_MuPlus_MC->GetMaximum()));
-  hist_xh_det34_MuPlus_MC->Draw("hist");
+  hist_xh_det34_MuPlus_MC->Scale(hist_xh_det34_MuPlus_Data->Integral() / hist_xh_det34_MuPlus_MC->Integral()); //normalize MC to Data
   hist_xh_det34_MuMinus_MC->SetTitle("");
   hist_xh_det34_MuMinus_MC->SetLineColor(kBlue);
   hist_xh_det34_MuMinus_MC->SetFillColor(kBlue-10);
-  hist_xh_det34_MuMinus_MC->Draw("histsame");
+  //hist_xh_det34_MuMinus_MC->Scale(hist_xh_det34_MuMinus_Data->Integral() / hist_xh_det34_MuMinus_MC->Integral()); //normalize MC to Data
   hist_xh_det34_MuPlus_Data->SetMarkerStyle(20);  
   hist_xh_det34_MuPlus_Data->SetMarkerColor(kRed);
   hist_xh_det34_MuPlus_Data->SetLineColor(kBlack);
-  hist_xh_det34_MuPlus_Data->Draw("samepe");
   hist_xh_det34_MuMinus_Data->SetMarkerStyle(20);  
   hist_xh_det34_MuMinus_Data->SetMarkerColor(kBlue);
   hist_xh_det34_MuMinus_Data->SetLineColor(kBlack);
+  hist_xh_det34_MuPlus_MC->SetMaximum(1.5 * max(max(hist_xh_det34_MuMinus_MC->GetMaximum(),hist_xh_det34_MuMinus_Data->GetMaximum()),max(hist_xh_det34_MuPlus_MC->GetMaximum(),hist_xh_det34_MuPlus_Data->GetMaximum())));
+  hist_xh_det34_MuPlus_MC->Draw("hist");
+  hist_xh_det34_MuMinus_MC->Draw("histsame");
+  hist_xh_det34_MuPlus_Data->Draw("samepe");
   hist_xh_det34_MuMinus_Data->Draw("samepe");
   TLegend* l_det34 = new TLegend(0.72,0.47,0.98,0.97);
   l_det34->AddEntry(hist_xh_det34_MuPlus_MC,"MC #mu^{+}","f");
@@ -811,7 +816,7 @@ void dataMCComparison(TString plotDataMCOutputPath){
   l_det34->Draw();
   c_det34->Update();
   c_det34->SaveAs((plotDataMCOutputPath + "/" + c_det34->GetName() + ".png")); 
-       
+
   // xh in det35
   TCanvas* c_det35 = new TCanvas("c_det35","c_det35");
   c_det35->cd();
@@ -819,19 +824,21 @@ void dataMCComparison(TString plotDataMCOutputPath){
   hist_xh_det35_MuPlus_MC->GetXaxis()->SetTitle("mm");
   hist_xh_det35_MuPlus_MC->SetLineColor(kRed);
   hist_xh_det35_MuPlus_MC->SetFillColor(kRed-10);
-  hist_xh_det35_MuPlus_MC->SetMaximum(1.05 * max(hist_xh_det35_MuMinus_MC->GetMaximum(),hist_xh_det35_MuPlus_MC->GetMaximum()));
-  hist_xh_det35_MuPlus_MC->Draw("hist");
+  //hist_xh_det35_MuPlus_MC->Scale(hist_xh_det35_MuPlus_Data->Integral() / hist_xh_det35_MuPlus_MC->Integral()); //normalize MC to Data
   hist_xh_det35_MuMinus_MC->SetTitle("");
   hist_xh_det35_MuMinus_MC->SetLineColor(kBlue);
   hist_xh_det35_MuMinus_MC->SetFillColor(kBlue-10);
-  hist_xh_det35_MuMinus_MC->Draw("histsame");
+  hist_xh_det35_MuMinus_MC->Scale(hist_xh_det35_MuMinus_Data->Integral() / hist_xh_det35_MuMinus_MC->Integral()); //normalize MC to Data
   hist_xh_det35_MuPlus_Data->SetMarkerStyle(20);  
   hist_xh_det35_MuPlus_Data->SetMarkerColor(kRed);
   hist_xh_det35_MuPlus_Data->SetLineColor(kBlack);
-  hist_xh_det35_MuPlus_Data->Draw("samepe");
   hist_xh_det35_MuMinus_Data->SetMarkerStyle(20);  
   hist_xh_det35_MuMinus_Data->SetMarkerColor(kBlue);
   hist_xh_det35_MuMinus_Data->SetLineColor(kBlack);
+  hist_xh_det35_MuPlus_MC->SetMaximum(1.5 * max(max(hist_xh_det35_MuMinus_MC->GetMaximum(),hist_xh_det35_MuMinus_Data->GetMaximum()),max(hist_xh_det35_MuPlus_MC->GetMaximum(),hist_xh_det35_MuPlus_Data->GetMaximum())));
+  hist_xh_det35_MuPlus_MC->Draw("hist");
+  hist_xh_det35_MuMinus_MC->Draw("histsame");
+  hist_xh_det35_MuPlus_Data->Draw("samepe");
   hist_xh_det35_MuMinus_Data->Draw("samepe");
   TLegend* l_det35 = new TLegend(0.12,0.47,0.38,0.97);
   l_det35->AddEntry(hist_xh_det35_MuPlus_MC,"MC #mu^{+}","f");
@@ -852,7 +859,7 @@ void dataMCComparison(TString plotDataMCOutputPath){
   l_det35->SetTextSize(20);
   l_det35->Draw();
   c_det35->Update();
-  c_det35->SaveAs((plotDataMCOutputPath + "/" + c_det35->GetName() + ".png")); 
+  c_det35->SaveAs((plotDataMCOutputPath + "/" + c_det35->GetName() + ".png"));  
 
   // xh in det36
   TCanvas* c_det36 = new TCanvas("c_det36","c_det36");
@@ -861,19 +868,21 @@ void dataMCComparison(TString plotDataMCOutputPath){
   hist_xh_det36_MuPlus_MC->GetXaxis()->SetTitle("mm");
   hist_xh_det36_MuPlus_MC->SetLineColor(kRed);
   hist_xh_det36_MuPlus_MC->SetFillColor(kRed-10);
-  hist_xh_det36_MuPlus_MC->SetMaximum(1.05 * max(hist_xh_det36_MuMinus_MC->GetMaximum(),hist_xh_det36_MuPlus_MC->GetMaximum()));
-  hist_xh_det36_MuPlus_MC->Draw("hist");
+  hist_xh_det36_MuPlus_MC->Scale(hist_xh_det36_MuPlus_Data->Integral() / hist_xh_det36_MuPlus_MC->Integral()); //normalize MC to Data
   hist_xh_det36_MuMinus_MC->SetTitle("");
   hist_xh_det36_MuMinus_MC->SetLineColor(kBlue);
   hist_xh_det36_MuMinus_MC->SetFillColor(kBlue-10);
-  hist_xh_det36_MuMinus_MC->Draw("histsame");
+  //hist_xh_det36_MuMinus_MC->Scale(hist_xh_det36_MuMinus_Data->Integral() / hist_xh_det36_MuMinus_MC->Integral()); //normalize MC to Data
   hist_xh_det36_MuPlus_Data->SetMarkerStyle(20);  
   hist_xh_det36_MuPlus_Data->SetMarkerColor(kRed);
   hist_xh_det36_MuPlus_Data->SetLineColor(kBlack);
-  hist_xh_det36_MuPlus_Data->Draw("samepe");
   hist_xh_det36_MuMinus_Data->SetMarkerStyle(20);  
   hist_xh_det36_MuMinus_Data->SetMarkerColor(kBlue);
   hist_xh_det36_MuMinus_Data->SetLineColor(kBlack);
+  hist_xh_det36_MuPlus_MC->SetMaximum(1.5 * max(max(hist_xh_det36_MuMinus_MC->GetMaximum(),hist_xh_det36_MuMinus_Data->GetMaximum()),max(hist_xh_det36_MuPlus_MC->GetMaximum(),hist_xh_det36_MuPlus_Data->GetMaximum())));
+  hist_xh_det36_MuPlus_MC->Draw("hist");
+  hist_xh_det36_MuMinus_MC->Draw("histsame");
+  hist_xh_det36_MuPlus_Data->Draw("samepe");
   hist_xh_det36_MuMinus_Data->Draw("samepe");
   TLegend* l_det36 = new TLegend(0.72,0.47,0.98,0.97);
   l_det36->AddEntry(hist_xh_det36_MuPlus_MC,"MC #mu^{+}","f");
@@ -903,19 +912,21 @@ void dataMCComparison(TString plotDataMCOutputPath){
   hist_xh_det37_MuPlus_MC->GetXaxis()->SetTitle("mm");
   hist_xh_det37_MuPlus_MC->SetLineColor(kRed);
   hist_xh_det37_MuPlus_MC->SetFillColor(kRed-10);
-  hist_xh_det37_MuPlus_MC->SetMaximum(1.05 * max(hist_xh_det37_MuMinus_MC->GetMaximum(),hist_xh_det37_MuPlus_MC->GetMaximum()));
-  hist_xh_det37_MuPlus_MC->Draw("hist");
+  //hist_xh_det37_MuPlus_MC->Scale(hist_xh_det37_MuPlus_Data->Integral() / hist_xh_det37_MuPlus_MC->Integral()); //normalize MC to Data
   hist_xh_det37_MuMinus_MC->SetTitle("");
   hist_xh_det37_MuMinus_MC->SetLineColor(kBlue);
   hist_xh_det37_MuMinus_MC->SetFillColor(kBlue-10);
-  hist_xh_det37_MuMinus_MC->Draw("histsame");
+  hist_xh_det37_MuMinus_MC->Scale(hist_xh_det37_MuMinus_Data->Integral() / hist_xh_det37_MuMinus_MC->Integral()); //normalize MC to Data
   hist_xh_det37_MuPlus_Data->SetMarkerStyle(20);  
   hist_xh_det37_MuPlus_Data->SetMarkerColor(kRed);
   hist_xh_det37_MuPlus_Data->SetLineColor(kBlack);
-  hist_xh_det37_MuPlus_Data->Draw("samepe");
   hist_xh_det37_MuMinus_Data->SetMarkerStyle(20);  
   hist_xh_det37_MuMinus_Data->SetMarkerColor(kBlue);
   hist_xh_det37_MuMinus_Data->SetLineColor(kBlack);
+  hist_xh_det37_MuPlus_MC->SetMaximum(1.5 * max(max(hist_xh_det37_MuMinus_MC->GetMaximum(),hist_xh_det37_MuMinus_Data->GetMaximum()),max(hist_xh_det37_MuPlus_MC->GetMaximum(),hist_xh_det37_MuPlus_Data->GetMaximum())));
+  hist_xh_det37_MuPlus_MC->Draw("hist");
+  hist_xh_det37_MuMinus_MC->Draw("histsame");
+  hist_xh_det37_MuPlus_Data->Draw("samepe");
   hist_xh_det37_MuMinus_Data->Draw("samepe");
   TLegend* l_det37 = new TLegend(0.12,0.47,0.38,0.97);
   l_det37->AddEntry(hist_xh_det37_MuPlus_MC,"MC #mu^{+}","f");
@@ -936,7 +947,8 @@ void dataMCComparison(TString plotDataMCOutputPath){
   l_det37->SetTextSize(20);
   l_det37->Draw();
   c_det37->Update();
-  c_det37->SaveAs((plotDataMCOutputPath + "/" + c_det37->GetName() + ".png")); 
+  c_det37->SaveAs((plotDataMCOutputPath + "/" + c_det37->GetName() + ".png"));     
+
 
   TCanvas* c_det6x = new TCanvas("c_det6x","c_det6x");
   c_det6x->cd();
@@ -944,19 +956,21 @@ void dataMCComparison(TString plotDataMCOutputPath){
   hist_xh_det62_MuPlus_MC->GetXaxis()->SetTitle("mm");
   hist_xh_det62_MuPlus_MC->SetLineColor(kRed); 
   hist_xh_det62_MuPlus_MC->SetFillColor(kRed-10);
-  hist_xh_det62_MuPlus_MC->SetMaximum(1.05 * max(hist_xh_det61_MuMinus_MC->GetMaximum(),hist_xh_det62_MuPlus_MC->GetMaximum()));
-  hist_xh_det62_MuPlus_MC->Draw("hist");
+  hist_xh_det62_MuPlus_MC->Scale(hist_xh_det62_MuPlus_Data->Integral() / hist_xh_det62_MuPlus_MC->Integral()); //normalize MC to Data
   hist_xh_det61_MuMinus_MC->SetTitle("");	   
   hist_xh_det61_MuMinus_MC->SetLineColor(kBlue);   
   hist_xh_det61_MuMinus_MC->SetFillColor(kBlue-10);
-  hist_xh_det61_MuMinus_MC->Draw("samehist");
+  hist_xh_det61_MuMinus_MC->Scale(hist_xh_det61_MuMinus_Data->Integral() / hist_xh_det61_MuMinus_MC->Integral()); //normalize MC to Data
   hist_xh_det62_MuPlus_Data->SetMarkerStyle(20);  
   hist_xh_det62_MuPlus_Data->SetMarkerColor(kRed);
   hist_xh_det62_MuPlus_Data->SetLineColor(kBlack);
-  hist_xh_det62_MuPlus_Data->Draw("samepe");
   hist_xh_det61_MuMinus_Data->SetMarkerStyle(20);  
   hist_xh_det61_MuMinus_Data->SetMarkerColor(kBlue);
   hist_xh_det61_MuMinus_Data->SetLineColor(kBlack);
+  hist_xh_det62_MuPlus_MC->SetMaximum(1.5 * max(max(hist_xh_det61_MuMinus_MC->GetMaximum(),hist_xh_det61_MuMinus_Data->GetMaximum()),max(hist_xh_det62_MuPlus_MC->GetMaximum(),hist_xh_det62_MuPlus_Data->GetMaximum())));
+  hist_xh_det62_MuPlus_MC->Draw("hist");
+  hist_xh_det61_MuMinus_MC->Draw("samehist");
+  hist_xh_det62_MuPlus_Data->Draw("samepe");
   hist_xh_det61_MuMinus_Data->Draw("samepe");
   TLegend* l_det6x = new TLegend(0.38,0.37,0.63,0.87);
   l_det6x->AddEntry(hist_xh_det62_MuPlus_MC,"MC #mu^{+}","f");
@@ -981,23 +995,25 @@ void dataMCComparison(TString plotDataMCOutputPath){
 
   TCanvas* c_xext = new TCanvas("c_xext","c_xext");
   c_xext->cd();
-  hist_xext_MuPlus_MC->SetTitle("");
-  //hist_xext_MuPlus_MC->GetXaxis()->SetTitle("");
+  hist_xext_MuPlus_MC->SetTitle("x ext");
+  hist_xext_MuPlus_MC->GetXaxis()->SetTitle("mm");
   hist_xext_MuPlus_MC->SetLineColor(kRed);
   hist_xext_MuPlus_MC->SetFillColor(kRed-10);
-  hist_xext_MuPlus_MC->SetMaximum(1.05 * max(hist_xext_MuMinus_MC->GetMaximum(),hist_xext_MuPlus_MC->GetMaximum()));
-  hist_xext_MuPlus_MC->Draw("hist");
+  hist_xext_MuPlus_MC->Scale(hist_xext_MuPlus_Data->Integral() / hist_xext_MuPlus_MC->Integral()); //normalize MC to Data
   hist_xext_MuMinus_MC->SetTitle("");
   hist_xext_MuMinus_MC->SetLineColor(kBlue);
-  hist_xext_MuMinus_MC->SetFillColor(kBlue-10);
-  hist_xext_MuMinus_MC->Draw("histsame");
+  hist_xext_MuMinus_MC->SetFillColorAlpha(kBlue-10, 0.571); // color with transparency - https://root.cern.ch/doc/master/classTColor.html
+  hist_xext_MuMinus_MC->Scale(hist_xext_MuMinus_Data->Integral() / hist_xext_MuMinus_MC->Integral()); //normalize MC to Data
   hist_xext_MuPlus_Data->SetMarkerStyle(20);  
   hist_xext_MuPlus_Data->SetMarkerColor(kRed);
   hist_xext_MuPlus_Data->SetLineColor(kBlack);
-  hist_xext_MuPlus_Data->Draw("samepe");
   hist_xext_MuMinus_Data->SetMarkerStyle(20);  
   hist_xext_MuMinus_Data->SetMarkerColor(kBlue);
   hist_xext_MuMinus_Data->SetLineColor(kBlack);
+  hist_xext_MuPlus_MC->SetMaximum(1.5 * max(max(hist_xext_MuMinus_MC->GetMaximum(),hist_xext_MuMinus_Data->GetMaximum()),max(hist_xext_MuPlus_MC->GetMaximum(),hist_xext_MuPlus_Data->GetMaximum())));
+  hist_xext_MuPlus_MC->Draw("hist");
+  hist_xext_MuMinus_MC->Draw("histsame");
+  hist_xext_MuPlus_Data->Draw("samepe");
   hist_xext_MuMinus_Data->Draw("samepe");
   TLegend* l_xext = new TLegend(0.72,0.47,0.98,0.97);
   l_xext->AddEntry(hist_xext_MuPlus_MC,"MC #mu^{+}","f");
