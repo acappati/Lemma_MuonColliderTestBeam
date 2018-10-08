@@ -457,6 +457,7 @@ void dataMCComparison(TString plotDataMCOutputPath){
   c_pMuPlus->cd();
   hist_pMuPlus_MC->SetTitle("p #mu^{+}");
   hist_pMuPlus_MC->GetXaxis()->SetTitle("p #mu^{+}");
+  hist_pMuPlus_MC->GetYaxis()->SetTitle("events");
   hist_pMuPlus_MC->SetLineColor(kRed);
   hist_pMuPlus_MC->SetFillColor(kRed-10);
   hist_pMuPlus_MC->Scale(hist_pMuPlus_Data->Integral() / hist_pMuPlus_MC->Integral()); //normalize MC to Data
@@ -486,6 +487,7 @@ void dataMCComparison(TString plotDataMCOutputPath){
   c_pMuMinus->cd();
   hist_pMuMinus_MC->SetTitle("p #mu^{-}");
   hist_pMuMinus_MC->GetXaxis()->SetTitle("p #mu^{-}");
+  hist_pMuMinus_MC->GetYaxis()->SetTitle("events");
   hist_pMuMinus_MC->SetLineColor(kBlue);
   hist_pMuMinus_MC->SetFillColor(kBlue-10);
   hist_pMuMinus_MC->Scale(hist_pMuMinus_Data->Integral() / hist_pMuMinus_MC->Integral()); //normalize MC to Data
@@ -514,6 +516,7 @@ void dataMCComparison(TString plotDataMCOutputPath){
   c_pTot->cd();
   hist_pTot_MC->SetTitle("p #mu^{+} + p #mu^{-}");
   hist_pTot_MC->GetXaxis()->SetTitle("p #mu^{+} + p #mu^{-}");
+  hist_pTot_MC->GetYaxis()->SetTitle("events");
   hist_pTot_MC->SetLineColor(kViolet);
   hist_pTot_MC->SetFillColor(kViolet-9);
   hist_pTot_MC->Scale(hist_pTot_Data->Integral() / hist_pTot_MC->Integral()); //normalize MC to Data
@@ -543,6 +546,7 @@ void dataMCComparison(TString plotDataMCOutputPath){
   c_chi2MuPlus->cd();
   hist_chi2MuPlus_MC->SetTitle("#Chi^{2} #mu^{+}");
   hist_chi2MuPlus_MC->GetXaxis()->SetTitle("#Chi^{2} #mu^{+}");
+  hist_chi2MuPlus_MC->GetYaxis()->SetTitle("events");
   hist_chi2MuPlus_MC->SetLineColor(kRed);   
   hist_chi2MuPlus_MC->SetFillColor(kRed-10);
   hist_chi2MuPlus_MC->Scale(hist_chi2MuPlus_Data->Integral() / hist_chi2MuPlus_MC->Integral()); //normalize MC to Data
@@ -572,6 +576,7 @@ void dataMCComparison(TString plotDataMCOutputPath){
   c_chi2MuMinus->cd();
   hist_chi2MuMinus_MC->SetTitle("#Chi^{2} #mu^{-}");
   hist_chi2MuMinus_MC->GetXaxis()->SetTitle("#Chi^{2} #mu^{-}");
+  hist_chi2MuMinus_MC->GetYaxis()->SetTitle("events");
   hist_chi2MuMinus_MC->SetLineColor(kBlue);   
   hist_chi2MuMinus_MC->SetFillColor(kBlue-10);
   hist_chi2MuMinus_MC->Scale(hist_chi2MuMinus_Data->Integral() / hist_chi2MuMinus_MC->Integral()); //normalize MC to Data
@@ -602,6 +607,7 @@ void dataMCComparison(TString plotDataMCOutputPath){
   c_det30->cd();
   hist_xh_det30_MuPlus_MC->SetTitle("xh in det30");
   hist_xh_det30_MuPlus_MC->GetXaxis()->SetTitle("mm");
+  hist_xh_det30_MuPlus_MC->GetYaxis()->SetTitle("events");
   hist_xh_det30_MuPlus_MC->SetLineColor(kRed);
   hist_xh_det30_MuPlus_MC->SetFillColor(kRed-10);
   hist_xh_det30_MuPlus_MC->Scale(hist_xh_det30_MuPlus_Data->Integral() / hist_xh_det30_MuPlus_MC->Integral()); //normalize MC to Data
@@ -646,6 +652,7 @@ void dataMCComparison(TString plotDataMCOutputPath){
   c_det31->cd();
   hist_xh_det31_MuPlus_MC->SetTitle("xh in det31");
   hist_xh_det31_MuPlus_MC->GetXaxis()->SetTitle("mm");
+  hist_xh_det31_MuPlus_MC->GetYaxis()->SetTitle("events");
   hist_xh_det31_MuPlus_MC->SetLineColor(kRed);
   hist_xh_det31_MuPlus_MC->SetFillColor(kRed-10);
   hist_xh_det31_MuPlus_MC->Scale(hist_xh_det31_MuPlus_Data->Integral() / hist_xh_det31_MuPlus_MC->Integral()); //normalize MC to Data
@@ -690,6 +697,7 @@ void dataMCComparison(TString plotDataMCOutputPath){
   c_det32->cd();
   hist_xh_det32_MuPlus_MC->SetTitle("xh in det32");
   hist_xh_det32_MuPlus_MC->GetXaxis()->SetTitle("mm");
+  hist_xh_det32_MuPlus_MC->GetYaxis()->SetTitle("events");
   hist_xh_det32_MuPlus_MC->SetLineColor(kRed);
   hist_xh_det32_MuPlus_MC->SetFillColor(kRed-10);
   hist_xh_det32_MuPlus_MC->Scale(hist_xh_det32_MuPlus_Data->Integral() / hist_xh_det32_MuPlus_MC->Integral()); //normalize MC to Data
@@ -734,6 +742,7 @@ void dataMCComparison(TString plotDataMCOutputPath){
   c_det33->cd();
   hist_xh_det33_MuPlus_MC->SetTitle("xh in det33");
   hist_xh_det33_MuPlus_MC->GetXaxis()->SetTitle("mm");
+  hist_xh_det33_MuPlus_MC->GetYaxis()->SetTitle("events");
   hist_xh_det33_MuPlus_MC->SetLineColor(kRed);
   hist_xh_det33_MuPlus_MC->SetFillColor(kRed-10);
   //hist_xh_det33_MuPlus_MC->Scale(hist_xh_det33_MuPlus_Data->Integral() / hist_xh_det33_MuPlus_MC->Integral()); //normalize MC to Data
@@ -778,6 +787,7 @@ void dataMCComparison(TString plotDataMCOutputPath){
   c_det34->cd();
   hist_xh_det34_MuPlus_MC->SetTitle("xh in det34");
   hist_xh_det34_MuPlus_MC->GetXaxis()->SetTitle("mm");
+  hist_xh_det34_MuPlus_MC->GetYaxis()->SetTitle("events");
   hist_xh_det34_MuPlus_MC->SetLineColor(kRed);
   hist_xh_det34_MuPlus_MC->SetFillColor(kRed-10);
   hist_xh_det34_MuPlus_MC->Scale(hist_xh_det34_MuPlus_Data->Integral() / hist_xh_det34_MuPlus_MC->Integral()); //normalize MC to Data
@@ -822,6 +832,7 @@ void dataMCComparison(TString plotDataMCOutputPath){
   c_det35->cd();
   hist_xh_det35_MuPlus_MC->SetTitle("xh in det35");
   hist_xh_det35_MuPlus_MC->GetXaxis()->SetTitle("mm");
+  hist_xh_det35_MuPlus_MC->GetYaxis()->SetTitle("events");
   hist_xh_det35_MuPlus_MC->SetLineColor(kRed);
   hist_xh_det35_MuPlus_MC->SetFillColor(kRed-10);
   //hist_xh_det35_MuPlus_MC->Scale(hist_xh_det35_MuPlus_Data->Integral() / hist_xh_det35_MuPlus_MC->Integral()); //normalize MC to Data
@@ -866,6 +877,7 @@ void dataMCComparison(TString plotDataMCOutputPath){
   c_det36->cd();
   hist_xh_det36_MuPlus_MC->SetTitle("xh in det36");
   hist_xh_det36_MuPlus_MC->GetXaxis()->SetTitle("mm");
+  hist_xh_det36_MuPlus_MC->GetYaxis()->SetTitle("events");
   hist_xh_det36_MuPlus_MC->SetLineColor(kRed);
   hist_xh_det36_MuPlus_MC->SetFillColor(kRed-10);
   hist_xh_det36_MuPlus_MC->Scale(hist_xh_det36_MuPlus_Data->Integral() / hist_xh_det36_MuPlus_MC->Integral()); //normalize MC to Data
@@ -910,6 +922,7 @@ void dataMCComparison(TString plotDataMCOutputPath){
   c_det37->cd();
   hist_xh_det37_MuPlus_MC->SetTitle("xh in det37");
   hist_xh_det37_MuPlus_MC->GetXaxis()->SetTitle("mm");
+  hist_xh_det37_MuPlus_MC->GetYaxis()->SetTitle("events");
   hist_xh_det37_MuPlus_MC->SetLineColor(kRed);
   hist_xh_det37_MuPlus_MC->SetFillColor(kRed-10);
   //hist_xh_det37_MuPlus_MC->Scale(hist_xh_det37_MuPlus_Data->Integral() / hist_xh_det37_MuPlus_MC->Integral()); //normalize MC to Data
@@ -954,6 +967,7 @@ void dataMCComparison(TString plotDataMCOutputPath){
   c_det6x->cd();
   hist_xh_det62_MuPlus_MC->SetTitle("xh in DTs");   
   hist_xh_det62_MuPlus_MC->GetXaxis()->SetTitle("mm");
+  hist_xh_det62_MuPlus_MC->GetYaxis()->SetTitle("events");
   hist_xh_det62_MuPlus_MC->SetLineColor(kRed); 
   hist_xh_det62_MuPlus_MC->SetFillColor(kRed-10);
   hist_xh_det62_MuPlus_MC->Scale(hist_xh_det62_MuPlus_Data->Integral() / hist_xh_det62_MuPlus_MC->Integral()); //normalize MC to Data
@@ -997,6 +1011,7 @@ void dataMCComparison(TString plotDataMCOutputPath){
   c_xext->cd();
   hist_xext_MuPlus_MC->SetTitle("x ext");
   hist_xext_MuPlus_MC->GetXaxis()->SetTitle("mm");
+  hist_xext_MuPlus_MC->GetYaxis()->SetTitle("events");
   hist_xext_MuPlus_MC->SetLineColor(kRed);
   hist_xext_MuPlus_MC->SetFillColor(kRed-10);
   hist_xext_MuPlus_MC->Scale(hist_xext_MuPlus_Data->Integral() / hist_xext_MuPlus_MC->Integral()); //normalize MC to Data
