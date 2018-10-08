@@ -199,35 +199,35 @@ void doTheHistos(TString inputFileName, TString label){
   inputTree->SetBranchAddress("event_type",     &event_type);       
 
   // def histos 
-  TH1F* hist_pMuPlus     = new TH1F("hist_pMuPlus","hist_pMuPlus",200,16000.,30000.);
-  TH1F* hist_pMuMinus    = new TH1F("hist_pMuMinus","hist_pMuMinus",200,16000.,30000.);
-  TH1F* hist_pTot        = new TH1F("hist_pTot","hist_pTot",200,40000.,47000.);
-  TH1F* hist_chi2MuPlus  = new TH1F("hist_chi2MuPlus","hist_chi2MuPlus",50,0.,10.);
+  TH1F* hist_pMuPlus     = new TH1F("hist_pMuPlus",    "hist_pMuPlus",    30,16000.,30000.);
+  TH1F* hist_pMuMinus    = new TH1F("hist_pMuMinus",   "hist_pMuMinus",   30,16000.,30000.);
+  TH1F* hist_pTot        = new TH1F("hist_pTot",       "hist_pTot",       80,40000.,47000.);
+  TH1F* hist_chi2MuPlus  = new TH1F("hist_chi2MuPlus", "hist_chi2MuPlus", 50,0.,10.);
   TH1F* hist_chi2MuMinus = new TH1F("hist_chi2MuMinus","hist_chi2MuMinus",50,0.,10.);
   // TH1F* hist_ThetaMuPlus  = new TH1F("hist_ThetaMuPlus","hist_ThetaMuPlus",10,0.,10.);    //angle in bending plane
   // TH1F* hist_ThetaMuMinus = new TH1F("hist_ThetaMuMinus","hist_ThetaMuMinus",10,0.,10.);  //angle in bending plane
 
-  TH1F* hist_xh_det10_MuPlus = new TH1F("hist_xh_det10_MuPlus","hist_xh_det10_MuPlus",100,   -9.5,   9.5);
-  TH1F* hist_xh_det20_MuPlus = new TH1F("hist_xh_det20_MuPlus","hist_xh_det20_MuPlus",100,   -9.5,   9.5);
-  TH1F* hist_xh_det30_MuPlus = new TH1F("hist_xh_det30_MuPlus","hist_xh_det30_MuPlus",100,  -46.5,  46.5);
-  TH1F* hist_xh_det31_MuPlus = new TH1F("hist_xh_det31_MuPlus","hist_xh_det31_MuPlus",100,  -46.5,  46.5);
-  TH1F* hist_xh_det32_MuPlus = new TH1F("hist_xh_det32_MuPlus","hist_xh_det32_MuPlus",100,   40.0, 120.0);
-  TH1F* hist_xh_det33_MuPlus = new TH1F("hist_xh_det33_MuPlus","hist_xh_det33_MuPlus",100, -120.0, -40.0);
-  TH1F* hist_xh_det34_MuPlus = new TH1F("hist_xh_det34_MuPlus","hist_xh_det34_MuPlus",100,   93.5, 186.5);
-  TH1F* hist_xh_det35_MuPlus = new TH1F("hist_xh_det35_MuPlus","hist_xh_det35_MuPlus",100, -186.5, -93.5);
-  TH1F* hist_xh_det36_MuPlus = new TH1F("hist_xh_det36_MuPlus","hist_xh_det36_MuPlus",100,  150.0, 330.0);
-  TH1F* hist_xh_det37_MuPlus = new TH1F("hist_xh_det37_MuPlus","hist_xh_det37_MuPlus",100, -330.0,-150.0);
+  TH1F* hist_xh_det10_MuPlus = new TH1F("hist_xh_det10_MuPlus","hist_xh_det10_MuPlus",25,   -9.5,   9.5);
+  TH1F* hist_xh_det20_MuPlus = new TH1F("hist_xh_det20_MuPlus","hist_xh_det20_MuPlus",25,   -9.5,   9.5);	  
+  TH1F* hist_xh_det30_MuPlus = new TH1F("hist_xh_det30_MuPlus","hist_xh_det30_MuPlus",25,  -46.5,  46.5);	  
+  TH1F* hist_xh_det31_MuPlus = new TH1F("hist_xh_det31_MuPlus","hist_xh_det31_MuPlus",25,  -46.5,  46.5);	  
+  TH1F* hist_xh_det32_MuPlus = new TH1F("hist_xh_det32_MuPlus","hist_xh_det32_MuPlus",25,   40.0, 120.0);	  
+  TH1F* hist_xh_det33_MuPlus = new TH1F("hist_xh_det33_MuPlus","hist_xh_det33_MuPlus",25, -120.0, -40.0);	  
+  TH1F* hist_xh_det34_MuPlus = new TH1F("hist_xh_det34_MuPlus","hist_xh_det34_MuPlus",25,   93.5, 186.5);	  
+  TH1F* hist_xh_det35_MuPlus = new TH1F("hist_xh_det35_MuPlus","hist_xh_det35_MuPlus",25, -186.5, -93.5);
+  TH1F* hist_xh_det36_MuPlus = new TH1F("hist_xh_det36_MuPlus","hist_xh_det36_MuPlus",25,  150.0, 330.0);
+  TH1F* hist_xh_det37_MuPlus = new TH1F("hist_xh_det37_MuPlus","hist_xh_det37_MuPlus",25, -330.0,-150.0);
 
-  TH1F* hist_xh_det10_MuMinus = new TH1F("hist_xh_det10_MuMinus","hist_xh_det10_MuMinus",100,   -9.5,   9.5);
-  TH1F* hist_xh_det20_MuMinus = new TH1F("hist_xh_det20_MuMinus","hist_xh_det20_MuMinus",100,   -9.5,   9.5);
-  TH1F* hist_xh_det30_MuMinus = new TH1F("hist_xh_det30_MuMinus","hist_xh_det30_MuMinus",100,  -46.5,  46.5);
-  TH1F* hist_xh_det31_MuMinus = new TH1F("hist_xh_det31_MuMinus","hist_xh_det31_MuMinus",100,  -46.5,  46.5);
-  TH1F* hist_xh_det32_MuMinus = new TH1F("hist_xh_det32_MuMinus","hist_xh_det32_MuMinus",100,   40.0, 120.0);
-  TH1F* hist_xh_det33_MuMinus = new TH1F("hist_xh_det33_MuMinus","hist_xh_det33_MuMinus",100, -120.0, -40.0);
-  TH1F* hist_xh_det34_MuMinus = new TH1F("hist_xh_det34_MuMinus","hist_xh_det34_MuMinus",100,   93.5, 186.5);
-  TH1F* hist_xh_det35_MuMinus = new TH1F("hist_xh_det35_MuMinus","hist_xh_det35_MuMinus",100, -186.5, -93.5);
-  TH1F* hist_xh_det36_MuMinus = new TH1F("hist_xh_det36_MuMinus","hist_xh_det36_MuMinus",100,  150.0, 330.0);
-  TH1F* hist_xh_det37_MuMinus = new TH1F("hist_xh_det37_MuMinus","hist_xh_det37_MuMinus",100, -330.0,-150.0);
+  TH1F* hist_xh_det10_MuMinus = new TH1F("hist_xh_det10_MuMinus","hist_xh_det10_MuMinus",25,   -9.5,   9.5);
+  TH1F* hist_xh_det20_MuMinus = new TH1F("hist_xh_det20_MuMinus","hist_xh_det20_MuMinus",25,   -9.5,   9.5);
+  TH1F* hist_xh_det30_MuMinus = new TH1F("hist_xh_det30_MuMinus","hist_xh_det30_MuMinus",25,  -46.5,  46.5);
+  TH1F* hist_xh_det31_MuMinus = new TH1F("hist_xh_det31_MuMinus","hist_xh_det31_MuMinus",25,  -46.5,  46.5);
+  TH1F* hist_xh_det32_MuMinus = new TH1F("hist_xh_det32_MuMinus","hist_xh_det32_MuMinus",25,   40.0, 120.0);
+  TH1F* hist_xh_det33_MuMinus = new TH1F("hist_xh_det33_MuMinus","hist_xh_det33_MuMinus",25, -120.0, -40.0);
+  TH1F* hist_xh_det34_MuMinus = new TH1F("hist_xh_det34_MuMinus","hist_xh_det34_MuMinus",25,   93.5, 186.5);
+  TH1F* hist_xh_det35_MuMinus = new TH1F("hist_xh_det35_MuMinus","hist_xh_det35_MuMinus",25, -186.5, -93.5);
+  TH1F* hist_xh_det36_MuMinus = new TH1F("hist_xh_det36_MuMinus","hist_xh_det36_MuMinus",25,  150.0, 330.0);
+  TH1F* hist_xh_det37_MuMinus = new TH1F("hist_xh_det37_MuMinus","hist_xh_det37_MuMinus",25, -330.0,-150.0);
 
   TH1F* hist_xh_det62_MuPlus  = new TH1F("hist_xh_det62_MuPlus", "hist_xh_det62_MuPlus", 50,-500.,500.);
   TH1F* hist_xh_det61_MuMinus = new TH1F("hist_xh_det61_MuMinus","hist_xh_det61_MuMinus",50,-500.,500.);
