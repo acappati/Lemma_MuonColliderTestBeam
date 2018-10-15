@@ -4,7 +4,7 @@
 //        output directory at the end of the script
 //
 // run with:
-//        root -l -b -q plotVariables.C
+//        root -l -b -q plotVariables.C++
 //
 // *****************************************************
 
@@ -1068,7 +1068,7 @@ void plotVariables(){
   TString inputFile_MC   = "/afs/cern.ch/user/a/abertoli/public/lemma/reco/reco-mupmum.root"; 
 
   // define output path and make output directory for data/MC comparison
-  TString plotDataMCOutputPath = "LemmaVariables_DataMCComparison_reco-333to337";
+  TString plotDataMCOutputPath = "181015_LemmaVariables_DataMCComparison_reco-333to337";
   gSystem->Exec(("mkdir -p "+plotDataMCOutputPath));
 
   // call do the histos function
