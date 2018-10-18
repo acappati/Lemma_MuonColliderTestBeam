@@ -201,7 +201,7 @@ void doTheHistos(TString inputFileName, TString label){
   // def histos 
   TH1F* hist_pMuPlus     = new TH1F("hist_pMuPlus",    "hist_pMuPlus",    30,16000.,30000.);
   TH1F* hist_pMuMinus    = new TH1F("hist_pMuMinus",   "hist_pMuMinus",   30,16000.,30000.);
-  TH1F* hist_pTot        = new TH1F("hist_pTot",       "hist_pTot",       80,40000.,47000.);
+  TH1F* hist_pTot        = new TH1F("hist_pTot",       "hist_pTot",       80,24800.,56800.);
   TH1F* hist_chi2MuPlus  = new TH1F("hist_chi2MuPlus", "hist_chi2MuPlus", 50,0.,10.);
   TH1F* hist_chi2MuMinus = new TH1F("hist_chi2MuMinus","hist_chi2MuMinus",50,0.,10.);
   // TH1F* hist_ThetaMuPlus  = new TH1F("hist_ThetaMuPlus","hist_ThetaMuPlus",10,0.,10.);    //angle in bending plane
