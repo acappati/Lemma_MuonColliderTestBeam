@@ -27,6 +27,7 @@
 #include "TAxis.h"
 #include "TF1.h"
 #include "TGraph.h"
+#include "TLine.h"
 #include "TPaveText.h"
 
 
@@ -229,8 +230,8 @@ void doTheHistos(TString inputFileName, TString label){
   TH1F* hist_xh_det36_MuMinus = new TH1F("hist_xh_det36_MuMinus","hist_xh_det36_MuMinus",25,  150.0, 330.0);
   TH1F* hist_xh_det37_MuMinus = new TH1F("hist_xh_det37_MuMinus","hist_xh_det37_MuMinus",25, -330.0,-150.0);
 
-  TH1F* hist_xh_det62_MuPlus  = new TH1F("hist_xh_det62_MuPlus", "hist_xh_det62_MuPlus", 50,-500.,500.);
-  TH1F* hist_xh_det61_MuMinus = new TH1F("hist_xh_det61_MuMinus","hist_xh_det61_MuMinus",50,-500.,500.);
+  TH1F* hist_xh_det62_MuPlus  = new TH1F("hist_xh_det62_MuPlus", "hist_xh_det62_MuPlus", 100,-1100.,1100.);
+  TH1F* hist_xh_det61_MuMinus = new TH1F("hist_xh_det61_MuMinus","hist_xh_det61_MuMinus",100,-1100.,1100.);
 
   TH1F* hist_xext_MuMinus = new TH1F("hist_xext_MuMinus","hist_xext_MuMinus",20,-50.,50.);
   TH1F* hist_xext_MuPlus  = new TH1F("hist_xext_MuPlus", "hist_xext_MuPlus", 20,-50.,50.);
@@ -986,7 +987,7 @@ void dataMCComparison(TString plotDataMCOutputPath){
   hist_xh_det61_MuMinus_MC->Draw("samehist");
   hist_xh_det62_MuPlus_Data->Draw("samepe");
   hist_xh_det61_MuMinus_Data->Draw("samepe");
-  TLegend* l_det6x = new TLegend(0.38,0.37,0.63,0.87);
+  TLegend* l_det6x = new TLegend(0.72,0.45,0.98,0.95);
   l_det6x->AddEntry(hist_xh_det62_MuPlus_MC,"MC #mu^{+}","f");
   l_det6x->AddEntry((TObject*)0,Form("entries: %.2f",hist_xh_det62_MuPlus_MC->GetEntries()),"");
   l_det6x->AddEntry((TObject*)0,Form("mean: %.2f",hist_xh_det62_MuPlus_MC->GetMean()),"");
@@ -1005,7 +1006,25 @@ void dataMCComparison(TString plotDataMCOutputPath){
   l_det6x->SetTextSize(20);
   l_det6x->Draw();
   c_det6x->Update();
+  TLine *line_det6xA = new TLine(261.5,gPad->GetUymin(),261.5,gPad->GetUymax());
+  line_det6xA->SetLineColor(kBlack);
+  line_det6xA->SetLineStyle(1);
+  line_det6xA->Draw();
+  TLine *line_det6xB = new TLine(261.5 + 735.,gPad->GetUymin(),261.5 + 735.,gPad->GetUymax());
+  line_det6xB->SetLineColor(kBlack);
+  line_det6xB->SetLineStyle(2);
+  line_det6xB->Draw();
+  TLine *line_det6xC = new TLine(-947.4 + 735.,gPad->GetUymin(),-947.4 + 735.,gPad->GetUymax());
+  line_det6xC->SetLineColor(kBlack);
+  line_det6xC->SetLineStyle(2);
+  line_det6xC->Draw();
+  TLine *line_det6xD = new TLine(-947.4,gPad->GetUymin(),-947.4,gPad->GetUymax());
+  line_det6xD->SetLineColor(kBlack);
+  line_det6xD->SetLineStyle(1);
+  line_det6xD->Draw();
+  c_det6x->Update();
   c_det6x->SaveAs((plotDataMCOutputPath + "/" + c_det6x->GetName() + ".png"));   
+
 
   TCanvas* c_xext = new TCanvas("c_xext","c_xext");
   c_xext->cd();
