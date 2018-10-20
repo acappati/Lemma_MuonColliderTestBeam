@@ -29,9 +29,11 @@
 #include "TGraph.h"
 #include "TLine.h"
 #include "TPaveText.h"
+#include "TRandom3.h"
 
 
 using namespace std;
+
 
 
 //Extrapolate track function: track points are refitted
@@ -149,6 +151,8 @@ Double_t extrapolate_track_x(Double_t z0 ,Double_t x_pos_mum[12], Double_t x_pos
 // doTheHistos function: read root file and do histos 
 void doTheHistos(TString inputFileName, TString label){
 
+  bool isMC = false;                // for Data
+  if(label == "MC"){ isMC = true; } // for MC
   
   Double_t chi2m;
   Double_t x_pos_mum[12];
@@ -172,6 +176,8 @@ void doTheHistos(TString inputFileName, TString label){
   Int_t    nhits;
   Double_t Calo_EnDep[25];
   Int_t    event_type;
+  Double_t gen_pos_mum[7]; // used for MC only
+  Double_t gen_pos_mup[7]; // used for MC only
 
   TFile* inputFile = TFile::Open(inputFileName);
   TTree* inputTree = (TTree*)inputFile->Get("lemma");
@@ -197,12 +203,17 @@ void doTheHistos(TString inputFileName, TString label){
   inputTree->SetBranchAddress("zh",             &zh[0]);	     
   inputTree->SetBranchAddress("nhits",          &nhits);	     
   inputTree->SetBranchAddress("Calo_EnDep",     &Calo_EnDep[0]);
-  inputTree->SetBranchAddress("event_type",     &event_type);       
+  inputTree->SetBranchAddress("event_type",     &event_type);   
+  if(isMC){
+    inputTree->SetBranchAddress("gen_pos_mum", &gen_pos_mum[0]);
+    inputTree->SetBranchAddress("gen_pos_mup", &gen_pos_mup[0]); 
+  }    
 
   // def histos 
   TH1F* hist_pMuPlus     = new TH1F("hist_pMuPlus",    "hist_pMuPlus",    30,16000.,30000.);
   TH1F* hist_pMuMinus    = new TH1F("hist_pMuMinus",   "hist_pMuMinus",   30,16000.,30000.);
-  TH1F* hist_pTot        = new TH1F("hist_pTot",       "hist_pTot",       80,24800.,56800.);
+  TH1F* hist_pTot        = new TH1F("hist_pTot",       "hist_pTot",       80,24800.,56800.);  
+  TH1F* hist_pTot_smear = new TH1F("hist_pTot_smear", "hist_pTot_smear", 80,24800.,56800.); // used for MC only
   TH1F* hist_chi2MuPlus  = new TH1F("hist_chi2MuPlus", "hist_chi2MuPlus", 50,0.,10.);
   TH1F* hist_chi2MuMinus = new TH1F("hist_chi2MuMinus","hist_chi2MuMinus",50,0.,10.);
   // TH1F* hist_ThetaMuPlus  = new TH1F("hist_ThetaMuPlus","hist_ThetaMuPlus",10,0.,10.);    //angle in bending plane
@@ -236,6 +247,7 @@ void doTheHistos(TString inputFileName, TString label){
   TH1F* hist_xext_MuMinus = new TH1F("hist_xext_MuMinus","hist_xext_MuMinus",20,-50.,50.);
   TH1F* hist_xext_MuPlus  = new TH1F("hist_xext_MuPlus", "hist_xext_MuPlus", 20,-50.,50.);
 
+
   // loop over tree entries 
   Long64_t entries = inputTree->GetEntries();
   for(Long64_t z=0; z<entries; ++z){
@@ -251,6 +263,15 @@ void doTheHistos(TString inputFileName, TString label){
       hist_chi2MuMinus->Fill(chi2m);  //chi2 for mu minus tracks
 
       hist_pTot->Fill(p_mum + p_mup); //total momentum 
+
+      // total momentum with smearing
+      if(isMC){  
+        TRandom* r= new TRandom(0);
+        Float_t pSum=0;
+        pSum+=gen_pos_mum[6]*(1+r->Gaus(0.,0.03));
+        pSum+=gen_pos_mup[6]*(1+r->Gaus(0.,0.03));
+        hist_pTot_smear->Fill(pSum);
+      }
 
       // histos for DTs
       hist_xh_det62_MuPlus->Fill(x_pos_DT_mup[0]);
@@ -329,7 +350,10 @@ void doTheHistos(TString inputFileName, TString label){
 
   hist_pMuPlus->Write(hist_pMuPlus->GetName());
   hist_pMuMinus->Write(hist_pMuMinus->GetName());
-  hist_pTot->Write(hist_pTot->GetName());      
+  hist_pTot->Write(hist_pTot->GetName());  
+  if(isMC){
+    hist_pTot_smear->Write(hist_pTot_smear->GetName());
+  }    
   hist_chi2MuPlus->Write(hist_chi2MuPlus->GetName());
   hist_chi2MuMinus->Write(hist_chi2MuMinus->GetName());
                                 
@@ -417,6 +441,7 @@ void dataMCComparison(TString plotDataMCOutputPath){
   TH1F* hist_pMuPlus_MC     = (TH1F*)inFile_MC->Get("hist_pMuPlus");
   TH1F* hist_pMuMinus_MC    = (TH1F*)inFile_MC->Get("hist_pMuMinus");
   TH1F* hist_pTot_MC        = (TH1F*)inFile_MC->Get("hist_pTot");      
+  TH1F* hist_pTot_smear_MC  = (TH1F*)inFile_MC->Get("hist_pTot_smear");      
   TH1F* hist_chi2MuPlus_MC  = (TH1F*)inFile_MC->Get("hist_chi2MuPlus");
   TH1F* hist_chi2MuMinus_MC = (TH1F*)inFile_MC->Get("hist_chi2MuMinus");
                                 
@@ -457,7 +482,7 @@ void dataMCComparison(TString plotDataMCOutputPath){
   TCanvas* c_pMuPlus = new TCanvas("c_pMuPlus","c_pMuPlus");
   c_pMuPlus->cd();
   hist_pMuPlus_MC->SetTitle("p #mu^{+}");
-  hist_pMuPlus_MC->GetXaxis()->SetTitle("p #mu^{+}");
+  hist_pMuPlus_MC->GetXaxis()->SetTitle("p #mu^{+} [MeV]");
   hist_pMuPlus_MC->GetYaxis()->SetTitle("events");
   hist_pMuPlus_MC->SetLineColor(kRed);
   hist_pMuPlus_MC->SetFillColor(kRed-10);
@@ -487,7 +512,7 @@ void dataMCComparison(TString plotDataMCOutputPath){
   TCanvas* c_pMuMinus = new TCanvas("c_pMuMinus","c_pMuMinus");
   c_pMuMinus->cd();
   hist_pMuMinus_MC->SetTitle("p #mu^{-}");
-  hist_pMuMinus_MC->GetXaxis()->SetTitle("p #mu^{-}");
+  hist_pMuMinus_MC->GetXaxis()->SetTitle("p #mu^{-} [MeV]");
   hist_pMuMinus_MC->GetYaxis()->SetTitle("events");
   hist_pMuMinus_MC->SetLineColor(kBlue);
   hist_pMuMinus_MC->SetFillColor(kBlue-10);
@@ -516,21 +541,28 @@ void dataMCComparison(TString plotDataMCOutputPath){
   TCanvas* c_pTot = new TCanvas("c_pTot","c_pTot");
   c_pTot->cd();
   hist_pTot_MC->SetTitle("p #mu^{+} + p #mu^{-}");
-  hist_pTot_MC->GetXaxis()->SetTitle("p #mu^{+} + p #mu^{-}");
+  hist_pTot_MC->GetXaxis()->SetTitle("p #mu^{+} + p #mu^{-} [MeV]");
   hist_pTot_MC->GetYaxis()->SetTitle("events");
-  hist_pTot_MC->SetLineColor(kViolet);
-  hist_pTot_MC->SetFillColor(kViolet-9);
+  hist_pTot_MC->SetLineColor(kViolet-6);
+  hist_pTot_MC->SetFillColor(kViolet-4);
   hist_pTot_MC->Scale(hist_pTot_Data->Integral() / hist_pTot_MC->Integral()); //normalize MC to Data
-  hist_pTot_MC->SetMaximum(1.2 * max(hist_pTot_MC->GetMaximum(),hist_pTot_Data->GetMaximum()));
-  hist_pTot_MC->Draw("hist");
+  hist_pTot_smear_MC->SetLineColor(kOrange+7);
+  hist_pTot_smear_MC->SetFillColorAlpha(kOrange-3, 0.571);
+  hist_pTot_smear_MC->Scale(hist_pTot_Data->Integral() / hist_pTot_smear_MC->Integral()); //normalize MC to Data
   hist_pTot_Data->SetMarkerStyle(20);
   hist_pTot_Data->SetMarkerColor(kViolet+4);
   hist_pTot_Data->SetLineColor(kBlack);
+  hist_pTot_MC->SetMaximum(1.2 * max(max(hist_pTot_MC->GetMaximum(),hist_pTot_smear_MC->GetMaximum()),hist_pTot_Data->GetMaximum()));
+  hist_pTot_MC->Draw("hist");
+  hist_pTot_smear_MC->Draw("histsame");
   hist_pTot_Data->Draw("samepe");
-  TLegend* l_pTot = new TLegend(0.72,0.67,0.98,0.97);
+  TLegend* l_pTot = new TLegend(0.72,0.47,0.98,0.97);
   l_pTot->AddEntry(hist_pTot_MC,"MC","f");
   l_pTot->AddEntry((TObject*)0,Form("entries: %.2f",hist_pTot_MC->GetEntries()),"");
   l_pTot->AddEntry((TObject*)0,Form("mean: %.2f",hist_pTot_MC->GetMean()),"");
+  l_pTot->AddEntry(hist_pTot_smear_MC,"MC smear","f");
+  l_pTot->AddEntry((TObject*)0,Form("entries: %.2f",hist_pTot_smear_MC->GetEntries()),"");
+  l_pTot->AddEntry((TObject*)0,Form("mean: %.2f",hist_pTot_smear_MC->GetMean()),"");
   l_pTot->AddEntry(hist_pTot_Data, "Data", "pl");
   l_pTot->AddEntry((TObject*)0,Form("entries: %.2f",hist_pTot_Data->GetEntries()),"");
   l_pTot->AddEntry((TObject*)0,Form("mean: %.2f",hist_pTot_Data->GetMean()),"");
@@ -1087,10 +1119,11 @@ void plotVariables(){
   TString inputFile_MC   = "/afs/cern.ch/user/a/abertoli/public/lemma/reco/reco-mupmum.root"; 
 
   // define output path and make output directory for data/MC comparison
-  TString plotDataMCOutputPath = "181018_LemmaVariables_DataMCComparison_reco-333to337";
+  TString plotDataMCOutputPath = "181020_LemmaVariables_DataMCComparison_reco-333to337";
   gSystem->Exec(("mkdir -p "+plotDataMCOutputPath));
 
   // call do the histos function
+  // arguments: input file, label for data or MC
   doTheHistos(inputFile_Data, "DATA");
   doTheHistos(inputFile_MC, "MC");
 
