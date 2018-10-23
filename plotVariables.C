@@ -213,7 +213,9 @@ void doTheHistos(TString inputFileName, TString label){
   TH1F* hist_pMuPlus     = new TH1F("hist_pMuPlus",    "hist_pMuPlus",    30,16000.,30000.);
   TH1F* hist_pMuMinus    = new TH1F("hist_pMuMinus",   "hist_pMuMinus",   30,16000.,30000.);
   TH1F* hist_pTot        = new TH1F("hist_pTot",       "hist_pTot",       80,24800.,56800.);  
-  TH1F* hist_pTot_smear = new TH1F("hist_pTot_smear", "hist_pTot_smear", 80,24800.,56800.); // used for MC only
+  TH1F* hist_pTot_smear03_bias000 = new TH1F("hist_pTot_smear03_bias000", "hist_pTot_smear03_bias000", 80,24800.,56800.); // used for MC only
+  TH1F* hist_pTot_smear03_bias099 = new TH1F("hist_pTot_smear03_bias099", "hist_pTot_smear03_bias099", 80,24800.,56800.); // used for MC only
+  TH1F* hist_pTot_smear03_bias101 = new TH1F("hist_pTot_smear03_bias101", "hist_pTot_smear03_bias101", 80,24800.,56800.); // used for MC only
   TH1F* hist_chi2MuPlus  = new TH1F("hist_chi2MuPlus", "hist_chi2MuPlus", 50,0.,10.);
   TH1F* hist_chi2MuMinus = new TH1F("hist_chi2MuMinus","hist_chi2MuMinus",50,0.,10.);
   // TH1F* hist_ThetaMuPlus  = new TH1F("hist_ThetaMuPlus","hist_ThetaMuPlus",10,0.,10.);    //angle in bending plane
@@ -266,11 +268,23 @@ void doTheHistos(TString inputFileName, TString label){
 
       // total momentum with smearing
       if(isMC){  
-        TRandom* r= new TRandom(0);
-        Float_t pSum=0;
-        pSum+=gen_pos_mum[6]*(1+r->Gaus(0.,0.03));
-        pSum+=gen_pos_mup[6]*(1+r->Gaus(0.,0.03));
-        hist_pTot_smear->Fill(pSum);
+        TRandom3* r0= new TRandom3(0);
+        Float_t pSum0=0;
+        pSum0+=gen_pos_mum[6]*(1+r0->Gaus(0.,0.03));
+        pSum0+=gen_pos_mup[6]*(1+r0->Gaus(0.,0.03));
+        hist_pTot_smear03_bias000->Fill(pSum0);
+
+        TRandom3* r1= new TRandom3(0);
+        Float_t pSum1=0;
+        pSum1+=gen_pos_mum[6]*(r1->Gaus(0.99,0.03));
+        pSum1+=gen_pos_mup[6]*(r1->Gaus(0.99,0.03));
+        hist_pTot_smear03_bias099->Fill(pSum1);
+        
+        TRandom3* r2= new TRandom3(0);
+        Float_t pSum2=0;
+        pSum2+=gen_pos_mum[6]*(r2->Gaus(1.01,0.03));
+        pSum2+=gen_pos_mup[6]*(r2->Gaus(1.01,0.03));
+        hist_pTot_smear03_bias101->Fill(pSum2);
       }
 
       // histos for DTs
@@ -352,7 +366,9 @@ void doTheHistos(TString inputFileName, TString label){
   hist_pMuMinus->Write(hist_pMuMinus->GetName());
   hist_pTot->Write(hist_pTot->GetName());  
   if(isMC){
-    hist_pTot_smear->Write(hist_pTot_smear->GetName());
+    hist_pTot_smear03_bias000->Write(hist_pTot_smear03_bias000->GetName());
+    hist_pTot_smear03_bias099->Write(hist_pTot_smear03_bias099->GetName());
+    hist_pTot_smear03_bias101->Write(hist_pTot_smear03_bias101->GetName());
   }    
   hist_chi2MuPlus->Write(hist_chi2MuPlus->GetName());
   hist_chi2MuMinus->Write(hist_chi2MuMinus->GetName());
@@ -441,7 +457,9 @@ void dataMCComparison(TString plotDataMCOutputPath){
   TH1F* hist_pMuPlus_MC     = (TH1F*)inFile_MC->Get("hist_pMuPlus");
   TH1F* hist_pMuMinus_MC    = (TH1F*)inFile_MC->Get("hist_pMuMinus");
   TH1F* hist_pTot_MC        = (TH1F*)inFile_MC->Get("hist_pTot");      
-  TH1F* hist_pTot_smear_MC  = (TH1F*)inFile_MC->Get("hist_pTot_smear");      
+  TH1F* hist_pTot_smear03_bias000_MC = (TH1F*)inFile_MC->Get("hist_pTot_smear03_bias000");      
+  TH1F* hist_pTot_smear03_bias099_MC = (TH1F*)inFile_MC->Get("hist_pTot_smear03_bias099");    
+  TH1F* hist_pTot_smear03_bias101_MC = (TH1F*)inFile_MC->Get("hist_pTot_smear03_bias101");        
   TH1F* hist_chi2MuPlus_MC  = (TH1F*)inFile_MC->Get("hist_chi2MuPlus");
   TH1F* hist_chi2MuMinus_MC = (TH1F*)inFile_MC->Get("hist_chi2MuMinus");
                                 
@@ -546,30 +564,47 @@ void dataMCComparison(TString plotDataMCOutputPath){
   hist_pTot_MC->SetLineColor(kViolet-6);
   hist_pTot_MC->SetFillColor(kViolet-4);
   hist_pTot_MC->Scale(hist_pTot_Data->Integral() / hist_pTot_MC->Integral()); //normalize MC to Data
-  hist_pTot_smear_MC->SetLineColor(kOrange+7);
-  hist_pTot_smear_MC->SetFillColorAlpha(kOrange-3, 0.571);
-  hist_pTot_smear_MC->Scale(hist_pTot_Data->Integral() / hist_pTot_smear_MC->Integral()); //normalize MC to Data
+  hist_pTot_smear03_bias000_MC->SetLineColor(kOrange+7);
+  hist_pTot_smear03_bias000_MC->SetFillColorAlpha(kOrange-3, 0.571);
+  hist_pTot_smear03_bias000_MC->Scale(hist_pTot_Data->Integral() / hist_pTot_smear03_bias000_MC->Integral()); //normalize MC to Data
+  hist_pTot_smear03_bias099_MC->SetLineColor(kGreen+3);
+  hist_pTot_smear03_bias099_MC->SetFillColorAlpha(kGreen-9, 0.571);
+  hist_pTot_smear03_bias099_MC->Scale(hist_pTot_Data->Integral() / hist_pTot_smear03_bias099_MC->Integral()); //normalize MC to Data
+  hist_pTot_smear03_bias101_MC->SetLineColor(kAzure+2);
+  hist_pTot_smear03_bias101_MC->SetFillColorAlpha(kAzure+6, 0.571);
+  hist_pTot_smear03_bias101_MC->Scale(hist_pTot_Data->Integral() / hist_pTot_smear03_bias101_MC->Integral()); //normalize MC to Data
   hist_pTot_Data->SetMarkerStyle(20);
-  hist_pTot_Data->SetMarkerColor(kViolet+4);
+  hist_pTot_Data->SetMarkerColor(kBlack);
   hist_pTot_Data->SetLineColor(kBlack);
-  hist_pTot_MC->SetMaximum(1.2 * max(max(hist_pTot_MC->GetMaximum(),hist_pTot_smear_MC->GetMaximum()),hist_pTot_Data->GetMaximum()));
+  hist_pTot_MC->SetMaximum(1.2 * max(max(max(hist_pTot_MC->GetMaximum(),hist_pTot_smear03_bias000_MC->GetMaximum()),max(hist_pTot_smear03_bias099_MC->GetMaximum(),hist_pTot_smear03_bias101_MC->GetMaximum())),hist_pTot_Data->GetMaximum()));
   hist_pTot_MC->Draw("hist");
-  hist_pTot_smear_MC->Draw("histsame");
+  hist_pTot_smear03_bias099_MC->Draw("histsame");
+  hist_pTot_smear03_bias101_MC->Draw("histsame");
+  hist_pTot_smear03_bias000_MC->Draw("histsame");
   hist_pTot_Data->Draw("samepe");
-  TLegend* l_pTot = new TLegend(0.72,0.47,0.98,0.97);
+  TLegend* l_pTot = new TLegend(0.76,0.17,0.98,0.97);
   l_pTot->AddEntry(hist_pTot_MC,"MC","f");
   l_pTot->AddEntry((TObject*)0,Form("entries: %.2f",hist_pTot_MC->GetEntries()),"");
   l_pTot->AddEntry((TObject*)0,Form("mean: %.2f",hist_pTot_MC->GetMean()),"");
-  l_pTot->AddEntry(hist_pTot_smear_MC,"MC smear","f");
-  l_pTot->AddEntry((TObject*)0,Form("entries: %.2f",hist_pTot_smear_MC->GetEntries()),"");
-  l_pTot->AddEntry((TObject*)0,Form("mean: %.2f",hist_pTot_smear_MC->GetMean()),"");
+  l_pTot->AddEntry(hist_pTot_smear03_bias099_MC,"MC smear","f");
+  l_pTot->AddEntry((TObject*)0,"gauss(0.99,0.03)","");
+  l_pTot->AddEntry((TObject*)0,Form("entries: %.2f",hist_pTot_smear03_bias099_MC->GetEntries()),"");
+  l_pTot->AddEntry((TObject*)0,Form("mean: %.2f",hist_pTot_smear03_bias099_MC->GetMean()),"");
+  l_pTot->AddEntry(hist_pTot_smear03_bias101_MC,"MC smear","f");
+  l_pTot->AddEntry((TObject*)0,"gauss(1.01,0.03)","");
+  l_pTot->AddEntry((TObject*)0,Form("entries: %.2f",hist_pTot_smear03_bias101_MC->GetEntries()),"");
+  l_pTot->AddEntry((TObject*)0,Form("mean: %.2f",hist_pTot_smear03_bias101_MC->GetMean()),"");
+  l_pTot->AddEntry(hist_pTot_smear03_bias000_MC,"MC smear","f");
+  l_pTot->AddEntry((TObject*)0,"gauss(0.00,0.03)","");
+  l_pTot->AddEntry((TObject*)0,Form("entries: %.2f",hist_pTot_smear03_bias000_MC->GetEntries()),"");
+  l_pTot->AddEntry((TObject*)0,Form("mean: %.2f",hist_pTot_smear03_bias000_MC->GetMean()),"");
   l_pTot->AddEntry(hist_pTot_Data, "Data", "pl");
   l_pTot->AddEntry((TObject*)0,Form("entries: %.2f",hist_pTot_Data->GetEntries()),"");
   l_pTot->AddEntry((TObject*)0,Form("mean: %.2f",hist_pTot_Data->GetMean()),"");
   l_pTot->SetFillColor(kWhite);
   l_pTot->SetLineColor(kBlack);
   l_pTot->SetTextFont(43);
-  l_pTot->SetTextSize(20);
+  l_pTot->SetTextSize(14);
   l_pTot->Draw();
   c_pTot->Update();
   c_pTot->SaveAs((plotDataMCOutputPath + "/" + c_pTot->GetName() + ".png"));
@@ -1119,7 +1154,7 @@ void plotVariables(){
   TString inputFile_MC   = "/afs/cern.ch/user/a/abertoli/public/lemma/reco/reco-mupmum.root"; 
 
   // define output path and make output directory for data/MC comparison
-  TString plotDataMCOutputPath = "181020_LemmaVariables_DataMCComparison_reco-333to337";
+  TString plotDataMCOutputPath = "181023_LemmaVariables_DataMCComparison_reco-333to337";
   gSystem->Exec(("mkdir -p "+plotDataMCOutputPath));
 
   // call do the histos function
