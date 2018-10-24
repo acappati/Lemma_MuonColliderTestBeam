@@ -561,39 +561,27 @@ void dataMCComparison(TString plotDataMCOutputPath){
   hist_pTot_MC->SetTitle("p #mu^{+} + p #mu^{-}");
   hist_pTot_MC->GetXaxis()->SetTitle("p #mu^{+} + p #mu^{-} [MeV]");
   hist_pTot_MC->GetYaxis()->SetTitle("events");
-  hist_pTot_MC->SetLineColor(kViolet-6);
-  hist_pTot_MC->SetFillColor(kViolet-4);
+  hist_pTot_MC->SetLineColor(kViolet+1);
+  hist_pTot_MC->SetLineWidth(2);
+  //hist_pTot_MC->SetLineColor(kViolet-6);
+  //hist_pTot_MC->SetFillColorAlpha(kViolet-4, 0.571);
   hist_pTot_MC->Scale(hist_pTot_Data->Integral() / hist_pTot_MC->Integral()); //normalize MC to Data
   hist_pTot_smear03_bias000_MC->SetLineColor(kOrange+7);
-  hist_pTot_smear03_bias000_MC->SetFillColorAlpha(kOrange-3, 0.571);
+  hist_pTot_smear03_bias000_MC->SetLineWidth(2);
+  //hist_pTot_smear03_bias000_MC->SetLineColor(kOrange+7);
+  //hist_pTot_smear03_bias000_MC->SetFillColorAlpha(kOrange-3, 0.571);
   hist_pTot_smear03_bias000_MC->Scale(hist_pTot_Data->Integral() / hist_pTot_smear03_bias000_MC->Integral()); //normalize MC to Data
-  hist_pTot_smear03_bias099_MC->SetLineColor(kGreen+3);
-  hist_pTot_smear03_bias099_MC->SetFillColorAlpha(kGreen-9, 0.571);
-  hist_pTot_smear03_bias099_MC->Scale(hist_pTot_Data->Integral() / hist_pTot_smear03_bias099_MC->Integral()); //normalize MC to Data
-  hist_pTot_smear03_bias101_MC->SetLineColor(kAzure+2);
-  hist_pTot_smear03_bias101_MC->SetFillColorAlpha(kAzure+6, 0.571);
-  hist_pTot_smear03_bias101_MC->Scale(hist_pTot_Data->Integral() / hist_pTot_smear03_bias101_MC->Integral()); //normalize MC to Data
   hist_pTot_Data->SetMarkerStyle(20);
   hist_pTot_Data->SetMarkerColor(kBlack);
   hist_pTot_Data->SetLineColor(kBlack);
-  hist_pTot_MC->SetMaximum(1.2 * max(max(max(hist_pTot_MC->GetMaximum(),hist_pTot_smear03_bias000_MC->GetMaximum()),max(hist_pTot_smear03_bias099_MC->GetMaximum(),hist_pTot_smear03_bias101_MC->GetMaximum())),hist_pTot_Data->GetMaximum()));
+  hist_pTot_MC->SetMaximum(1.2 * max(max(hist_pTot_MC->GetMaximum(),hist_pTot_smear03_bias000_MC->GetMaximum()),hist_pTot_Data->GetMaximum()));
   hist_pTot_MC->Draw("hist");
-  hist_pTot_smear03_bias099_MC->Draw("histsame");
-  hist_pTot_smear03_bias101_MC->Draw("histsame");
   hist_pTot_smear03_bias000_MC->Draw("histsame");
   hist_pTot_Data->Draw("samepe");
-  TLegend* l_pTot = new TLegend(0.76,0.17,0.98,0.97);
+  TLegend* l_pTot = new TLegend(0.76,0.55,0.98,0.96);
   l_pTot->AddEntry(hist_pTot_MC,"MC","f");
   l_pTot->AddEntry((TObject*)0,Form("entries: %.2f",hist_pTot_MC->GetEntries()),"");
-  l_pTot->AddEntry((TObject*)0,Form("mean: %.2f",hist_pTot_MC->GetMean()),"");
-  l_pTot->AddEntry(hist_pTot_smear03_bias099_MC,"MC smear","f");
-  l_pTot->AddEntry((TObject*)0,"gauss(0.99,0.03)","");
-  l_pTot->AddEntry((TObject*)0,Form("entries: %.2f",hist_pTot_smear03_bias099_MC->GetEntries()),"");
-  l_pTot->AddEntry((TObject*)0,Form("mean: %.2f",hist_pTot_smear03_bias099_MC->GetMean()),"");
-  l_pTot->AddEntry(hist_pTot_smear03_bias101_MC,"MC smear","f");
-  l_pTot->AddEntry((TObject*)0,"gauss(1.01,0.03)","");
-  l_pTot->AddEntry((TObject*)0,Form("entries: %.2f",hist_pTot_smear03_bias101_MC->GetEntries()),"");
-  l_pTot->AddEntry((TObject*)0,Form("mean: %.2f",hist_pTot_smear03_bias101_MC->GetMean()),"");
+  l_pTot->AddEntry((TObject*)0,Form("mean: %.2f",hist_pTot_MC->GetMean()),"");  
   l_pTot->AddEntry(hist_pTot_smear03_bias000_MC,"MC smear","f");
   l_pTot->AddEntry((TObject*)0,"gauss(0.00,0.03)","");
   l_pTot->AddEntry((TObject*)0,Form("entries: %.2f",hist_pTot_smear03_bias000_MC->GetEntries()),"");
@@ -608,6 +596,60 @@ void dataMCComparison(TString plotDataMCOutputPath){
   l_pTot->Draw();
   c_pTot->Update();
   c_pTot->SaveAs((plotDataMCOutputPath + "/" + c_pTot->GetName() + ".png"));
+
+
+  TCanvas* c_pTot_smear = new TCanvas("c_pTot_smear","c_pTot_smear");
+  c_pTot_smear->cd();
+  hist_pTot_smear03_bias099_MC->SetTitle("p #mu^{+} + p #mu^{-}");
+  hist_pTot_smear03_bias099_MC->GetXaxis()->SetTitle("p #mu^{+} + p #mu^{-} [MeV]");
+  hist_pTot_smear03_bias099_MC->GetYaxis()->SetTitle("events");
+  hist_pTot_smear03_bias099_MC->SetLineColor(kGreen+1);
+  hist_pTot_smear03_bias099_MC->SetLineWidth(2);
+  //hist_pTot_smear03_bias099_MC->SetLineColor(kGreen+3);
+  //hist_pTot_smear03_bias099_MC->SetFillColorAlpha(kGreen-9, 0.571);
+  hist_pTot_smear03_bias099_MC->Scale(hist_pTot_Data->Integral() / hist_pTot_smear03_bias099_MC->Integral()); //normalize MC to Data
+  hist_pTot_smear03_bias101_MC->SetLineColor(kAzure-3);
+  hist_pTot_smear03_bias101_MC->SetLineWidth(2);
+  //hist_pTot_smear03_bias101_MC->SetLineColor(kAzure+2);
+  //hist_pTot_smear03_bias101_MC->SetFillColorAlpha(kAzure+6, 0.571);
+  hist_pTot_smear03_bias101_MC->Scale(hist_pTot_Data->Integral() / hist_pTot_smear03_bias101_MC->Integral()); //normalize MC to Data
+  hist_pTot_smear03_bias000_MC->SetLineColor(kOrange+7);
+  hist_pTot_smear03_bias000_MC->SetLineWidth(2);
+  //hist_pTot_smear03_bias000_MC->SetLineColor(kOrange+7);
+  //hist_pTot_smear03_bias000_MC->SetFillColorAlpha(kOrange-3, 0.571);
+  hist_pTot_smear03_bias000_MC->Scale(hist_pTot_Data->Integral() / hist_pTot_smear03_bias000_MC->Integral()); //normalize MC to Data
+  hist_pTot_Data->SetMarkerStyle(20);
+  hist_pTot_Data->SetMarkerColor(kBlack);
+  hist_pTot_Data->SetLineColor(kBlack);
+  hist_pTot_smear03_bias099_MC->SetMaximum(1.2 * max(max(hist_pTot_smear03_bias099_MC->GetMaximum(),hist_pTot_smear03_bias101_MC->GetMaximum()),max(hist_pTot_Data->GetMaximum(),hist_pTot_smear03_bias000_MC->GetMaximum())));
+  hist_pTot_smear03_bias099_MC->Draw("histsame");
+  hist_pTot_smear03_bias101_MC->Draw("histsame");
+  hist_pTot_smear03_bias000_MC->Draw("histsame");
+  hist_pTot_Data->Draw("samepe");
+  TLegend* l_pTot_smear = new TLegend(0.76,0.36,0.98,0.97);
+  l_pTot_smear->AddEntry(hist_pTot_smear03_bias099_MC,"MC smear","f");
+  l_pTot_smear->AddEntry((TObject*)0,"gauss(0.99,0.03)","");
+  l_pTot_smear->AddEntry((TObject*)0,Form("entries: %.2f",hist_pTot_smear03_bias099_MC->GetEntries()),"");
+  l_pTot_smear->AddEntry((TObject*)0,Form("mean: %.2f",hist_pTot_smear03_bias099_MC->GetMean()),"");
+  l_pTot_smear->AddEntry(hist_pTot_smear03_bias101_MC,"MC smear","f");
+  l_pTot_smear->AddEntry((TObject*)0,"gauss(1.01,0.03)","");
+  l_pTot_smear->AddEntry((TObject*)0,Form("entries: %.2f",hist_pTot_smear03_bias101_MC->GetEntries()),"");
+  l_pTot_smear->AddEntry((TObject*)0,Form("mean: %.2f",hist_pTot_smear03_bias101_MC->GetMean()),"");
+  l_pTot_smear->AddEntry(hist_pTot_smear03_bias000_MC,"MC smear","f");
+  l_pTot_smear->AddEntry((TObject*)0,"gauss(0.00,0.03)","");
+  l_pTot_smear->AddEntry((TObject*)0,Form("entries: %.2f",hist_pTot_smear03_bias000_MC->GetEntries()),"");
+  l_pTot_smear->AddEntry((TObject*)0,Form("mean: %.2f",hist_pTot_smear03_bias000_MC->GetMean()),"");
+  l_pTot_smear->AddEntry(hist_pTot_Data, "Data", "pl");
+  l_pTot_smear->AddEntry((TObject*)0,Form("entries: %.2f",hist_pTot_Data->GetEntries()),"");
+  l_pTot_smear->AddEntry((TObject*)0,Form("mean: %.2f",hist_pTot_Data->GetMean()),"");
+  l_pTot_smear->SetFillColor(kWhite);
+  l_pTot_smear->SetLineColor(kBlack);
+  l_pTot_smear->SetTextFont(43);
+  l_pTot_smear->SetTextSize(14);
+  l_pTot_smear->Draw();
+  c_pTot_smear->Update();
+  c_pTot_smear->SaveAs((plotDataMCOutputPath + "/" + c_pTot_smear->GetName() + ".png"));
+ 
  
 
   TCanvas* c_chi2MuPlus = new TCanvas("c_chi2MuPlus","c_chi2MuPlus");
@@ -1150,11 +1192,11 @@ void dataMCComparison(TString plotDataMCOutputPath){
 void plotVariables(){
 
   // define input files 
-  TString inputFile_Data = "/afs/cern.ch/user/a/abertoli/public/lemma/reco/reco-333to337.root";
+  TString inputFile_Data = "/afs/cern.ch/user/a/abertoli/public/lemma/reco/reco-333to352.root";
   TString inputFile_MC   = "/afs/cern.ch/user/a/abertoli/public/lemma/reco/reco-mupmum.root"; 
 
   // define output path and make output directory for data/MC comparison
-  TString plotDataMCOutputPath = "181023_LemmaVariables_DataMCComparison_reco-333to337";
+  TString plotDataMCOutputPath = "181024_LemmaVariables_DataMCComparison_reco-333to352";
   gSystem->Exec(("mkdir -p "+plotDataMCOutputPath));
 
   // call do the histos function
