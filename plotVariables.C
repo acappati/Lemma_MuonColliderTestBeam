@@ -249,6 +249,8 @@ void doTheHistos(TString inputFileName, TString label){
   TH1F* hist_xext_MuMinus = new TH1F("hist_xext_MuMinus","hist_xext_MuMinus",20,-50.,50.);
   TH1F* hist_xext_MuPlus  = new TH1F("hist_xext_MuPlus", "hist_xext_MuPlus", 20,-50.,50.);
 
+  TH1F* hist_InvMass_mupmum  = new TH1F("hist_InvMass_mupmum", "hist_InvMass_mupmum", 100,24800.,57000.);
+
 
   // loop over tree entries 
   Long64_t entries = inputTree->GetEntries();
@@ -294,26 +296,47 @@ void doTheHistos(TString inputFileName, TString label){
 
       // use extrapolate_track_x function 
       Double_t z0 = 10.*(569.5-84.6); // subdet 30
-      Double_t x_ext = -9999;
-      Double_t x_ext_err = -9999;
-      Double_t dx_on_dz_ext = -9999;
-      Double_t dx_on_dz_ext_err = -9999;
-      Double_t chi2 = 99999;
+      Double_t x_ext_mup     = -9999;
+      Double_t x_ext_mup_err = -9999;
+      Double_t x_ext_mum     = -9999;
+      Double_t x_ext_mum_err = -9999;
+      Double_t dx_on_dz_ext_mup     = -9999;
+      Double_t dx_on_dz_ext_mup_err = -9999;
+      Double_t dx_on_dz_ext_mum     = -9999;
+      Double_t dx_on_dz_ext_mum_err = -9999;
+      Double_t chi2_mup = 99999;
+      Double_t chi2_mum = 99999;
       //inputs are: z0, x_pos_mum, x_pos_mum_err, z_pos_mum
       //outputs are saved in:
       //x_ext (extrapolated x position at z=z0), 
-      //x_ext_err, dx_on_dz_ext (extrapolated dx/dz at z=z0), 
+      //x_ext_err, 
+      //dx_on_dz_ext (extrapolated dx/dz at z=z0), 
       //dx_on_dz_ext_err
-      chi2 = extrapolate_track_x(z0, x_pos_mum, x_pos_mum_err, z_x_pos_mum, x_ext, x_ext_err, dx_on_dz_ext, dx_on_dz_ext_err);
-      if( chi2 < 9999. ){
+      chi2_mum = extrapolate_track_x(z0, x_pos_mum, x_pos_mum_err, z_x_pos_mum, x_ext_mum, x_ext_mum_err, dx_on_dz_ext_mum, dx_on_dz_ext_mum_err);
+      if( chi2_mum < 9999. ){
         // cout << x_ext << " " << x_ext_err << endl;
-        hist_xext_MuMinus->Fill(x_ext);
+        hist_xext_MuMinus->Fill(x_ext_mum);
       }
-      chi2 = extrapolate_track_x(z0, x_pos_mup, x_pos_mup_err, z_x_pos_mup, x_ext, x_ext_err, dx_on_dz_ext, dx_on_dz_ext_err);
-      if( chi2 < 9999. ){
+      chi2_mup = extrapolate_track_x(z0, x_pos_mup, x_pos_mup_err, z_x_pos_mup, x_ext_mup, x_ext_mup_err, dx_on_dz_ext_mup, dx_on_dz_ext_mup_err);
+      if( chi2_mup < 9999. ){
         // cout << x_ext << " " << x_ext_err << endl;
-        hist_xext_MuPlus->Fill(x_ext);
+        hist_xext_MuPlus->Fill(x_ext_mup);
       }
+
+
+      // --- mu+ mu- invariant mass
+      Double_t theta_xz_mup = acos(dx_on_dz_ext_mup);
+      Double_t theta_xz_mum = acos(dx_on_dz_ext_mum);
+
+      Double_t restMass_mu = 105.66; // [MeV]
+
+      Double_t E_mup = sqrt((restMass_mu*restMass_mu) + (p_mup*p_mup));
+      Double_t E_mum = sqrt((restMass_mu*restMass_mu) + (p_mum*p_mum));
+
+      Double_t invMass_mupmum = 2*restMass_mu*restMass_mu + 2*(E_mup*E_mum - p_mup*p_mum*cos(theta_xz_mup-theta_xz_mum));
+      
+      hist_InvMass_mupmum->Fill(invMass_mupmum);
+      // -----
 
 
       // histos for hits in Si det
@@ -372,6 +395,8 @@ void doTheHistos(TString inputFileName, TString label){
   }    
   hist_chi2MuPlus->Write(hist_chi2MuPlus->GetName());
   hist_chi2MuMinus->Write(hist_chi2MuMinus->GetName());
+
+  hist_InvMass_mupmum->Write(hist_InvMass_mupmum->GetName());
                                 
   hist_xh_det10_MuPlus->Write(hist_xh_det10_MuPlus->GetName());
   hist_xh_det20_MuPlus->Write(hist_xh_det20_MuPlus->GetName());
@@ -421,6 +446,8 @@ void dataMCComparison(TString plotDataMCOutputPath){
   TH1F* hist_pTot_Data        = (TH1F*)inFile_Data->Get("hist_pTot");      
   TH1F* hist_chi2MuPlus_Data  = (TH1F*)inFile_Data->Get("hist_chi2MuPlus");
   TH1F* hist_chi2MuMinus_Data = (TH1F*)inFile_Data->Get("hist_chi2MuMinus");
+
+  TH1F* hist_InvMass_mupmum_Data = (TH1F*)inFile_Data->Get("hist_InvMass_mupmum");
                                 
   TH1F* hist_xh_det10_MuPlus_Data = (TH1F*)inFile_Data->Get("hist_xh_det10_MuPlus");
   TH1F* hist_xh_det20_MuPlus_Data = (TH1F*)inFile_Data->Get("hist_xh_det20_MuPlus");
@@ -462,6 +489,8 @@ void dataMCComparison(TString plotDataMCOutputPath){
   TH1F* hist_pTot_smear03_bias101_MC = (TH1F*)inFile_MC->Get("hist_pTot_smear03_bias101");        
   TH1F* hist_chi2MuPlus_MC  = (TH1F*)inFile_MC->Get("hist_chi2MuPlus");
   TH1F* hist_chi2MuMinus_MC = (TH1F*)inFile_MC->Get("hist_chi2MuMinus");
+
+  TH1F* hist_InvMass_mupmum_MC = (TH1F*)inFile_MC->Get("hist_InvMass_mupmum");
                                 
   TH1F* hist_xh_det10_MuPlus_MC = (TH1F*)inFile_MC->Get("hist_xh_det10_MuPlus");
   TH1F* hist_xh_det20_MuPlus_MC = (TH1F*)inFile_MC->Get("hist_xh_det20_MuPlus");
@@ -710,6 +739,36 @@ void dataMCComparison(TString plotDataMCOutputPath){
   l_chi2MuMinus->Draw();
   c_chi2MuMinus->Update();
   c_chi2MuMinus->SaveAs((plotDataMCOutputPath + "/" + c_chi2MuMinus->GetName() + ".png"));
+
+
+  TCanvas* c_InvMass_mupmum = new TCanvas("c_InvMass_mupmum","c_InvMass_mupmum");
+  c_InvMass_mupmum->cd();
+  hist_InvMass_mupmum_MC->SetTitle("Invariant Mass");
+  hist_InvMass_mupmum_MC->GetXaxis()->SetTitle("m #mu^{+} #mu^{-} [MeV]");
+  hist_InvMass_mupmum_MC->GetYaxis()->SetTitle("events");
+  hist_InvMass_mupmum_MC->SetLineColor(kGreen+2);   
+  hist_InvMass_mupmum_MC->SetFillColor(kGreen-9);
+  hist_InvMass_mupmum_MC->Scale(hist_InvMass_mupmum_Data->Integral() / hist_InvMass_mupmum_MC->Integral()); //normalize MC to Data
+  hist_InvMass_mupmum_MC->SetMaximum(1.2 * max(hist_InvMass_mupmum_MC->GetMaximum(),hist_InvMass_mupmum_Data->GetMaximum()));
+  hist_InvMass_mupmum_MC->Draw("hist");
+  hist_InvMass_mupmum_Data->SetMarkerStyle(20);  
+  hist_InvMass_mupmum_Data->SetMarkerColor(kBlack);
+  hist_InvMass_mupmum_Data->SetLineColor(kBlack);
+  hist_InvMass_mupmum_Data->Draw("samepe");
+  TLegend* l_InvMass_mupmum = new TLegend(0.75,0.67,0.98,0.95);
+  l_InvMass_mupmum->AddEntry(hist_InvMass_mupmum_MC,"MC","f");
+  l_InvMass_mupmum->AddEntry((TObject*)0,Form("entries: %.2f",hist_InvMass_mupmum_MC->GetEntries()),"");
+  l_InvMass_mupmum->AddEntry((TObject*)0,Form("mean: %.2f",hist_InvMass_mupmum_MC->GetMean()),"");
+  l_InvMass_mupmum->AddEntry(hist_InvMass_mupmum_Data, "Data", "pl");
+  l_InvMass_mupmum->AddEntry((TObject*)0,Form("entries: %.2f",hist_InvMass_mupmum_Data->GetEntries()),"");
+  l_InvMass_mupmum->AddEntry((TObject*)0,Form("mean: %.2f",hist_InvMass_mupmum_Data->GetMean()),"");
+  l_InvMass_mupmum->SetFillColor(kWhite);
+  l_InvMass_mupmum->SetLineColor(kBlack);
+  l_InvMass_mupmum->SetTextFont(43);
+  l_InvMass_mupmum->SetTextSize(16);
+  l_InvMass_mupmum->Draw();
+  c_InvMass_mupmum->Update();
+  c_InvMass_mupmum->SaveAs((plotDataMCOutputPath + "/" + c_InvMass_mupmum->GetName() + ".png"));
  
 
   // xh in det30
@@ -1202,7 +1261,7 @@ void plotVariables(){
   TString inputFile_MC   = "/afs/cern.ch/user/a/abertoli/public/lemma/reco/reco-mupmum.root"; 
 
   // define output path and make output directory for data/MC comparison
-  TString plotDataMCOutputPath = "181024_LemmaVariables_DataMCComparison_reco-333to352";
+  TString plotDataMCOutputPath = "181029_LemmaVariables_DataMCComparison_reco-333to352";
   gSystem->Exec(("mkdir -p "+plotDataMCOutputPath));
 
   // call do the histos function
