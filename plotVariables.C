@@ -249,7 +249,7 @@ void doTheHistos(TString inputFileName, TString label){
   TH1F* hist_xext_MuMinus = new TH1F("hist_xext_MuMinus","hist_xext_MuMinus",20,-50.,50.);
   TH1F* hist_xext_MuPlus  = new TH1F("hist_xext_MuPlus", "hist_xext_MuPlus", 20,-50.,50.);
 
-  TH1F* hist_InvMass_mupmum  = new TH1F("hist_InvMass_mupmum", "hist_InvMass_mupmum", 100,24800.,57000.);
+  TH1F* hist_InvMass_mupmum  = new TH1F("hist_InvMass_mupmum", "hist_InvMass_mupmum", 100,100.,300.);
 
 
   // loop over tree entries 
@@ -333,7 +333,7 @@ void doTheHistos(TString inputFileName, TString label){
       Double_t E_mup = sqrt((restMass_mu*restMass_mu) + (p_mup*p_mup));
       Double_t E_mum = sqrt((restMass_mu*restMass_mu) + (p_mum*p_mum));
 
-      Double_t invMass_mupmum = 2*restMass_mu*restMass_mu + 2*(E_mup*E_mum - p_mup*p_mum*cos(theta_xz_mup-theta_xz_mum));
+      Double_t invMass_mupmum = sqrt(2*restMass_mu*restMass_mu + 2*(E_mup*E_mum - p_mup*p_mum*cos(theta_xz_mup-theta_xz_mum)));
       
       hist_InvMass_mupmum->Fill(invMass_mupmum);
       // -----
@@ -743,7 +743,7 @@ void dataMCComparison(TString plotDataMCOutputPath){
 
   TCanvas* c_InvMass_mupmum = new TCanvas("c_InvMass_mupmum","c_InvMass_mupmum");
   c_InvMass_mupmum->cd();
-  hist_InvMass_mupmum_MC->SetTitle("Invariant Mass");
+  hist_InvMass_mupmum_MC->SetTitle("Invariant Mass #mu^{+} #mu^{-}");
   hist_InvMass_mupmum_MC->GetXaxis()->SetTitle("m #mu^{+} #mu^{-} [MeV]");
   hist_InvMass_mupmum_MC->GetYaxis()->SetTitle("events");
   hist_InvMass_mupmum_MC->SetLineColor(kGreen+2);   
