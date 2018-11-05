@@ -249,10 +249,12 @@ void doTheHistos(TString inputFileName, TString label){
   TH1F* hist_xext_MuMinus = new TH1F("hist_xext_MuMinus","hist_xext_MuMinus",20,-50.,50.);
   TH1F* hist_xext_MuPlus  = new TH1F("hist_xext_MuPlus", "hist_xext_MuPlus", 20,-50.,50.);
 
-  TH1F* hist_theta_xz_mup    = new TH1F("hist_theta_xz_mup", "hist_theta_xz_mup", 100,-3.2,3.2);
-  TH1F* hist_theta_xz_mum    = new TH1F("hist_theta_xz_mum", "hist_theta_xz_mum", 100,-3.2,3.2);
+  TH1F* hist_theta_xz_mup    = new TH1F("hist_theta_xz_mup", "hist_theta_xz_mup", 100,-0.025,0.025); //[rad]
+  TH1F* hist_theta_xz_mum    = new TH1F("hist_theta_xz_mum", "hist_theta_xz_mum", 100,-0.025,0.025); //[rad]
   TH1F* hist_InvMass_mupmum  = new TH1F("hist_InvMass_mupmum", "hist_InvMass_mupmum", 100,100.,300.);
 
+  TH1F* hist_xcross = new TH1F("hist_xcross", "hist_xcross", 100,-30.,30.);    // [mm]
+  TH1F* hist_zcross = new TH1F("hist_zcross", "hist_zcross", 100,2000.,7000.); // [mm]
 
 
   // loop over tree entries 
@@ -325,6 +327,19 @@ void doTheHistos(TString inputFileName, TString label){
         // cout << x_ext << " " << x_ext_err << endl;
         hist_xext_MuPlus->Fill(x_ext_mup);
       }
+
+
+      // ---- x and z on the target (primary vertex of mu+ mu- production)
+      // derived assuming: 
+      // -   x_mup(z) = x_ext_mup + dx_on_dz_ext_mup * (z-z0)
+      // -   x_mum(z) = x_ext_mum + dx_on_dz_ext_mum * (z-z0) 
+      // -   x_mup(z_cross) = x_mum(z_cross)  
+      Double_t z_cross = z0 + (x_ext_mum - x_ext_mup)/(dx_on_dz_ext_mup - dx_on_dz_ext_mum);
+      Double_t x_cross = x_ext_mup + dx_on_dz_ext_mup * (z_cross - z0);
+
+      hist_xcross->Fill(x_cross);
+      hist_zcross->Fill(z_cross);
+      
 
 
       // --- mu+ mu- invariant mass
@@ -404,6 +419,9 @@ void doTheHistos(TString inputFileName, TString label){
   hist_theta_xz_mup->Write(hist_theta_xz_mup->GetName());
   hist_theta_xz_mum->Write(hist_theta_xz_mum->GetName());
   hist_InvMass_mupmum->Write(hist_InvMass_mupmum->GetName());
+
+  hist_xcross->Write(hist_xcross->GetName());
+  hist_zcross->Write(hist_zcross->GetName());
                                 
   hist_xh_det10_MuPlus->Write(hist_xh_det10_MuPlus->GetName());
   hist_xh_det20_MuPlus->Write(hist_xh_det20_MuPlus->GetName());
@@ -457,6 +475,9 @@ void dataMCComparison(TString plotDataMCOutputPath){
   TH1F* hist_theta_xz_mup_Data   = (TH1F*)inFile_Data->Get("hist_theta_xz_mup");
   TH1F* hist_theta_xz_mum_Data   = (TH1F*)inFile_Data->Get("hist_theta_xz_mum");
   TH1F* hist_InvMass_mupmum_Data = (TH1F*)inFile_Data->Get("hist_InvMass_mupmum");
+
+  TH1F* hist_xcross_Data = (TH1F*)inFile_Data->Get("hist_xcross"); 
+  TH1F* hist_zcross_Data = (TH1F*)inFile_Data->Get("hist_zcross");
                                 
   TH1F* hist_xh_det10_MuPlus_Data = (TH1F*)inFile_Data->Get("hist_xh_det10_MuPlus");
   TH1F* hist_xh_det20_MuPlus_Data = (TH1F*)inFile_Data->Get("hist_xh_det20_MuPlus");
@@ -502,7 +523,10 @@ void dataMCComparison(TString plotDataMCOutputPath){
   TH1F* hist_theta_xz_mup_MC   = (TH1F*)inFile_MC->Get("hist_theta_xz_mup");
   TH1F* hist_theta_xz_mum_MC   = (TH1F*)inFile_MC->Get("hist_theta_xz_mum");
   TH1F* hist_InvMass_mupmum_MC = (TH1F*)inFile_MC->Get("hist_InvMass_mupmum");
-                                
+
+  TH1F* hist_xcross_MC = (TH1F*)inFile_MC->Get("hist_xcross"); 
+  TH1F* hist_zcross_MC = (TH1F*)inFile_MC->Get("hist_zcross");
+                                 
   TH1F* hist_xh_det10_MuPlus_MC = (TH1F*)inFile_MC->Get("hist_xh_det10_MuPlus");
   TH1F* hist_xh_det20_MuPlus_MC = (TH1F*)inFile_MC->Get("hist_xh_det20_MuPlus");
   TH1F* hist_xh_det30_MuPlus_MC = (TH1F*)inFile_MC->Get("hist_xh_det30_MuPlus");
@@ -841,6 +865,70 @@ void dataMCComparison(TString plotDataMCOutputPath){
   l_InvMass_mupmum->Draw();
   c_InvMass_mupmum->Update();
   c_InvMass_mupmum->SaveAs((plotDataMCOutputPath + "/" + c_InvMass_mupmum->GetName() + ".png"));
+
+
+  TCanvas* c_xcross = new TCanvas("c_xcross","c_xcross");
+  c_xcross->cd();
+  hist_xcross_MC->SetTitle("x Primary Vertex");
+  hist_xcross_MC->GetXaxis()->SetTitle("x cross [mm]");
+  hist_xcross_MC->GetYaxis()->SetTitle("events");
+  hist_xcross_MC->SetLineColor(kOrange+7);   
+  hist_xcross_MC->SetFillColor(kOrange-3);
+  //hist_xcross_MC->Scale(hist_xcross_Data->Integral() / hist_xcross_MC->Integral()); //normalize MC to Data
+  hist_xcross_MC->SetMaximum(1.2 * max(hist_xcross_MC->GetMaximum(),hist_xcross_Data->GetMaximum()));
+  hist_xcross_MC->Draw("hist");
+  hist_xcross_Data->SetMarkerStyle(20);  
+  hist_xcross_Data->SetMarkerColor(kBlack);
+  hist_xcross_Data->SetLineColor(kBlack);
+  hist_xcross_Data->Draw("samepe");
+  TLegend* l_xcross = new TLegend(0.75,0.67,0.98,0.95);
+  l_xcross->AddEntry(hist_xcross_MC,"MC","f");
+  l_xcross->AddEntry((TObject*)0,Form("entries: %.2f",hist_xcross_MC->GetEntries()),"");
+  l_xcross->AddEntry((TObject*)0,Form("mean: %.2f",hist_xcross_MC->GetMean()),"");
+  l_xcross->AddEntry(hist_xcross_Data, "Data", "pl");
+  l_xcross->AddEntry((TObject*)0,Form("entries: %.2f",hist_xcross_Data->GetEntries()),"");
+  l_xcross->AddEntry((TObject*)0,Form("mean: %.2f",hist_xcross_Data->GetMean()),"");
+  l_xcross->SetFillColor(kWhite);
+  l_xcross->SetLineColor(kBlack);
+  l_xcross->SetTextFont(43);
+  l_xcross->SetTextSize(16);
+  l_xcross->Draw();
+  c_xcross->Update();
+  c_xcross->SaveAs((plotDataMCOutputPath + "/" + c_xcross->GetName() + ".png"));
+
+
+  TCanvas* c_zcross = new TCanvas("c_zcross","c_zcross");
+  c_zcross->cd();
+  hist_zcross_MC->SetTitle("z Primary Vertex");
+  hist_zcross_MC->GetXaxis()->SetTitle("z cross [mm]");
+  hist_zcross_MC->GetYaxis()->SetTitle("events");
+  hist_zcross_MC->SetLineColor(kOrange+7);   
+  hist_zcross_MC->SetFillColor(kOrange-3);
+  //hist_zcross_MC->Scale(hist_zcross_Data->Integral() / hist_zcross_MC->Integral()); //normalize MC to Data
+  hist_zcross_MC->SetMaximum(1.2 * max(hist_zcross_MC->GetMaximum(),hist_zcross_Data->GetMaximum()));
+  hist_zcross_MC->Draw("hist");
+  hist_zcross_Data->SetMarkerStyle(20);  
+  hist_zcross_Data->SetMarkerColor(kBlack);
+  hist_zcross_Data->SetLineColor(kBlack);
+  hist_zcross_Data->Draw("samepe");
+  TLegend* l_zcross = new TLegend(0.75,0.67,0.98,0.95);
+  l_zcross->AddEntry(hist_zcross_MC,"MC","f");
+  l_zcross->AddEntry((TObject*)0,Form("entries: %.2f",hist_zcross_MC->GetEntries()),"");
+  l_zcross->AddEntry((TObject*)0,Form("mean: %.2f",hist_zcross_MC->GetMean()),"");
+  l_zcross->AddEntry(hist_zcross_Data, "Data", "pl");
+  l_zcross->AddEntry((TObject*)0,Form("entries: %.2f",hist_zcross_Data->GetEntries()),"");
+  l_zcross->AddEntry((TObject*)0,Form("mean: %.2f",hist_zcross_Data->GetMean()),"");
+  l_zcross->SetFillColor(kWhite);
+  l_zcross->SetLineColor(kBlack);
+  l_zcross->SetTextFont(43);
+  l_zcross->SetTextSize(16);
+  l_zcross->Draw();
+  c_zcross->Update();
+  TLine *line_zcross_centre = new TLine(3733.,gPad->GetUymin(),3733.,gPad->GetUymax());
+  line_zcross_centre->SetLineColor(kRed);
+  line_zcross_centre->SetLineStyle(2);
+  line_zcross_centre->Draw();
+  c_zcross->SaveAs((plotDataMCOutputPath + "/" + c_zcross->GetName() + ".png"));
  
 
   // xh in det30
