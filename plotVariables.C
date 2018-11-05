@@ -249,7 +249,10 @@ void doTheHistos(TString inputFileName, TString label){
   TH1F* hist_xext_MuMinus = new TH1F("hist_xext_MuMinus","hist_xext_MuMinus",20,-50.,50.);
   TH1F* hist_xext_MuPlus  = new TH1F("hist_xext_MuPlus", "hist_xext_MuPlus", 20,-50.,50.);
 
+  TH1F* hist_theta_xz_mup    = new TH1F("hist_theta_xz_mup", "hist_theta_xz_mup", 100,-3.2,3.2);
+  TH1F* hist_theta_xz_mum    = new TH1F("hist_theta_xz_mum", "hist_theta_xz_mum", 100,-3.2,3.2);
   TH1F* hist_InvMass_mupmum  = new TH1F("hist_InvMass_mupmum", "hist_InvMass_mupmum", 100,100.,300.);
+
 
 
   // loop over tree entries 
@@ -325,8 +328,8 @@ void doTheHistos(TString inputFileName, TString label){
 
 
       // --- mu+ mu- invariant mass
-      Double_t theta_xz_mup = acos(dx_on_dz_ext_mup);
-      Double_t theta_xz_mum = acos(dx_on_dz_ext_mum);
+      Double_t theta_xz_mup = atan(dx_on_dz_ext_mup);
+      Double_t theta_xz_mum = atan(dx_on_dz_ext_mum);
 
       Double_t restMass_mu = 105.66; // [MeV]
 
@@ -335,6 +338,8 @@ void doTheHistos(TString inputFileName, TString label){
 
       Double_t invMass_mupmum = sqrt(2*restMass_mu*restMass_mu + 2*(E_mup*E_mum - p_mup*p_mum*cos(theta_xz_mup-theta_xz_mum)));
       
+      hist_theta_xz_mup->Fill(theta_xz_mup);
+      hist_theta_xz_mum->Fill(theta_xz_mum);
       hist_InvMass_mupmum->Fill(invMass_mupmum);
       // -----
 
@@ -396,6 +401,8 @@ void doTheHistos(TString inputFileName, TString label){
   hist_chi2MuPlus->Write(hist_chi2MuPlus->GetName());
   hist_chi2MuMinus->Write(hist_chi2MuMinus->GetName());
 
+  hist_theta_xz_mup->Write(hist_theta_xz_mup->GetName());
+  hist_theta_xz_mum->Write(hist_theta_xz_mum->GetName());
   hist_InvMass_mupmum->Write(hist_InvMass_mupmum->GetName());
                                 
   hist_xh_det10_MuPlus->Write(hist_xh_det10_MuPlus->GetName());
@@ -447,6 +454,8 @@ void dataMCComparison(TString plotDataMCOutputPath){
   TH1F* hist_chi2MuPlus_Data  = (TH1F*)inFile_Data->Get("hist_chi2MuPlus");
   TH1F* hist_chi2MuMinus_Data = (TH1F*)inFile_Data->Get("hist_chi2MuMinus");
 
+  TH1F* hist_theta_xz_mup_Data   = (TH1F*)inFile_Data->Get("hist_theta_xz_mup");
+  TH1F* hist_theta_xz_mum_Data   = (TH1F*)inFile_Data->Get("hist_theta_xz_mum");
   TH1F* hist_InvMass_mupmum_Data = (TH1F*)inFile_Data->Get("hist_InvMass_mupmum");
                                 
   TH1F* hist_xh_det10_MuPlus_Data = (TH1F*)inFile_Data->Get("hist_xh_det10_MuPlus");
@@ -490,6 +499,8 @@ void dataMCComparison(TString plotDataMCOutputPath){
   TH1F* hist_chi2MuPlus_MC  = (TH1F*)inFile_MC->Get("hist_chi2MuPlus");
   TH1F* hist_chi2MuMinus_MC = (TH1F*)inFile_MC->Get("hist_chi2MuMinus");
 
+  TH1F* hist_theta_xz_mup_MC   = (TH1F*)inFile_MC->Get("hist_theta_xz_mup");
+  TH1F* hist_theta_xz_mum_MC   = (TH1F*)inFile_MC->Get("hist_theta_xz_mum");
   TH1F* hist_InvMass_mupmum_MC = (TH1F*)inFile_MC->Get("hist_InvMass_mupmum");
                                 
   TH1F* hist_xh_det10_MuPlus_MC = (TH1F*)inFile_MC->Get("hist_xh_det10_MuPlus");
@@ -739,6 +750,67 @@ void dataMCComparison(TString plotDataMCOutputPath){
   l_chi2MuMinus->Draw();
   c_chi2MuMinus->Update();
   c_chi2MuMinus->SaveAs((plotDataMCOutputPath + "/" + c_chi2MuMinus->GetName() + ".png"));
+
+  
+  TCanvas* c_theta_xz_mup = new TCanvas("c_theta_xz_mup","c_theta_xz_mup");
+  c_theta_xz_mup->cd();
+  hist_theta_xz_mup_MC->SetTitle("#theta xz #mu^{+}");
+  hist_theta_xz_mup_MC->GetXaxis()->SetTitle("#theta [rad]");
+  hist_theta_xz_mup_MC->GetYaxis()->SetTitle("events");
+  hist_theta_xz_mup_MC->SetLineColor(kRed);   
+  hist_theta_xz_mup_MC->SetFillColor(kRed-10);
+  hist_theta_xz_mup_MC->Scale(hist_theta_xz_mup_Data->Integral() / hist_theta_xz_mup_MC->Integral()); //normalize MC to Data
+  hist_theta_xz_mup_MC->SetMaximum(1.2 * max(hist_theta_xz_mup_MC->GetMaximum(),hist_theta_xz_mup_Data->GetMaximum()));
+  hist_theta_xz_mup_MC->Draw("hist");
+  hist_theta_xz_mup_Data->SetMarkerStyle(20);  
+  hist_theta_xz_mup_Data->SetMarkerColor(kBlack);
+  hist_theta_xz_mup_Data->SetLineColor(kBlack);
+  hist_theta_xz_mup_Data->Draw("samepe");
+  TLegend* l_theta_xz_mup = new TLegend(0.75,0.67,0.98,0.95);
+  l_theta_xz_mup->AddEntry(hist_theta_xz_mup_MC,"MC","f");
+  l_theta_xz_mup->AddEntry((TObject*)0,Form("entries: %.2f",hist_theta_xz_mup_MC->GetEntries()),"");
+  l_theta_xz_mup->AddEntry((TObject*)0,Form("mean: %.2f",hist_theta_xz_mup_MC->GetMean()),"");
+  l_theta_xz_mup->AddEntry(hist_theta_xz_mup_Data, "Data", "pl");
+  l_theta_xz_mup->AddEntry((TObject*)0,Form("entries: %.2f",hist_theta_xz_mup_Data->GetEntries()),"");
+  l_theta_xz_mup->AddEntry((TObject*)0,Form("mean: %.2f",hist_theta_xz_mup_Data->GetMean()),"");
+  l_theta_xz_mup->SetFillColor(kWhite);
+  l_theta_xz_mup->SetLineColor(kBlack);
+  l_theta_xz_mup->SetTextFont(43);
+  l_theta_xz_mup->SetTextSize(16);
+  l_theta_xz_mup->Draw();
+  c_theta_xz_mup->Update();
+  c_theta_xz_mup->SaveAs((plotDataMCOutputPath + "/" + c_theta_xz_mup->GetName() + ".png"));
+
+
+  TCanvas* c_theta_xz_mum = new TCanvas("c_theta_xz_mum","c_theta_xz_mum");
+  c_theta_xz_mum->cd();
+  hist_theta_xz_mum_MC->SetTitle("#theta xz #mu^{-}");
+  hist_theta_xz_mum_MC->GetXaxis()->SetTitle("#theta [rad]");
+  hist_theta_xz_mum_MC->GetYaxis()->SetTitle("events");
+  hist_theta_xz_mum_MC->SetLineColor(kBlue);   
+  hist_theta_xz_mum_MC->SetFillColor(kBlue-10);
+  hist_theta_xz_mum_MC->Scale(hist_theta_xz_mum_Data->Integral() / hist_theta_xz_mum_MC->Integral()); //normalize MC to Data
+  hist_theta_xz_mum_MC->SetMaximum(1.2 * max(hist_theta_xz_mum_MC->GetMaximum(),hist_theta_xz_mum_Data->GetMaximum()));
+  hist_theta_xz_mum_MC->Draw("hist");
+  hist_theta_xz_mum_Data->SetMarkerStyle(20);  
+  hist_theta_xz_mum_Data->SetMarkerColor(kBlack);
+  hist_theta_xz_mum_Data->SetLineColor(kBlack);
+  hist_theta_xz_mum_Data->Draw("samepe");
+  TLegend* l_theta_xz_mum = new TLegend(0.75,0.67,0.98,0.95);
+  l_theta_xz_mum->AddEntry(hist_theta_xz_mum_MC,"MC","f");
+  l_theta_xz_mum->AddEntry((TObject*)0,Form("entries: %.2f",hist_theta_xz_mum_MC->GetEntries()),"");
+  l_theta_xz_mum->AddEntry((TObject*)0,Form("mean: %.2f",hist_theta_xz_mum_MC->GetMean()),"");
+  l_theta_xz_mum->AddEntry(hist_theta_xz_mum_Data, "Data", "pl");
+  l_theta_xz_mum->AddEntry((TObject*)0,Form("entries: %.2f",hist_theta_xz_mum_Data->GetEntries()),"");
+  l_theta_xz_mum->AddEntry((TObject*)0,Form("mean: %.2f",hist_theta_xz_mum_Data->GetMean()),"");
+  l_theta_xz_mum->SetFillColor(kWhite);
+  l_theta_xz_mum->SetLineColor(kBlack);
+  l_theta_xz_mum->SetTextFont(43);
+  l_theta_xz_mum->SetTextSize(16);
+  l_theta_xz_mum->Draw();
+  c_theta_xz_mum->Update();
+  c_theta_xz_mum->SaveAs((plotDataMCOutputPath + "/" + c_theta_xz_mum->GetName() + ".png"));
+
 
 
   TCanvas* c_InvMass_mupmum = new TCanvas("c_InvMass_mupmum","c_InvMass_mupmum");
@@ -1261,7 +1333,7 @@ void plotVariables(){
   TString inputFile_MC   = "/afs/cern.ch/user/a/abertoli/public/lemma/reco/reco-mupmum.root"; 
 
   // define output path and make output directory for data/MC comparison
-  TString plotDataMCOutputPath = "181029_LemmaVariables_DataMCComparison_reco-333to352";
+  TString plotDataMCOutputPath = "181105_LemmaVariables_DataMCComparison_reco-333to352";
   gSystem->Exec(("mkdir -p "+plotDataMCOutputPath));
 
   // call do the histos function
