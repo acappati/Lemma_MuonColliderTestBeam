@@ -874,7 +874,7 @@ void dataMCComparison(TString plotDataMCOutputPath){
   hist_xcross_MC->GetYaxis()->SetTitle("events");
   hist_xcross_MC->SetLineColor(kOrange+7);   
   hist_xcross_MC->SetFillColor(kOrange-3);
-  //hist_xcross_MC->Scale(hist_xcross_Data->Integral() / hist_xcross_MC->Integral()); //normalize MC to Data
+  hist_xcross_MC->Scale(hist_xcross_Data->Integral() / hist_xcross_MC->Integral()); //normalize MC to Data
   hist_xcross_MC->SetMaximum(1.2 * max(hist_xcross_MC->GetMaximum(),hist_xcross_Data->GetMaximum()));
   hist_xcross_MC->Draw("hist");
   hist_xcross_Data->SetMarkerStyle(20);  
@@ -904,7 +904,7 @@ void dataMCComparison(TString plotDataMCOutputPath){
   hist_zcross_MC->GetYaxis()->SetTitle("events");
   hist_zcross_MC->SetLineColor(kOrange+7);   
   hist_zcross_MC->SetFillColor(kOrange-3);
-  //hist_zcross_MC->Scale(hist_zcross_Data->Integral() / hist_zcross_MC->Integral()); //normalize MC to Data
+  hist_zcross_MC->Scale(hist_zcross_Data->Integral() / hist_zcross_MC->Integral()); //normalize MC to Data
   hist_zcross_MC->SetMaximum(1.2 * max(hist_zcross_MC->GetMaximum(),hist_zcross_Data->GetMaximum()));
   hist_zcross_MC->Draw("hist");
   hist_zcross_Data->SetMarkerStyle(20);  
@@ -1421,7 +1421,7 @@ void plotVariables(){
   TString inputFile_MC   = "/afs/cern.ch/user/a/abertoli/public/lemma/reco/reco-mupmum.root"; 
 
   // define output path and make output directory for data/MC comparison
-  TString plotDataMCOutputPath = "181105_LemmaVariables_DataMCComparison_reco-333to352";
+  TString plotDataMCOutputPath = "181108_LemmaVariables_DataMCComparison_reco-333to352";
   gSystem->Exec(("mkdir -p "+plotDataMCOutputPath));
 
   // call do the histos function
