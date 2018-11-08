@@ -337,9 +337,20 @@ void doTheHistos(TString inputFileName, TString label){
       Double_t z_cross = z0 + (x_ext_mum - x_ext_mup)/(dx_on_dz_ext_mup - dx_on_dz_ext_mum);
       Double_t x_cross = x_ext_mup + dx_on_dz_ext_mup * (z_cross - z0);
 
+      // if MC we use gen level quantities
+      // - on det 30: gen_pos_mum[0]=xh[i]; gen_pos_mum[1]=yh[i]; gen_pos_mum[2]=zh[i];
+      //              gen_pos_mup[0]=xh[i]; gen_pos_mup[1]=yh[i]; gen_pos_mup[2]=zh[i];
+      // - on det 31: gen_pos_mum[3]=xh[i]; gen_pos_mum[4]=yh[i]; gen_pos_mum[5]=zh[i];
+      //              gen_pos_mup[3]=xh[i]; gen_pos_mup[4]=yh[i]; gen_pos_mup[5]=zh[i];
+      if(isMC){
+        Double_t gen_dx_on_dz_ext_mup = (gen_pos_mup[3] - gen_pos_mup[0])/(gen_pos_mup[5] - gen_pos_mup[2]);
+        Double_t gen_dx_on_dz_ext_mum = (gen_pos_mum[3] - gen_pos_mum[0])/(gen_pos_mum[5] - gen_pos_mum[2]);
+        z_cross = z0 + (gen_pos_mum[0] - gen_pos_mup[0])/(gen_dx_on_dz_ext_mup - gen_dx_on_dz_ext_mum);
+      }
+
       hist_xcross->Fill(x_cross);
       hist_zcross->Fill(z_cross);
-      
+      // ----
 
 
       // --- mu+ mu- invariant mass
@@ -1421,7 +1432,7 @@ void plotVariables(){
   TString inputFile_MC   = "/afs/cern.ch/user/a/abertoli/public/lemma/reco/reco-mupmum.root"; 
 
   // define output path and make output directory for data/MC comparison
-  TString plotDataMCOutputPath = "181108_LemmaVariables_DataMCComparison_reco-333to352";
+  TString plotDataMCOutputPath = "181108_LemmaVariables_DataMCComparison_reco-333to352_v2";
   gSystem->Exec(("mkdir -p "+plotDataMCOutputPath));
 
   // call do the histos function
