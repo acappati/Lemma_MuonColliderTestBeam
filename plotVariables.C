@@ -1962,7 +1962,7 @@ void dataMCComparison(TString plotDataMCOutputPath, TString normalizationOption)
 
 
 // main function 
-void plotVariables_BeamInfo(){
+void plotVariables(){
 
   // define input files 
   TString inputFile_Data = "/afs/cern.ch/user/a/abertoli/public/lemma/reco/reco-333to352.root";
