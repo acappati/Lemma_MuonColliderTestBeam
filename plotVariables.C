@@ -1972,7 +1972,7 @@ void plotVariables(){
 
   // define input files 
   TString inputFile_Data = "/afs/cern.ch/user/a/abertoli/public/lemma/reco/reco-333to352.root";
-  TString inputFile_MC   = "/afs/cern.ch/user/a/abertoli/public/lemma/reco/previous/reco-mupmum.root"; 
+  TString inputFile_MC   = "/afs/cern.ch/user/a/abertoli/public/lemma/reco/reco-mupmum.root"; 
 
   // define output path and make output directory for data/MC comparison
   TString plotDataMCOutputPath = "181212_LemmaVariables_DataMCComparison_reco-333to352";
