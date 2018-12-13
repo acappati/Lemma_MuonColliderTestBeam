@@ -182,8 +182,8 @@ void doTheHistos(TString inputFileName, TString label){
   Int_t    nhits;
   Double_t Calo_EnDep[25];
   Int_t    event_type;
-  Double_t gen_pos_mum[7]; // used for MC only
-  Double_t gen_pos_mup[7]; // used for MC only
+  Double_t gen_pos_mum[12]; // used for MC only
+  Double_t gen_pos_mup[12]; // used for MC only
 
   //TFile* inputFile = TFile::Open(inputFileName);
   TFile* inputFile = new TFile(inputFileName);
@@ -328,7 +328,6 @@ void doTheHistos(TString inputFileName, TString label){
       }
 
       // histos for DTs
-      cout<<x_pos_DT_mum[0]<<endl;
       hist_xh_det62_MuPlus->Fill(x_pos_DT_mup[0]);
       hist_xh_det61_MuMinus->Fill(x_pos_DT_mum[0]);
 
@@ -1995,8 +1994,8 @@ void plotVariables(){
   //                    uncommenting the chosen option
   // ---
   // TString normalizationOption = "normMCtoDATA";
-  // TString normalizationOption = "normMCandDATAto1";
-  TString normalizationOption = "normMCandDATAoutofthebox";
+  TString normalizationOption = "normMCandDATAto1";
+  // TString normalizationOption = "normMCandDATAoutofthebox";
   // ---
   dataMCComparison(plotDataMCOutputPath,normalizationOption);
 
