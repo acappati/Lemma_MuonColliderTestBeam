@@ -164,7 +164,7 @@ void doTheHistos(TString inputFileName, TString label){
   Double_t x_pos_mum[12];
   Double_t x_pos_mum_err[12];
   Double_t z_x_pos_mum[12];
-  Double_t x_pos_DT_mum[8]; for(int i=0;i<8;i++){x_pos_DT_mum[i]=0.;}
+  Double_t x_pos_DT_mum[8];
   Double_t z_pos_DT_mum[8];
   Double_t p_mum;
   Double_t p_mup;
@@ -185,7 +185,6 @@ void doTheHistos(TString inputFileName, TString label){
   Double_t gen_pos_mum[12]; // used for MC only
   Double_t gen_pos_mup[12]; // used for MC only
 
-  //TFile* inputFile = TFile::Open(inputFileName);
   TFile* inputFile = new TFile(inputFileName);
   TTree* inputTree = (TTree*)inputFile->Get("lemma");
 
@@ -468,15 +467,15 @@ void doTheHistos(TString inputFileName, TString label){
   hist_zcross->Write(hist_zcross->GetName()); delete hist_zcross;
                                 
   hist_xh_det10_MuPlus->Write(hist_xh_det10_MuPlus->GetName()); delete hist_xh_det10_MuPlus;
-  hist_xh_det20_MuPlus->Write(hist_xh_det20_MuPlus->GetName());	delete hist_xh_det20_MuPlus;
-  hist_xh_det30_MuPlus->Write(hist_xh_det30_MuPlus->GetName());	delete hist_xh_det30_MuPlus;
-  hist_xh_det31_MuPlus->Write(hist_xh_det31_MuPlus->GetName());	delete hist_xh_det31_MuPlus;
-  hist_xh_det32_MuPlus->Write(hist_xh_det32_MuPlus->GetName());	delete hist_xh_det32_MuPlus;
-  hist_xh_det33_MuPlus->Write(hist_xh_det33_MuPlus->GetName());	delete hist_xh_det33_MuPlus;
-  hist_xh_det34_MuPlus->Write(hist_xh_det34_MuPlus->GetName());	delete hist_xh_det34_MuPlus;
-  hist_xh_det35_MuPlus->Write(hist_xh_det35_MuPlus->GetName());	delete hist_xh_det35_MuPlus;
-  hist_xh_det36_MuPlus->Write(hist_xh_det36_MuPlus->GetName());	delete hist_xh_det36_MuPlus;
-  hist_xh_det37_MuPlus->Write(hist_xh_det37_MuPlus->GetName());	delete hist_xh_det37_MuPlus;
+  hist_xh_det20_MuPlus->Write(hist_xh_det20_MuPlus->GetName()); delete hist_xh_det20_MuPlus;
+  hist_xh_det30_MuPlus->Write(hist_xh_det30_MuPlus->GetName()); delete hist_xh_det30_MuPlus;
+  hist_xh_det31_MuPlus->Write(hist_xh_det31_MuPlus->GetName()); delete hist_xh_det31_MuPlus;
+  hist_xh_det32_MuPlus->Write(hist_xh_det32_MuPlus->GetName()); delete hist_xh_det32_MuPlus;
+  hist_xh_det33_MuPlus->Write(hist_xh_det33_MuPlus->GetName()); delete hist_xh_det33_MuPlus;
+  hist_xh_det34_MuPlus->Write(hist_xh_det34_MuPlus->GetName()); delete hist_xh_det34_MuPlus;
+  hist_xh_det35_MuPlus->Write(hist_xh_det35_MuPlus->GetName()); delete hist_xh_det35_MuPlus;
+  hist_xh_det36_MuPlus->Write(hist_xh_det36_MuPlus->GetName()); delete hist_xh_det36_MuPlus;
+  hist_xh_det37_MuPlus->Write(hist_xh_det37_MuPlus->GetName()); delete hist_xh_det37_MuPlus;
                               
   hist_xh_det10_MuMinus->Write(hist_xh_det10_MuMinus->GetName()); delete hist_xh_det10_MuMinus; 
   hist_xh_det20_MuMinus->Write(hist_xh_det20_MuMinus->GetName()); delete hist_xh_det20_MuMinus;
