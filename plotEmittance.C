@@ -45,6 +45,32 @@ using namespace std;
 
 
 
+// Double_t getemittance(Double_t x[5000], Double_t xp[5000]){
+
+//   Double_t emittance=0.;
+
+//   Double_t x2=0.;
+//   Double_t xp2=0.;
+//   Double_t xxp=0.;
+//   for(Int_t i=0;i<n_points;i++){
+//     x2+=(x[i]*x[i]);
+//     xp2+=(xp[i]*xp[i]);
+//     xxp+=(x[i]*xp[i]);
+//   }
+//   x2*=1./float(n_points);
+//   xp2*=1./float(n_points);
+//   xxp*=1./float(n_points);
+
+//   emittance=TMath::Sqrt(x2*xp2-xxp*xxp);
+
+//   return emittance;
+
+// }
+
+
+
+
+
 // doTheHistos function: read root file and do histos 
 void doTheHistos(TString inputFileName, TString label, double zEndTarget, TString plotOutputPath){
 
@@ -177,7 +203,12 @@ void doTheHistos(TString inputFileName, TString label, double zEndTarget, TStrin
       Double_t zpos(zEndTarget); //Z position exit face of the Be target
       Int_t nxbe = ReturnBeamInfo(subdet, xh, zh, nhits, zpos, xpatz, thatz);  // number of positrons
       hist_npos_Data->Fill(nxbe);
-      cout<<"npos ="<<nxbe<<endl;
+
+      // vector<double> vec_PositronBeamEmittance_x_1eplus_Data;
+      // vector<double> vec_PositronBeamEmittance_xprime_1eplus_Data;
+      // vector<double> vec_PositronBeamEmittance_x_moreThan1eplus_Data;
+      // vector<double> vec_PositronBeamEmittance_xprime_moreThan1eplus_Data;
+
       for(Int_t j=0; j<nxbe; j++){
         hist_xbe_positrons_Data->Fill(xpatz[j]); //position [mm]
         hist_the_positrons_Data->Fill(thatz[j]); //angle [rad]
@@ -186,17 +217,25 @@ void doTheHistos(TString inputFileName, TString label, double zEndTarget, TStrin
           hist1D_PositronBeamEmittance_x______1eplus_Data->Fill(xpatz[j]);
           hist1D_PositronBeamEmittance_xprime_1eplus_Data->Fill(thatz[j]);
           hist2D_PositronBeamEmittance_emitt__1eplus_Data->Fill(xpatz[j],thatz[j]);
-          cout<<j<<endl;
-          cout<<"---"<<endl;
+
+          // vec_PositronBeamEmittance_x_1eplus_Data     .push_back(xpatz[j]);
+	  // vec_PositronBeamEmittance_xprime_1eplus_Data.push_back(thatz[j]);
+
         }else if(j>1){
+
           hist1D_PositronBeamEmittance_x______moreThan1eplus_Data->Fill(xpatz[j]);
           hist1D_PositronBeamEmittance_xprime_moreThan1eplus_Data->Fill(thatz[j]);
           hist2D_PositronBeamEmittance_emitt__moreThan1eplus_Data->Fill(xpatz[j],thatz[j]);
-          cout<<j<<endl;
+
+          // vec_PositronBeamEmittance_x_moreThan1eplus_Data     .push_back(xpatz[j]);
+          // vec_PositronBeamEmittance_xprime_moreThan1eplus_Data.push_back(thatz[j]);
         }
       }
-    cout<<"***"<<endl;
-    }
+    
+      // double emittance_positronBeam_1eplus_Data = getemittance();
+      // double emittance_positronBeam_1eplus_Data = getemittance();
+
+    }//end if !isMC
     // ----------------------------------------------------------------------
 
 
@@ -336,6 +375,18 @@ void doTheHistos(TString inputFileName, TString label, double zEndTarget, TStrin
     hist2D_PositronBeamEmittance_emitt__1eplus_Data->GetYaxis()->SetTitleOffset(1.4);
     gStyle->SetPalette(kCool);
     hist2D_PositronBeamEmittance_emitt__1eplus_Data->Draw("COLZ");
+    float emittanceValue_positronBeam_1eplus_Data = sqrt(hist2D_PositronBeamEmittance_emitt__1eplus_Data->GetCovariance(1,1)*hist2D_PositronBeamEmittance_emitt__1eplus_Data->GetCovariance(2,2) - hist2D_PositronBeamEmittance_emitt__1eplus_Data->GetCovariance(2,1)*hist2D_PositronBeamEmittance_emitt__1eplus_Data->GetCovariance(1,2));
+    TPaveText* pv_positronBeam_1eplus = new TPaveText(0.15,0.75,0.35,0.85,"brNDC");
+    pv_positronBeam_1eplus->AddText(Form("#epsilon = %f",emittanceValue_positronBeam_1eplus_Data));
+    pv_positronBeam_1eplus->AddText("mm #times rad");
+    pv_positronBeam_1eplus->SetFillColor(kWhite);
+    pv_positronBeam_1eplus->SetBorderSize(0);
+    pv_positronBeam_1eplus->SetTextFont(40);
+    pv_positronBeam_1eplus->SetTextSize(0.05);
+    pv_positronBeam_1eplus->SetTextFont(42);
+    pv_positronBeam_1eplus->SetTextAlign(22); //text centering
+    pv_positronBeam_1eplus->Draw();
+    c_PositronBeamEmittance_emitt_1eplus->Update();
     c_PositronBeamEmittance_emitt_1eplus->SaveAs((plotOutputPath + "/" + c_PositronBeamEmittance_emitt_1eplus->GetName() + ".png"));
     
     
@@ -359,6 +410,18 @@ void doTheHistos(TString inputFileName, TString label, double zEndTarget, TStrin
     hist2D_PositronBeamEmittance_emitt__moreThan1eplus_Data->GetYaxis()->SetTitleOffset(1.4);
     gStyle->SetPalette(kCool);
     hist2D_PositronBeamEmittance_emitt__moreThan1eplus_Data->Draw("COLZ");
+    float emittanceValue_positronBeam_moreThan1eplus_Data = sqrt(hist2D_PositronBeamEmittance_emitt__moreThan1eplus_Data->GetCovariance(1,1)*hist2D_PositronBeamEmittance_emitt__moreThan1eplus_Data->GetCovariance(2,2) - hist2D_PositronBeamEmittance_emitt__moreThan1eplus_Data->GetCovariance(2,1)*hist2D_PositronBeamEmittance_emitt__moreThan1eplus_Data->GetCovariance(1,2));
+    TPaveText* pv_positronBeam_moreThan1eplus = new TPaveText(0.15,0.75,0.35,0.85,"brNDC");
+    pv_positronBeam_moreThan1eplus->AddText(Form("#epsilon = %f",emittanceValue_positronBeam_moreThan1eplus_Data));
+    pv_positronBeam_moreThan1eplus->AddText("mm #times rad");
+    pv_positronBeam_moreThan1eplus->SetFillColor(kWhite);
+    pv_positronBeam_moreThan1eplus->SetBorderSize(0);
+    pv_positronBeam_moreThan1eplus->SetTextFont(40);
+    pv_positronBeam_moreThan1eplus->SetTextSize(0.05);
+    pv_positronBeam_moreThan1eplus->SetTextFont(42);
+    pv_positronBeam_moreThan1eplus->SetTextAlign(22); //text centering
+    pv_positronBeam_moreThan1eplus->Draw();
+    c_PositronBeamEmittance_emitt_moreThan1eplus->Update();
     c_PositronBeamEmittance_emitt_moreThan1eplus->SaveAs((plotOutputPath + "/" + c_PositronBeamEmittance_emitt_moreThan1eplus->GetName() + ".png"));
 
   }
@@ -588,7 +651,7 @@ void doTheHistos(TString inputFileName, TString label, double zEndTarget, TStrin
     c_emittanceControl_emittance_mum->Update();
     c_emittanceControl_emittance_mum->SaveAs((plotOutputPath + "/" + c_emittanceControl_emittance_mum->GetName() + ".png"));
   
-  }
+  } //end plot mc plots
 
   cout<<" Plots done! =) "<<endl; 
 
@@ -600,26 +663,38 @@ void doTheHistos(TString inputFileName, TString label, double zEndTarget, TStrin
 void plotEmittance(){
 
   // define input files 
-  TString inputFile_Data = "/afs/cern.ch/user/a/abertoli/public/lemma/reco/reco-333to352.root";
-  TString inputFile_MC   = "/afs/cern.ch/user/a/abertoli/public/lemma/reco/reco-mupmum.root"; 
+  TString inputFile_Data_Aug2018_Be6cm = "/afs/cern.ch/user/a/abertoli/public/lemma/reco/reco-333to352.root"; 
+  TString inputFile_MC_Aug2018_Be6cm   = "/afs/cern.ch/user/a/abertoli/public/lemma/reco/reco-mupmum.root";   
+  TString inputFile_MC_Sep2018_Be6cm   = "/afs/cern.ch/user/a/abertoli/public/lemma/reco/sep18/reco-mupmum-Be6cm.root";
+  TString inputFile_MC_Sep2018_C6cm    = "/afs/cern.ch/user/a/abertoli/public/lemma/reco/sep18/reco-mupmum-C6cm.root";
+  TString inputFile_MC_Sep2018_C2cm    = "/afs/cern.ch/user/a/abertoli/public/lemma/reco/sep18/reco-mupmum-C2cm.root";
   
-  // define output path and make output directory for data/MC comparison
-  TString plotOutputPath = "190314_Emittance_reco-333to352_August2018targetBe6cm";
+  
+  // define output path and make output directory 
+
+  //TString plotOutputPath = "190314_Emittance_August2018_targetBe6cm_DATA";
+  //TString plotOutputPath = "190314_Emittance_August2018_targetBe6cm_MC";
+  //TString plotOutputPath = "190314_Emittance_September2018_targetBe6cm_MC";
+  //TString plotOutputPath = "190314_Emittance_September2018_targetC6cm_MC";
+  TString plotOutputPath = "190314_Emittance_September2018_targetC2cm_MC";
   gSystem->Exec(("mkdir -p "+plotOutputPath));
 
 
 
   // choose type of target
-  double zEndTarget = 10.*(457.9+3.-84.6);   // [mm] - dataset: AUGUST 2018    Be target 6 cm
+  //double zEndTarget = 10.*(457.9+3.-84.6);   // [mm] - dataset: AUGUST 2018    Be target 6 cm
   //double zEndTarget = 10.*(460.93+3.-82.78); // [mm] - dataset: SEPTEMBER 2018 Be target 6 cm and C target 6cm
-  //double zEndTarget = 10.*(460.93+1.-82.78); // [mm] - dataset: SEPTEMBER 2018 C  target 2 cm 
+  double zEndTarget = 10.*(460.93+1.-82.78); // [mm] - dataset: SEPTEMBER 2018 C  target 2 cm 
  
 
 
   // --- call do the histos function
   // arguments: input file, label for data or MC
-  doTheHistos(inputFile_Data, "DATA", zEndTarget, plotOutputPath);
-  doTheHistos(inputFile_MC,   "MC",   zEndTarget, plotOutputPath);
 
+  //doTheHistos(inputFile_Data_Aug2018_Be6cm, "DATA", zEndTarget, plotOutputPath);
+  //doTheHistos(inputFile_MC_Aug2018_Be6cm,   "MC",   zEndTarget, plotOutputPath);
+  //doTheHistos(inputFile_MC_Sep2018_Be6cm,   "MC",   zEndTarget, plotOutputPath);
+  //doTheHistos(inputFile_MC_Sep2018_C6cm,    "MC",   zEndTarget, plotOutputPath); 
+  doTheHistos(inputFile_MC_Sep2018_C2cm,    "MC",   zEndTarget, plotOutputPath);
 
 }
