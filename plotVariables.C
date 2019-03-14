@@ -2318,7 +2318,7 @@ void plotVariables(){
   TString inputFile_MC   = "/afs/cern.ch/user/a/abertoli/public/lemma/reco/reco-mupmum.root"; 
   
   // define output path and make output directory for data/MC comparison
-  TString plotDataMCOutputPath = "190314_LemmaVariables_DataMCComparison_reco-333to352_targetAugustBe6cm";
+  TString plotDataMCOutputPath = "190314_LemmaVariables_DataMCComparison_reco-333to352_August_targetBe6cm";
   gSystem->Exec(("mkdir -p "+plotDataMCOutputPath));
 
 
