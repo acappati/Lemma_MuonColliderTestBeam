@@ -55,15 +55,15 @@ Double_t getemittance(vector<Double_t> x, vector<Double_t> xp){
   Double_t xp2=0.;
   Double_t xxp=0.;
   for(UInt_t i=0;i<x.size();i++){
-    x2+=(x[i]*x[i]);
-    xp2+=(xp[i]*xp[i]);
-    xxp+=(x[i]*xp[i]);
+    x2+=(1000000*x[i]*1000000*x[i]); // [nm x nm]
+    xp2+=(xp[i]*xp[i]);              // [rad x rad]
+    xxp+=(1000000*x[i]*xp[i]);       // [nm x rad]
   }
   x2*=1./float(n_points);
   xp2*=1./float(n_points);
   xxp*=1./float(n_points);
 
-  emittance=TMath::Sqrt(x2*xp2-xxp*xxp);
+  emittance=TMath::Sqrt(x2*xp2-xxp*xxp); // [nm x rad]
 
   return emittance;
 
@@ -168,7 +168,7 @@ void doTheHistos(TString inputFileName, TString label, double zEndTarget, TStrin
   // --- DATA HISTOS
   TH1F* hist_npos_Data = new TH1F("hist_npos_Data", "N positrons", 11, -0.5, 10.5);                                           
   TH1F* hist_xbe_positrons_Data = new TH1F("hist_xbe_positrons_Data", "Positron: Be exit point (mm)", 100, -30.0, 30.0);      
-  TH1F* hist_the_positrons_Data = new TH1F("hist_the_positrons_Data", "Positron: theta exit (urad)",  100, -0.002, 0.002);    
+  TH1F* hist_the_positrons_Data = new TH1F("hist_the_positrons_Data", "Positron: theta exit (rad)",  100, -0.002, 0.002);    
 
   TH1F* hist1D_PositronBeamEmittance_x______1eplus_Data = new TH1F("hist1D_PositronBeamEmittance_x______1eplus_Data","hist1D_PositronBeamEmittance_x______1eplus_Data",100,-30.,30.); 
   TH1F* hist1D_PositronBeamEmittance_xprime_1eplus_Data = new TH1F("hist1D_PositronBeamEmittance_xprime_1eplus_Data","hist1D_PositronBeamEmittance_xprime_1eplus_Data",100,-0.002,0.002);
@@ -418,8 +418,8 @@ void doTheHistos(TString inputFileName, TString label, double zEndTarget, TStrin
     // --- Unbinned formula
     float emittanceValue_positronBeam_1eplus_Data = getemittance(vec_PositronBeamEmittance_x_1eplus_Data, vec_PositronBeamEmittance_xprime_1eplus_Data); 
     TPaveText* pv_positronBeam_1eplus = new TPaveText(0.15,0.75,0.35,0.85,"brNDC");
-    pv_positronBeam_1eplus->AddText(Form("#epsilon = %f",emittanceValue_positronBeam_1eplus_Data));
-    pv_positronBeam_1eplus->AddText("mm #times rad");
+    pv_positronBeam_1eplus->AddText(Form("#epsilon = %.2f",emittanceValue_positronBeam_1eplus_Data));
+    pv_positronBeam_1eplus->AddText("nm #times rad");
     pv_positronBeam_1eplus->SetFillColor(kWhite);
     pv_positronBeam_1eplus->SetBorderSize(0);
     pv_positronBeam_1eplus->SetTextFont(40);
@@ -455,8 +455,8 @@ void doTheHistos(TString inputFileName, TString label, double zEndTarget, TStrin
     // float emittanceValue_positronBeam_moreThan1eplus_Data = sqrt(hist2D_PositronBeamEmittance_emitt__moreThan1eplus_Data->GetCovariance(1,1)*hist2D_PositronBeamEmittance_emitt__moreThan1eplus_Data->GetCovariance(2,2) - hist2D_PositronBeamEmittance_emitt__moreThan1eplus_Data->GetCovariance(2,1)*hist2D_PositronBeamEmittance_emitt__moreThan1eplus_Data->GetCovariance(1,2));
     float emittanceValue_positronBeam_moreThan1eplus_Data = getemittance(vec_PositronBeamEmittance_x_moreThan1eplus_Data, vec_PositronBeamEmittance_xprime_moreThan1eplus_Data);
     TPaveText* pv_positronBeam_moreThan1eplus = new TPaveText(0.15,0.75,0.35,0.85,"brNDC");
-    pv_positronBeam_moreThan1eplus->AddText(Form("#epsilon = %f",emittanceValue_positronBeam_moreThan1eplus_Data));
-    pv_positronBeam_moreThan1eplus->AddText("mm #times rad");
+    pv_positronBeam_moreThan1eplus->AddText(Form("#epsilon = %.2f",emittanceValue_positronBeam_moreThan1eplus_Data));
+    pv_positronBeam_moreThan1eplus->AddText("nm #times rad");
     pv_positronBeam_moreThan1eplus->SetFillColor(kWhite);
     pv_positronBeam_moreThan1eplus->SetBorderSize(0);
     pv_positronBeam_moreThan1eplus->SetTextFont(40);
@@ -488,8 +488,8 @@ void doTheHistos(TString inputFileName, TString label, double zEndTarget, TStrin
     // --- Unbinned formula
     float emittanceValue_mup = getemittance(vec_emittance_x_mup_MC, vec_emittance_xprime_mup_MC);
     TPaveText* pv_x_emittance_mup = new TPaveText(0.15,0.75,0.35,0.85,"brNDC");
-    pv_x_emittance_mup->AddText(Form("#epsilon = %f",emittanceValue_mup));
-    pv_x_emittance_mup->AddText("mm #times rad");
+    pv_x_emittance_mup->AddText(Form("#epsilon = %.2f",emittanceValue_mup));
+    pv_x_emittance_mup->AddText("nm #times rad");
     pv_x_emittance_mup->SetFillColor(kWhite);
     pv_x_emittance_mup->SetBorderSize(0);
     pv_x_emittance_mup->SetTextFont(40);
@@ -513,8 +513,8 @@ void doTheHistos(TString inputFileName, TString label, double zEndTarget, TStrin
     // --- Unbinned formula
     float emittanceValue_mum = getemittance(vec_emittance_x_mum_MC, vec_emittance_xprime_mum_MC);
     TPaveText* pv_x_emittance_mum = new TPaveText(0.15,0.75,0.35,0.85,"brNDC");
-    pv_x_emittance_mum->AddText(Form("#epsilon = %f",emittanceValue_mum));
-    pv_x_emittance_mum->AddText("mm #times rad");
+    pv_x_emittance_mum->AddText(Form("#epsilon = %.2f",emittanceValue_mum));
+    pv_x_emittance_mum->AddText("nm #times rad");
     pv_x_emittance_mum->SetFillColor(kWhite);
     pv_x_emittance_mum->SetBorderSize(0);
     pv_x_emittance_mum->SetTextFont(40);
@@ -660,8 +660,8 @@ void doTheHistos(TString inputFileName, TString label, double zEndTarget, TStrin
     // --- Unbinned formula
     float emittanceValue_raw_positron_MC = getemittance(vec_emittanceControl_emittance_x_positron_MC, vec_emittanceControl_emittance_xprime_positron_MC);
     TPaveText* pv_emittanceControl_emittance_positron = new TPaveText(0.15,0.75,0.35,0.85,"brNDC");
-    pv_emittanceControl_emittance_positron->AddText(Form("#epsilon = %f",emittanceValue_raw_positron_MC));
-    pv_emittanceControl_emittance_positron->AddText("mm #times rad");
+    pv_emittanceControl_emittance_positron->AddText(Form("#epsilon = %.2f",emittanceValue_raw_positron_MC));
+    pv_emittanceControl_emittance_positron->AddText("nm #times rad");
     pv_emittanceControl_emittance_positron->SetFillColor(kWhite);
     pv_emittanceControl_emittance_positron->SetBorderSize(0);
     pv_emittanceControl_emittance_positron->SetTextFont(40);
@@ -686,8 +686,8 @@ void doTheHistos(TString inputFileName, TString label, double zEndTarget, TStrin
     // --- Unbinned formula
     float emittanceValue_raw_mup = getemittance(vec_emittanceControl_emittance_x_mup_MC, vec_emittanceControl_emittance_xprime_mup_MC);
     TPaveText* pv_emittanceControl_emittance_mup = new TPaveText(0.15,0.75,0.35,0.85,"brNDC");
-    pv_emittanceControl_emittance_mup->AddText(Form("#epsilon = %f",emittanceValue_raw_mup));
-    pv_emittanceControl_emittance_mup->AddText("mm #times rad");
+    pv_emittanceControl_emittance_mup->AddText(Form("#epsilon = %.2f",emittanceValue_raw_mup));
+    pv_emittanceControl_emittance_mup->AddText("nm #times rad");
     pv_emittanceControl_emittance_mup->SetFillColor(kWhite);
     pv_emittanceControl_emittance_mup->SetBorderSize(0);
     pv_emittanceControl_emittance_mup->SetTextFont(40);
@@ -712,8 +712,8 @@ void doTheHistos(TString inputFileName, TString label, double zEndTarget, TStrin
     // --- Unbinned formula
     float emittanceValue_raw_mum = getemittance(vec_emittanceControl_emittance_x_mum_MC, vec_emittanceControl_emittance_xprime_mum_MC);
     TPaveText* pv_emittanceControl_emittance_mum = new TPaveText(0.15,0.75,0.35,0.85,"brNDC");
-    pv_emittanceControl_emittance_mum->AddText(Form("#epsilon = %f",emittanceValue_raw_mum));
-    pv_emittanceControl_emittance_mum->AddText("mm #times rad");
+    pv_emittanceControl_emittance_mum->AddText(Form("#epsilon = %.2f",emittanceValue_raw_mum));
+    pv_emittanceControl_emittance_mum->AddText("nm #times rad");
     pv_emittanceControl_emittance_mum->SetFillColor(kWhite);
     pv_emittanceControl_emittance_mum->SetBorderSize(0);
     pv_emittanceControl_emittance_mum->SetTextFont(40);
@@ -745,8 +745,8 @@ void plotEmittance(){
   
   // define output path and make output directory 
 
-  //TString plotOutputPath = "190318_Emittance_August2018_targetBe6cm_DATA";
-  TString plotOutputPath = "190318_Emittance_August2018_targetBe6cm_MC";
+  TString plotOutputPath = "190318_Emittance_August2018_targetBe6cm_DATA";
+  //TString plotOutputPath = "190318_Emittance_August2018_targetBe6cm_MC";
   //TString plotOutputPath = "190318_Emittance_September2018_targetBe6cm_MC";
   //TString plotOutputPath = "190318_Emittance_September2018_targetC6cm_MC";
   //TString plotOutputPath = "190318_Emittance_September2018_targetC2cm_MC";
@@ -764,8 +764,8 @@ void plotEmittance(){
   // --- call do the histos function
   // arguments: input file, label for data or MC
 
-  //doTheHistos(inputFile_Data_Aug2018_Be6cm, "DATA", zEndTarget, plotOutputPath);
-  doTheHistos(inputFile_MC_Aug2018_Be6cm,   "MC",   zEndTarget, plotOutputPath);
+  doTheHistos(inputFile_Data_Aug2018_Be6cm, "DATA", zEndTarget, plotOutputPath);
+  //doTheHistos(inputFile_MC_Aug2018_Be6cm,   "MC",   zEndTarget, plotOutputPath);
   //doTheHistos(inputFile_MC_Sep2018_Be6cm,   "MC",   zEndTarget, plotOutputPath);
   //doTheHistos(inputFile_MC_Sep2018_C6cm,    "MC",   zEndTarget, plotOutputPath); 
   //doTheHistos(inputFile_MC_Sep2018_C2cm,    "MC",   zEndTarget, plotOutputPath);
