@@ -296,6 +296,14 @@ void plotEmittance_graph(){
   cout<<"emittance mup: "<<emittValue_mup_5<<" nm x rad"<<endl;
   cout<<"emittance mum: "<<emittValue_mum_5<<" nm x rad"<<endl;
 
+  // --- file 12345 (it contains all the previous ones)
+  double emittValue_mup_12345 = -99.;
+  double emittValue_mum_12345 = -99.;
+  fillVecGetEmittance(inputPath + "reco-mupmum-2k-12345.root" , "MC", zEndTarget, emittValue_mup_12345, emittValue_mum_12345);
+  cout<<"--- File 12345: "<<endl;
+  cout<<"emittance mup: "<<emittValue_mup_12345<<" nm x rad"<<endl;
+  cout<<"emittance mum: "<<emittValue_mum_12345<<" nm x rad"<<endl;
+
 
   // -----------
   // --- Graph
@@ -319,7 +327,13 @@ void plotEmittance_graph(){
   g_mup->SetMarkerStyle(20); 
   g_mup->SetMarkerStyle(20); 
   g_mup->SetMarkerColor(kRed);
+  g_mup->GetHistogram()->SetMaximum(15.);
+  g_mup->GetHistogram()->SetMinimum(10.);
   g_mup->Draw("AP");
+  TLine* l_mup = new TLine(0.7,emittValue_mup_12345,5.3,emittValue_mup_12345);
+  l_mup->SetLineColor(kRed);
+  l_mup->SetLineStyle(2);
+  l_mup->Draw();
   c_emittance->cd(2);
   g_mum->SetTitle("emittance #mu^{-}");
   g_mum->GetXaxis()->SetTitle("file");
@@ -327,7 +341,13 @@ void plotEmittance_graph(){
   g_mum->GetYaxis()->SetTitleOffset(1.5);
   g_mum->SetMarkerStyle(20); 
   g_mum->SetMarkerColor(kBlue);
+  g_mum->GetHistogram()->SetMaximum(15.);
+  g_mum->GetHistogram()->SetMinimum(10.);
   g_mum->Draw("AP");
+  TLine* l_mum = new TLine(0.7,emittValue_mum_12345,5.3,emittValue_mum_12345);
+  l_mum->SetLineColor(kBlue);
+  l_mum->SetLineStyle(2);
+  l_mum->Draw();
   c_emittance->SaveAs("emittance_files.png");
 
 }
