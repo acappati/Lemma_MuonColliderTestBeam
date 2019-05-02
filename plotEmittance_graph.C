@@ -330,7 +330,7 @@ void plotEmittance_graph(){
   g_mup->GetHistogram()->SetMaximum(15.);
   g_mup->GetHistogram()->SetMinimum(10.);
   g_mup->Draw("AP");
-  TLine* l_mup = new TLine(0.7,emittValue_mup_12345,5.3,emittValue_mup_12345);
+  TLine* l_mup = new TLine(0.7,emittValue_mup_12345,5.3,emittValue_mup_12345); //emittance value of merged file
   l_mup->SetLineColor(kRed);
   l_mup->SetLineStyle(2);
   l_mup->Draw();
@@ -344,7 +344,7 @@ void plotEmittance_graph(){
   g_mum->GetHistogram()->SetMaximum(15.);
   g_mum->GetHistogram()->SetMinimum(10.);
   g_mum->Draw("AP");
-  TLine* l_mum = new TLine(0.7,emittValue_mum_12345,5.3,emittValue_mum_12345);
+  TLine* l_mum = new TLine(0.7,emittValue_mum_12345,5.3,emittValue_mum_12345); //emittance value of merged file
   l_mum->SetLineColor(kBlue);
   l_mum->SetLineStyle(2);
   l_mum->Draw();
