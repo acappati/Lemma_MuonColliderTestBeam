@@ -1,6 +1,7 @@
 // ******************************************************************
 // this script reads x and x' histos from 2 files (Aug18 and Sep18)
 // and superimposes them (both for mu+ and mu-)
+// -- input files have to be produced with plotEmittance.C script
 //
 //
 // run with: 
